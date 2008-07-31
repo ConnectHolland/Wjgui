@@ -236,6 +236,21 @@ WJWindow.prototype = {
 	getContentElement: function(rowname) {
 		return this._contentElements[rowname];
 	},
+	
+	/**
+	 * evalContentElement
+	 *
+	 * Evaluates the script parts in the content element identified by rowname 
+	 *
+	 * @since Wed Jul 30 2008
+	 * @access public
+	 * @param string rowname
+	 * @return void
+	 **/
+	evalContentElement: function(rowname) {
+		var element = this.getContentElement(rowname);
+		element.innerHTML.evalScripts();
+	},
 
 	/**
 	 * _absolutizeTopLeft
