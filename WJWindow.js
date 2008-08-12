@@ -285,7 +285,7 @@ WJWindow.prototype = {
 	_checkMaxHeight: function(element) {
 		var element = element || this.getContentElement("main");
 		if (this.getY() + this.getHeight() > document.viewport.getHeight() ) {
-			this.setHeight(document.viewport.getHeight() - this.getY(), null, false);
+			this.setHeight(document.viewport.getHeight() - this.getY(), element, false);
 		}
 		else {
 			element.setStyle({"maxHeight": ""});
@@ -397,7 +397,29 @@ WJWindow.prototype = {
 	 * @return void
 	 **/
 	setContent: function(content) {
+		if (Object.isString(content) ) {
+			this.getContentElement("main").innerHTML = content;
+		}
+		if (Object.isElement(content) ) {
+			this.getContentElement("main").appendChild(content);
+		}
 		this._content = content;
+	},
+	
+	/**
+	 * addButton
+	 *
+	 * Adds a button to the window
+	 *
+	 * @since Tue Aug 12 2008
+	 * @access public
+	 * @param string caption
+	 * @param mixed callback
+	 * @param boolean defaultButton
+	 * @return DOMElement
+	 **/
+	addButton: function(caption, eventHandler, defaultButton) {
+		return WJButton.create(caption, eventHandler, defaultButton, this.getContentElement("buttons") );
 	},
 
 	/**
@@ -721,6 +743,27 @@ WJWindow.prototype = {
 	stopCentered: function() {
 		Event.stopObserving(window, "resize", this._centerObserver);
 		this._centerObserver = null;
+	},
+	
+	/**
+	 * maximize
+	 *
+	 * Maximizes the window
+	 *
+	 * @since Fri Aug 8 2008
+	 * @access public
+	 * @return void
+	 **/
+	maximize: function(paddingTop, paddingRight, paddingBottom, paddingLeft) {
+		var paddingTop = paddingTop || 0;
+		var paddingRight = paddingRight || paddingTop;
+		var paddingBottom = paddingBottom || paddingTop;
+		var paddingLeft = paddingLeft || paddingTop;
+		
+		this.setX(paddingLeft);
+		this.setY(paddingTop);
+		this.setWidth(document.viewport.getWidth() - (paddingLeft + paddingRight) );
+		this.setHeight(document.viewport.getHeight() - (paddingTop + paddingBottom) );
 	}
 };
 
