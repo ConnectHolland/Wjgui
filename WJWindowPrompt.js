@@ -27,7 +27,7 @@ var WJWindowPrompt = Class.create(WJWindowMessageDialog, {
 	/**
 	 * _getMainTemplate
 	 *
-	 * 
+	 * Adds the input element to the template
 	 *
 	 * @since Tue Jul 8 2008
 	 * @access protected
@@ -64,12 +64,12 @@ var WJWindowPrompt = Class.create(WJWindowMessageDialog, {
 	 * @param mixed result
 	 * @return void
 	 **/
-	windowResult: function(result) {
+	windowResult: function(event, result) {
 		if (result) {
-			this._callback(this.getInput().value );
+			this._callback(event, this.getInput().value );
 		}
 		else {
-			this._callback("");
+			this._callback(event, "");
 		}
 	},
 

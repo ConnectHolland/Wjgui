@@ -39,7 +39,8 @@ WJWindow.prototype = {
 	 **/
 	initialize: function(callback, type) {
 		this._createWindow();
-		this._addListeners();
+		this._listeners = new Hash();
+		this._addDefaultListeners();
 		
 		this._addCloseButton();
 
@@ -90,7 +91,7 @@ WJWindow.prototype = {
 	},
 
 	/**
-	 * _addListeners
+	 * _addDefaultListeners
 	 *
 	 * Adds custom event listeners to the window
 	 *
@@ -98,60 +99,90 @@ WJWindow.prototype = {
 	 * @access protected
 	 * @return void
 	 **/
-	_addListeners: function(element) {
-		var element = element || this._windowElement;
-		
-		this._createListeners().each(function(windowElement, nameFunc, index) {
-			Event.observe(windowElement, "aeroplane:" + nameFunc.key, nameFunc.value);
-		}.bind(this, element) );
-	},
-
-	/**
-	 * _createListeners
-	 *
-	 * Creates a hash with event listeners
-	 *
-	 * @since Mon Jul 7 2008
-	 * @access protected
-	 * @return void
-	 **/
-	_createListeners: function() {
-		this._listeners = new Hash();
-		
-		this.setListener("close", this.windowResult.bind(this, false) );
-		this.setListener("true", this.windowResult.bind(this, true) );
-		this.setListener("false", this.windowResult.bind(this, false) );
-
-		return this._listeners;
+	_addDefaultListeners: function(element) {
+		this.addListener("true", this.windowResult.bindAsEventListener(this, true) );
+		this.addListener("false", this.windowResult.bindAsEventListener(this, false) );
+		this.addListener("close", this.windowResult.bindAsEventListener(this, false) );
+		this.addListener("save", this.windowResult.bindAsEventListener(this) );
+		this.addListener("cancel", this.windowResult.bindAsEventListener(this) );
 	},
 	
 	/**
-	 * setListener
+	 * addListener
 	 *
-	 * 
+	 * Adds a listener for a custom event that calls the given callback or the default callback of this window
 	 *
-	 * @since Wed Jul 9 2008
+	 * @since Tue Aug 12 2008
 	 * @access 
 	 * @param 
 	 * @return 
 	 **/
-	setListener: function(key, func) {
-		this._listeners.set(key, func);
+	addListener: function(eventName, callback, element) {
+		var callback = callback || this.windowResult.bindAsEventListener(this);
+		var element = element || this._windowElement;
+
+		Event.observe(element, "aeroplane:" + eventName, callback);
+		this._setListener(eventName, {"element": element, "callback": callback} );
+	},
+
+	/**
+	 * _setListener
+	 *
+	 * Registers a listener function
+	 *
+	 * @since Wed Jul 9 2008
+	 * @access public
+	 * @param string key
+	 * @param Object elementAndCallback
+	 * @return void
+	 **/
+	_setListener: function(key, elementAndCallback) {
+		this._listeners.set(key, elementAndCallback);
+	},
+
+	/**
+	 * removeListener
+	 *
+	 * Removes the listener set for key
+	 *
+	 * @since Tue Aug 12 2008
+	 * @access 
+	 * @param 
+	 * @return 
+	 **/
+	removeListener: function(key) {
+		var listener = this.getListener(key);
+		Event.stopObserving(listener.element, "aeroplane:" + key, listener.callback);
+		this._listeners.unset(key);
+	},
+
+	/**
+	 * removeListeners
+	 *
+	 * Removes all listeners
+	 *
+	 * @since Tue Aug 12 2008
+	 * @access public
+	 * @return void
+	 **/
+	removeListeners: function() {
+		this._listeners.each(function(info) {
+			this.removeListener(info.key);
+		}.bind(this) );
 	},
 	
 	/**
 	 * windowResult
 	 *
-	 * Handles the window result event (in other words calls the callback with the result)
+	 * Handles the window result event
 	 *
 	 * @since Wed Jul 9 2008
 	 * @access protected
 	 * @param Event event
-	 * @param mixed result
 	 * @return void
 	 **/
-	windowResult: function(result) {
-		this._callback(result);
+	windowResult: function() {
+		this._callback.apply(this, arguments);
 	},
 	
 	/**
@@ -165,6 +196,20 @@ WJWindow.prototype = {
 	 **/
 	getListeners: function() {
 		return this._listeners;
+	},
+
+	/**
+	 * getListener
+	 *
+	 * Returns the listener info set for key
+	 *
+	 * @since Tue Aug 12 2008
+	 * @access 
+	 * @param 
+	 * @return 
+	 **/
+	getListener: function(key) {
+		return this._listeners.get(key);
 	},
 	
 	/**
@@ -350,7 +395,7 @@ WJWindow.prototype = {
 		if (Object.isFunction(this._callbackFunction) ) {
 			var args = $A(arguments);
 			args.unshift(this);
-			return this._callbackFunction.apply(this._callbackFunction, args);
+			return this._callbackFunction.apply(this._callbackFunction,  args);
 		}
 	},
 

@@ -24,6 +24,9 @@ var WJWindowAlert = Class.create(WJWindowMessageDialog, {
 			this._type = "alert";
 		}
 		$super(toDecorate);
-		this.getListeners().get("close").setArgument(0, true); // closing an alert means ok
+		this.getListener("close").callback.setArgument(0, true); // closing an alert means ok
+		this.removeListener("false");// an alert can only be true
+		this.removeListener("save");
+		this.removeListener("cancel");
 	}
 });

@@ -52,21 +52,15 @@ var WJWindowModal = Class.create({
 	/**
 	 * _rebindListeners
 	 *
-	 * Stops the listeners observing and rebinds this to the listeners
+	 * Stops the listeners observing and rebinds 'this' to the listeners
 	 *
 	 * @since Mon Jul 7 2008
 	 * @access protected
 	 * @return void
 	 **/
 	_rebindListeners: function() {
-		var listeners = this.getListeners();
-		var element = this._decorated.getWindowElement();
-
-		listeners.each(function(windowElement, nameFunc, index) {
-			Event.stopObserving(windowElement, "aeroplane:" + nameFunc.key, nameFunc.value);
-		}.bind(this, element) );
-
-		this._addListeners();
+		this.removeListeners();
+		this._addDefaultListeners();
 	},
 
 	/**
