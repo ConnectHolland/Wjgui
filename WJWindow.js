@@ -104,6 +104,7 @@ WJWindow.prototype = {
 		this.addListener("false", this.windowResult.bindAsEventListener(this, false) );
 		this.addListener("close", this.windowResult.bindAsEventListener(this, false) );
 		this.addListener("save", this.windowResult.bindAsEventListener(this) );
+		this.addListener("delete", this.windowResult.bindAsEventListener(this) );
 		this.addListener("cancel", this.windowResult.bindAsEventListener(this) );
 	},
 	
