@@ -46,10 +46,6 @@ WJWindow.prototype = {
 
 		this.setCallback(callback);
 		this.setTitle("Windmill CMS");
-		
-		this.setX(600); // Remove this
-		this.setY(270); // Remove this
-		this.show(); // Remove this
 	},
 
 	/**
@@ -564,6 +560,21 @@ WJWindow.prototype = {
 		var element = element || this.getContentElement("main");
 		var windowHeight = this._windowElement.getHeight();
 		var otherRowsHeight = windowHeight - element.getHeight();
+		
+		if ( (height - otherRowsHeight) < 0) {
+			if (element.getHeight() == 0) {
+				var wasVisible = this.isVisible();
+				this._windowElement.setStyle({"visibility": "hidden"});
+				this.show();
+				this.setHeight(height, element);
+				this._windowElement.setStyle({"visibility": "visible"});
+				this[((wasVisible)?"show":"hide")]();
+			}
+			else {
+				this.setHeight(otherRowsHeight, element);
+			}
+			return;
+		}
 		element.style.height = (height - otherRowsHeight) + "px";
 		
 		// avoid infinitive loops

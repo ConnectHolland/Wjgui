@@ -47,14 +47,14 @@ var WJWindowMessageDialog = Class.create(WJWindowModal, {
 	},
 
 	/**
-	 * 
 	 *
-	 * 
+	 *
+	 *
 	 *
 	 * @since Wed Jul 9 2008
-	 * @access 
-	 * @param 
-	 * @return 
+	 * @access
+	 * @param
+	 * @return
 	 **/
 	_getTemplateValues: function() {
 		return {"classprefix": this._getBaseClassname(), "windowtype": this._type};
@@ -78,7 +78,7 @@ var WJWindowMessageDialog = Class.create(WJWindowModal, {
 	/**
 	 * _getMainTemplate
 	 *
-	 * 
+	 *
 	 *
 	 * @since Tue Jul 8 2008
 	 * @access protected
@@ -101,5 +101,19 @@ var WJWindowMessageDialog = Class.create(WJWindowModal, {
 	setMessage: function(message) {
 		this.message = message.stripTags().stripScripts().split("\n").join("<br/>");
 		this.getContentElement("message").innerHTML = this.message;
+	},
+
+	/**
+	 * _callback
+	 *
+	 * Does the callback that this window should do (and hides the message)
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access protected
+	 * @return mixed
+	 **/
+	_callback: function() {
+		this.hide();
+		return this._decorated._callback.apply(this._decorated, $A(arguments) );
 	}
 });
