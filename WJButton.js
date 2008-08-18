@@ -109,7 +109,7 @@ var WJButton = Class.create({
 	 * @return void
 	 **/
 	_createButton: function() {
-		this._buttonElement = document.createElement("button");
+		this._buttonElement = new Element("button");
 		var template = this._getTemplate();
 		var replaces = {};
 		replaces.classprefix = this._getBaseClassName();

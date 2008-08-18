@@ -59,8 +59,7 @@ WJWindow.prototype = {
 	 **/
 	_createWindow: function() {
 		var classname = this._getBaseClassname();
-		this._windowElement = document.createElement("div");
-		this._windowElement.className = classname;
+		this._windowElement = new Element("div", {"class": classname});
 		this._createWindowRows(["title", "main", "buttons", "bottom"], classname);
 		this._windowElementId = this._windowElement.identify();
 		document.body.appendChild(this._windowElement);
@@ -80,10 +79,7 @@ WJWindow.prototype = {
 	 **/
 	_addCloseButton: function() {
 		var title = this.getContentElement("title");
-		var closeButton = document.createElement("div");
-		closeButton.setAttribute("class", this._getBaseClassname() + "_closebutton");
-		closeButton.setAttribute("onclick", "this.fire(\"aeroplane:close\")");
-		title.appendChild(closeButton);
+		title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "this.fire(\"aeroplane:close\")"} ) );
 	},
 
 	/**
@@ -250,7 +246,6 @@ WJWindow.prototype = {
 	_createWindowRows: function(rows, classprefix, windowElement) {
 		var row = this._getWindowRowTemplate();
 		var windowElement = windowElement || this._windowElement;
-		Element.extend(windowElement);
 		rows.each(function(windowElement, row, classprefix, rowname, index) {
 			var body = " " + classprefix + "_body";
 			if (index == 0 || index == (rows.length - 1) ) {

@@ -75,9 +75,7 @@ var WJWindowModal = Class.create({
 	_createModalLayer: function() {
 		var windowElement = this._decorated.getWindowElement();
 		
-		this._modalLayer = document.createElement("div");
-		this._modalLayer.className = this._getBaseClassname() + "_modality";
-		Element.extend(this._modalLayer);
+		this._modalLayer = new Element("div", {"class": this._getBaseClassname() + "_modality"});
 		document.body.appendChild(this._modalLayer);
 		this._modalLayer.appendChild(windowElement);
 		this._absolutizeTopLeft(this._modalLayer);
