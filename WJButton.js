@@ -61,8 +61,54 @@ var WJButton = Class.create({
 	 * @return 
 	 **/
 	updateCaption: function(caption) {
-		this._caption = caption.stripTags().stripScripts().split("\n").join("<br/>");
-		this.getButton().getElementsByClassName(this._getBaseClassName() + "_content")[0].innerHTML = this._caption;
+		this._caption = caption.stripTags().stripScripts();
+		this.getButton().getElementsByClassName(this._getBaseClassName() + "_content")[0].update(this._caption);
+
+		// TODO make this not crach IE7
+		var fontsize = parseInt(this.getButton().getElementsByClassName(this._getBaseClassName() + "_content")[0].getStyle("font-size") );
+		var buttonHeight = this.getButton().getHeight();
+		var textHeight = this.getButton().getElementsByClassName(this._getBaseClassName() + "_content")[0].getHeight();
+
+		var i = 1;
+		while (textHeight > buttonHeight) {
+			this.setWidth(this.getWidth() + (fontsize * 2) );
+			textHeight = this.getButton().getElementsByClassName(this._getBaseClassName() + "_content")[0].getHeight();
+			
+			i++;
+			if (i > 20) {
+				// TEMP IE7 protection
+				break;
+			}
+		}
+		
+	},
+
+	/**
+	 * 
+	 *
+	 * 
+	 *
+	 * @since Mon Aug 18 2008
+	 * @access 
+	 * @param 
+	 * @return 
+	 **/
+	getWidth: function() {
+		return this.getButton().getWidth();
+	},
+
+	/**
+	 * 
+	 *
+	 * 
+	 *
+	 * @since Mon Aug 18 2008
+	 * @access 
+	 * @param 
+	 * @return 
+	 **/
+	setWidth: function(width) {
+		this.getButton().setStyle({"width": width + "px"});
 	},
 	
 	/**
