@@ -35,6 +35,7 @@ var WJButton = Class.create({
 		if (Object.isElement(this._parentElement) ) {
 			this._parentElement.appendChild(this.getButton() );
 		}
+		this.updateCaption.bind(this).defer(this._caption);
 	},
 
 	/**
@@ -53,59 +54,77 @@ var WJButton = Class.create({
 	/**
 	 * updateCaption
 	 *
-	 * A method that updates the caption content of 
+	 * A method that updates the caption content of the button (and resizes the button if needed)
 	 *
 	 * @since Thu Jul 10 2008
-	 * @access 
-	 * @param 
-	 * @return 
+	 * @access public
+	 * @param string caption
+	 * @return Element
 	 **/
 	updateCaption: function(caption) {
 		this._caption = caption.stripTags().stripScripts();
-		this.getButton().getElementsByClassName(this._getBaseClassName() + "_content")[0].update(this._caption);
-
-		// TODO make this not crach IE7
-		var fontsize = parseInt(this.getButton().getElementsByClassName(this._getBaseClassName() + "_content")[0].getStyle("font-size") );
-		var buttonHeight = this.getButton().getHeight();
-		var textHeight = this.getButton().getElementsByClassName(this._getBaseClassName() + "_content")[0].getHeight();
-
-		var i = 1;
-		while (textHeight > buttonHeight) {
-			this.setWidth(this.getWidth() + (fontsize * 2) );
-			textHeight = this.getButton().getElementsByClassName(this._getBaseClassName() + "_content")[0].getHeight();
-			
-			i++;
-			if (i > 20) {
-				// TEMP IE7 protection
-				break;
-			}
-		}
-		
+		var contentElement = this.getContentElement();
+		contentElement.update(this._caption);
+		this.setWidth(this._getNewButtonWidth(this._caption, contentElement) );
+		return this.getButton();
 	},
 
 	/**
-	 * 
+	 * getContentElement
 	 *
-	 * 
+	 * Returns the container of the content
+	 *
+	 * @since Tue Aug 19 2008
+	 * @access public
+	 * @return Element
+	 **/
+	getContentElement: function() {
+		return this.getButton().getElementsByClassName(this._getBaseClassName() + "_content")[0];
+	},
+
+	/**
+	 * getNewButtonWidth
+	 *
+	 * Returns the width needed to fit the content on the button
+	 *
+	 * @since Tue Aug 19 2008
+	 * @access protected
+	 * @param string text
+	 * @param Element element
+	 * @return integer
+	 **/
+	_getNewButtonWidth: function(text, element) {
+		var fontfamily = element.getStyle("font-family");
+		var fontsize = element.getStyle("font-size");
+		WJButton.messureElement.setStyle({"font-family": fontfamily, "font-size": fontsize}).update(text);
+		var width = document.body.appendChild(WJButton.messureElement).getWidth();
+		WJButton.messureElement.remove();
+		width += this.getWidth() - element.getWidth();
+		return (width > 100) ? width : 100;
+	},
+
+	/**
+	 * getWidth
+	 *
+	 * Tells the width of the button
 	 *
 	 * @since Mon Aug 18 2008
-	 * @access 
-	 * @param 
-	 * @return 
+	 * @access public
+	 * @return integer
 	 **/
 	getWidth: function() {
 		return this.getButton().getWidth();
 	},
 
 	/**
-	 * 
+	 * setWidth
 	 *
-	 * 
+	 * Sets the width of the button
 	 *
 	 * @since Mon Aug 18 2008
-	 * @access 
-	 * @param 
-	 * @return 
+	 * @access public
+	 * @param integer width
+	 * @return void
 	 **/
 	setWidth: function(width) {
 		this.getButton().setStyle({"width": width + "px"});
@@ -159,7 +178,6 @@ var WJButton = Class.create({
 		var template = this._getTemplate();
 		var replaces = {};
 		replaces.classprefix = this._getBaseClassName();
-		replaces.caption = this._caption;
 		
 		this._buttonElement.className = replaces.classprefix + " " + replaces.classprefix + "_" + ((this._defaultButton) ? "" : "no") + "default";
 		
@@ -189,7 +207,7 @@ var WJButton = Class.create({
 	 * @return Template
 	 **/
 	_getTemplate: function() {
-		return new Template("<div class='#{classprefix}_left #{classprefix}_column'><div class='#{classprefix}_right #{classprefix}_column'><div class='#{classprefix}_center #{classprefix}_column'><div class='#{classprefix}_content'>#{caption}</div></div></div></div>");
+		return new Template("<div class='#{classprefix}_left #{classprefix}_column'><div class='#{classprefix}_right #{classprefix}_column'><div class='#{classprefix}_center #{classprefix}_column'><div class='#{classprefix}_content'>&#160;</div></div></div></div>");
 	},
 
 	/**
@@ -218,6 +236,14 @@ var WJButton = Class.create({
 		Event.observe(this.getButton(), "click", this._eventHandler);
 	}
 });
+
+/**
+ * an element to messure string length in context
+ *
+ * @since Tue Aug 19 2008
+ * @access public
+ **/
+WJButton.messureElement = new Element("div", {"style": "position: absolute; float: left; visibility: hidden;"});
 
 /**
  * create
