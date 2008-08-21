@@ -538,6 +538,7 @@ WJWindow.prototype = {
 		this._width = width;
 		var element = element || this._windowElement;
 		element.style.width = width + "px";
+		element.fire("aeroplane:resize");
 	},
 
 	/**
@@ -575,6 +576,9 @@ WJWindow.prototype = {
 		// avoid infinitive loops
 		if (checkHeight != false) {
 			this._checkMaxHeight(element);
+		}
+		if (!checkHeight) {
+			element.fire("aeroplane:resize");
 		}
 	},
 
