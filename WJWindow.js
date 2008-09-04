@@ -1,5 +1,5 @@
 /**
- * WJWindow
+ * class WJWindow
  *
  * The base window class
  *
@@ -8,8 +8,7 @@
  * @author Giso Stallenberg
  * @package Windmill.Javascript.Aeroplane
  **/
-var WJWindow = Class.create();
-WJWindow.prototype = {
+var WJWindow = Class.create({
 	/**
 	 * Properties of Window
 	 *
@@ -38,6 +37,7 @@ WJWindow.prototype = {
 	 * @return WJWindow
 	 **/
 	initialize: function(callback, type) {
+		this._loading = false;
 		this._createWindow();
 		this._listeners = new Hash();
 		this._addDefaultListeners();
@@ -820,8 +820,43 @@ WJWindow.prototype = {
 		this.setY(paddingTop);
 		this.setWidth(document.viewport.getWidth() - (paddingLeft + paddingRight) );
 		this.setHeight(document.viewport.getHeight() - (paddingTop + paddingBottom) );
+	},
+	
+	/**
+	 * setLoading
+	 *
+	 * Mark this window as loading (or not)
+	 *
+	 * @since Wed Sep 3 2008
+	 * @access public
+	 * @param boolean loading
+	 * @return void
+	 **/
+	setLoading: function(loading) {
+		if (loading && !this.getLoading() ) {
+			this.getWindowElement().addClassName("aeroplane_window_loading");
+			this.getContentElement("main").setStyle({"visibility": "hidden"});
+		}
+		else if (!loading && this.getLoading() ) {
+			this.getWindowElement().removeClassName("aeroplane_window_loading");
+			this.getContentElement("main").setStyle({"visibility": "visible"});
+		}
+		this._loading = loading;
+	},
+
+	/**
+	 * getLoading
+	 *
+	 * Tells if this window is marked as loading
+	 *
+	 * @since Wed Sep 3 2008
+	 * @access public
+	 * @return boolean
+	 **/
+	getLoading: function() {
+		return this._loading;
 	}
-};
+});
 
 
 WJWindow._messagedialog = function(type, message, callback, show) {
