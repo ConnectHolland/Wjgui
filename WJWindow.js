@@ -38,6 +38,7 @@ var WJWindow = Class.create({
 	 **/
 	initialize: function(callback, type) {
 		this._loading = false;
+		this._basetitle = this._title = "";
 		this._createWindow();
 		this._listeners = new Hash();
 		this._addDefaultListeners();
@@ -45,7 +46,7 @@ var WJWindow = Class.create({
 		this._addCloseButton();
 
 		this.setCallback(callback);
-		this.setTitle("Windmill CMS");
+		this.setBaseTitle("Windmill CMS");
 	},
 
 	/**
@@ -79,7 +80,7 @@ var WJWindow = Class.create({
 	 **/
 	_addCloseButton: function() {
 		var title = this.getContentElement("title");
-		title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "this.fire(\"aeroplane:close\")"} ) );
+		title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "this.fire(\"aeroplane:close\")", "title": dgettext("wjgui", "Close window") } ) );
 	},
 
 	/**
@@ -98,6 +99,52 @@ var WJWindow = Class.create({
 		this.addListener("save", this.windowResult.bindAsEventListener(this) );
 		this.addListener("delete", this.windowResult.bindAsEventListener(this) );
 		this.addListener("cancel", this.windowResult.bindAsEventListener(this) );
+		this._addDefaultKeyListener();
+	},
+	
+	/**
+	 * _addDefaultKeyListener
+	 *
+	 * Adds a listener for key's like return and esc
+	 *
+	 * @since Fri Sep 5 2008
+	 * @access protected
+	 * @return void
+	 **/
+	_addDefaultKeyListener: function() {
+		// here for extending purposes only
+		var element = element || this._windowElement;
+		Event.observe(element, "keydown", this.keyHandle.bindAsEventListener(this) );
+	},
+
+	/**
+	 * keyHandle
+	 *
+	 * Handles pressing enter or esc
+	 *
+	 * @since Fri Sep 5 2008
+	 * @access public
+	 * @param Event event
+	 * @return void
+	 **/
+	keyHandle: function(event) {
+		var element = event.element();
+		if (Object.isElement(element.up(".aeroplane_window") ) ) {
+			switch (event.keyCode) {
+				case Event.KEY_RETURN:
+					if (this.isVisible() ) {
+						element.fire("aeroplane:true");
+					}
+					break;
+				case Event.KEY_ESC:
+					if (this.isVisible() ) {
+						element.fire("aeroplane:close");
+					}
+					break;
+				default:
+					return;
+			}
+		}
 	},
 	
 	/**
@@ -108,7 +155,7 @@ var WJWindow = Class.create({
 	 * @since Tue Aug 12 2008
 	 * @access 
 	 * @param 
-	 * @return 
+	 * @return WJWindow
 	 **/
 	addListener: function(eventName, callback, element) {
 		var callback = callback || this.windowResult.bindAsEventListener(this);
@@ -116,6 +163,7 @@ var WJWindow = Class.create({
 
 		Event.observe(element, "aeroplane:" + eventName, callback);
 		this._setListener(eventName, {"element": element, "callback": callback} );
+		return this;
 	},
 
 	/**
@@ -141,12 +189,13 @@ var WJWindow = Class.create({
 	 * @since Tue Aug 12 2008
 	 * @access 
 	 * @param 
-	 * @return 
+	 * @return WJWindow
 	 **/
 	removeListener: function(key) {
 		var listener = this.getListener(key);
 		Event.stopObserving(listener.element, "aeroplane:" + key, listener.callback);
 		this._listeners.unset(key);
+		return this;
 	},
 
 	/**
@@ -156,12 +205,13 @@ var WJWindow = Class.create({
 	 *
 	 * @since Tue Aug 12 2008
 	 * @access public
-	 * @return void
+	 * @return WJWindow
 	 **/
 	removeListeners: function() {
 		this._listeners.each(function(info) {
 			this.removeListener(info.key);
 		}.bind(this) );
+		return this;
 	},
 	
 	/**
@@ -282,11 +332,12 @@ var WJWindow = Class.create({
 	 * @since Wed Jul 30 2008
 	 * @access public
 	 * @param string rowname
-	 * @return void
+	 * @return WJWindow
 	 **/
 	evalContentElement: function(rowname) {
 		var element = this.getContentElement(rowname);
 		element.innerHTML.evalScripts();
+		return this;
 	},
 
 	/**
@@ -336,11 +387,13 @@ var WJWindow = Class.create({
 	 *
 	 * @since Fri Jun 27 2008
 	 * @access public
-	 * @return void
+	 * @return WJWindow
 	 **/
 	show: function(element) {
 		var element = element || this._outerElement || this._windowElement;
 		element.style.display = "block";
+		element.focus();
+		return this;
 	},
 
 	/**
@@ -350,11 +403,12 @@ var WJWindow = Class.create({
 	 *
 	 * @since Fri Jun 27 2008
 	 * @access public
-	 * @return void
+	 * @return WJWindow
 	 **/
 	hide: function(element) {
 		var element = element || this._outerElement || this._windowElement;
 		element.style.display = "none";
+		return this;
 	},
 	
 	/**
@@ -364,14 +418,14 @@ var WJWindow = Class.create({
 	 *
 	 * @since Mon Jul 28 2008
 	 * @access public
-	 * @return void
+	 * @return WJWindow
 	 **/
 	destroy: function(element) {
 		var element = element || this._outerElement || this._windowElement;
 		if (element.parentNode) {
-			element.parentNode.removeChild(element);
+			element.remove();
 		}
-
+		return this;
 	},
 
 	/**
@@ -405,13 +459,29 @@ var WJWindow = Class.create({
 	},
 
 	/**
+	 * setBaseTitle
+	 *
+	 * Changes the base title
+	 *
+	 * @since Wed Sep 10 2008
+	 * @access public
+	 * @param string title
+	 * @return WJWindow
+	 **/
+	setBaseTitle: function(title) {
+		this._basetitle = title;
+		this.setTitle(this.getTitle() );
+		return this;
+	},
+
+	/**
 	 * setTitle
 	 *
 	 * Changes the title
 	 *
 	 * @since Fri Jun 27 2008
 	 * @access public
-	 * @return void
+	 * @return WJWindow
 	 **/
 	setTitle: function(title) {
 		this._title = title;
@@ -420,7 +490,21 @@ var WJWindow = Class.create({
 			this.getContentElement("title").innerHTML = "<h1>&#160;</h1>" + this.getContentElement("title").innerHTML;
 			return this.setTitle(this._title);
 		}
-		headers[0].innerHTML = this._title;
+		headers[0].innerHTML = this._getComposedTitle();
+		return this;
+	},
+
+	/**
+	 * _getComposedTitle
+	 *
+	 * Creates a nice looking title
+	 *
+	 * @since Wed Sep 10 2008
+	 * @access protected
+	 * @return string
+	 **/
+	_getComposedTitle: function() {
+		return this._title + ( (this._basetitle != "" &&  this._basetitle != this._title) ? ( (this._title != "") ? " - " : "") + this._basetitle : "");
 	},
 
 	/**
@@ -431,7 +515,7 @@ var WJWindow = Class.create({
 	 * @since Fri Jun 27 2008
 	 * @access public
 	 * @param mixed content
-	 * @return void
+	 * @return WJWindow
 	 **/
 	setContent: function(content) {
 		if (Object.isString(content) ) {
@@ -441,6 +525,7 @@ var WJWindow = Class.create({
 			this.getContentElement("main").appendChild(content);
 		}
 		this._content = content;
+		return this;
 	},
 	
 	/**
@@ -456,7 +541,11 @@ var WJWindow = Class.create({
 	 * @return DOMElement
 	 **/
 	addButton: function(caption, eventHandler, defaultButton) {
-		return WJButton.create(caption, eventHandler, defaultButton, this.getContentElement("buttons") );
+		var button = WJButton.create(caption, eventHandler, defaultButton, this.getContentElement("buttons") );
+		if (defaultButton) {
+			button.focus();
+		}
+		return button;
 	},
 
 	/**
@@ -467,12 +556,13 @@ var WJWindow = Class.create({
 	 * @since Fri Jun 27 2008
 	 * @access public
 	 * @param Function callback
-	 * @return void
+	 * @return WJWindow
 	 **/
 	setCallback: function(callback) {
 		if (Object.isFunction(callback) ) {
 			this._callbackFunction = callback;
 		}
+		return this;
 	},
 
 	/**
@@ -483,12 +573,13 @@ var WJWindow = Class.create({
 	 * @since Fri Jun 27 2008
 	 * @access public
 	 * @param integer x
-	 * @return void
+	 * @return WJWindow
 	 **/
 	setX: function(x, element) {
 		this._x = x || 0;
 		var element = element || this._windowElement;
 		element.style.left = x + "px";
+		return this;
 	},
 
 	/**
@@ -499,13 +590,14 @@ var WJWindow = Class.create({
 	 * @since Fri Jun 27 2008
 	 * @access public
 	 * @param integer y
-	 * @return void
+	 * @return WJWindow
 	 **/
 	setY: function(y, element) {
 		this._y = y || 0;
 		var element = element || this._windowElement;
 		element.style.top = y + "px";
 		this._checkMaxHeight(element);
+		return this;
 	},
 
 	/**
@@ -516,12 +608,13 @@ var WJWindow = Class.create({
 	 * @since Fri Jun 27 2008
 	 * @access public
 	 * @param integer z
-	 * @return void
+	 * @return WJWindow
 	 **/
 	setZ: function(z, element) {
 		this._z = z || 10000;
 		var element = element || this._windowElement;
 		element.style.zIndex = z;
+		return this;
 	},
 
 	/**
@@ -532,13 +625,14 @@ var WJWindow = Class.create({
 	 * @since Fri Jun 27 2008
 	 * @access public
 	 * @param integer width
-	 * @return void
+	 * @return WJWindow
 	 **/
 	setWidth: function(width, element) {
 		this._width = width;
 		var element = element || this._windowElement;
 		element.style.width = width + "px";
 		element.fire("aeroplane:resize");
+		return this;
 	},
 
 	/**
@@ -549,7 +643,7 @@ var WJWindow = Class.create({
 	 * @since Fri Jun 27 2008
 	 * @access public
 	 * @param integer height
-	 * @return void
+	 * @return WJWindow
 	 **/
 	setHeight: function(height, element, checkHeight) {
 		this._height = height;
@@ -580,6 +674,20 @@ var WJWindow = Class.create({
 		if (!checkHeight) {
 			element.fire("aeroplane:resize");
 		}
+		return this;
+	},
+
+	/**
+	 * getBaseTitle
+	 *
+	 * Returns the title of this window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return string
+	 **/
+	getBaseTitle: function() {
+		return this._basetitle;
 	},
 
 	/**
@@ -758,15 +866,15 @@ var WJWindow = Class.create({
 	 * @since Mon Jul 7 2008
 	 * @access public
 	 * @param DOMElement element
-	 * @return void
+	 * @return WJWindow
 	 **/
 	center: function(element) {
 		var element = element || this._windowElement;
 		var remainsX = document.viewport.getWidth() - this.getWidth(element);
 		var remainsY = document.viewport.getHeight() - this.getHeight(element);
 		
-		this.setX(remainsX / 2, element);
-		this.setY(remainsY / 2, element);
+		this.setX(remainsX / 2, element).setY(remainsY / 2, element);
+		return this;
 	},
 	
 	/**
@@ -808,7 +916,7 @@ var WJWindow = Class.create({
 	 *
 	 * @since Fri Aug 8 2008
 	 * @access public
-	 * @return void
+	 * @return WJWindow
 	 **/
 	maximize: function(paddingTop, paddingRight, paddingBottom, paddingLeft) {
 		var paddingTop = paddingTop || 0;
@@ -816,10 +924,8 @@ var WJWindow = Class.create({
 		var paddingBottom = paddingBottom || paddingTop;
 		var paddingLeft = paddingLeft || paddingTop;
 		
-		this.setX(paddingLeft);
-		this.setY(paddingTop);
-		this.setWidth(document.viewport.getWidth() - (paddingLeft + paddingRight) );
-		this.setHeight(document.viewport.getHeight() - (paddingTop + paddingBottom) );
+		this.setX(paddingLeft).setY(paddingTop).setWidth(document.viewport.getWidth() - (paddingLeft + paddingRight) ).setHeight(document.viewport.getHeight() - (paddingTop + paddingBottom) );
+		return this;
 	},
 	
 	/**
@@ -830,7 +936,7 @@ var WJWindow = Class.create({
 	 * @since Wed Sep 3 2008
 	 * @access public
 	 * @param boolean loading
-	 * @return void
+	 * @return WJWindow
 	 **/
 	setLoading: function(loading) {
 		if (loading && !this.getLoading() ) {
@@ -842,6 +948,7 @@ var WJWindow = Class.create({
 			this.getContentElement("main").setStyle({"visibility": "visible"});
 		}
 		this._loading = loading;
+		return this;
 	},
 
 	/**
