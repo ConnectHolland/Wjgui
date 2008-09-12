@@ -71,7 +71,7 @@ var WJWindowMessageDialog = Class.create(WJWindowModal, {
 	 **/
 	_addButtons: function() {
 		this._buttons = new Hash();
-		this._buttons.set("ok", WJButton.create(gettext("OK"), "true", true, this.getContentElement("buttons") ).focus() );
+		this._buttons.set("ok", WJButton.create(gettext("OK"), "true", true, this.getContentElement("buttons") ) ).focus();
 		return this._buttons;
 	},
 
@@ -87,7 +87,7 @@ var WJWindowMessageDialog = Class.create(WJWindowModal, {
 	_getTemplate: function() {
 		return new Template("<div class='#{classprefix}_messageicon #{classprefix}_messageicon_#{windowtype}'>&#160;</div><div class='#{classprefix}_message'>&#160;</div>");
 	},
-	
+
 	/**
 	 * setMessage
 	 *

@@ -23,7 +23,7 @@ var WJWindowBooleanConfirm = Class.create(WJWindowConfirm, {
 		this._type = "booleanconfirm";
 		$super(toDecorate);
 	},
-	
+
 	/**
 	 * _addButtons
 	 *

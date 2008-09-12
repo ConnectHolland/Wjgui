@@ -42,7 +42,7 @@ var WJWindow = Class.create({
 		this._createWindow();
 		this._listeners = new Hash();
 		this._addDefaultListeners();
-		
+
 		this._addCloseButton();
 
 		this.setCallback(callback);
@@ -101,7 +101,7 @@ var WJWindow = Class.create({
 		this.addListener("cancel", this.windowResult.bindAsEventListener(this) );
 		this._addDefaultKeyListener();
 	},
-	
+
 	/**
 	 * _addDefaultKeyListener
 	 *
@@ -146,15 +146,15 @@ var WJWindow = Class.create({
 			}
 		}
 	},
-	
+
 	/**
 	 * addListener
 	 *
 	 * Adds a listener for a custom event that calls the given callback or the default callback of this window
 	 *
 	 * @since Tue Aug 12 2008
-	 * @access 
-	 * @param 
+	 * @access
+	 * @param
 	 * @return WJWindow
 	 **/
 	addListener: function(eventName, callback, element) {
@@ -187,8 +187,8 @@ var WJWindow = Class.create({
 	 * Removes the listener set for key
 	 *
 	 * @since Tue Aug 12 2008
-	 * @access 
-	 * @param 
+	 * @access
+	 * @param
 	 * @return WJWindow
 	 **/
 	removeListener: function(key) {
@@ -213,7 +213,7 @@ var WJWindow = Class.create({
 		}.bind(this) );
 		return this;
 	},
-	
+
 	/**
 	 * windowResult
 	 *
@@ -227,7 +227,7 @@ var WJWindow = Class.create({
 	windowResult: function() {
 		this._callback.apply(this, arguments);
 	},
-	
+
 	/**
 	 * getListeners
 	 *
@@ -247,14 +247,14 @@ var WJWindow = Class.create({
 	 * Returns the listener info set for key
 	 *
 	 * @since Tue Aug 12 2008
-	 * @access 
-	 * @param 
-	 * @return 
+	 * @access
+	 * @param
+	 * @return
 	 **/
 	getListener: function(key) {
 		return this._listeners.get(key);
 	},
-	
+
 	/**
 	 * _getBaseClassname
 	 *
@@ -303,7 +303,7 @@ var WJWindow = Class.create({
 			}
 			windowElement.innerHTML += row.evaluate({"rowname": rowname, "classprefix": classprefix, "body": body});
 		}.bind(this, windowElement, row, classprefix));
-		
+
 		this._contentElements = {};
 		rows.each(function(windowElements, rowname, index) {
 			this._contentElements[rowname] = windowElements[index];
@@ -323,11 +323,11 @@ var WJWindow = Class.create({
 	getContentElement: function(rowname) {
 		return this._contentElements[rowname];
 	},
-	
+
 	/**
 	 * evalContentElement
 	 *
-	 * Evaluates the script parts in the content element identified by rowname 
+	 * Evaluates the script parts in the content element identified by rowname
 	 *
 	 * @since Wed Jul 30 2008
 	 * @access public
@@ -379,7 +379,7 @@ var WJWindow = Class.create({
 			element.setStyle({"maxHeight": ""});
 		}
 	},
-	
+
 	/**
 	 * show
 	 *
@@ -410,7 +410,7 @@ var WJWindow = Class.create({
 		element.style.display = "none";
 		return this;
 	},
-	
+
 	/**
 	 * destroy
 	 *
@@ -527,7 +527,7 @@ var WJWindow = Class.create({
 		this._content = content;
 		return this;
 	},
-	
+
 	/**
 	 * addButton
 	 *
@@ -650,7 +650,7 @@ var WJWindow = Class.create({
 		var element = element || this.getContentElement("main");
 		var windowHeight = this._windowElement.getHeight();
 		var otherRowsHeight = windowHeight - element.getHeight();
-		
+
 		if ( (height - otherRowsHeight) < 0) {
 			if (element.getHeight() == 0) {
 				var wasVisible = this.isVisible();
@@ -666,7 +666,7 @@ var WJWindow = Class.create({
 			return;
 		}
 		element.style.height = (height - otherRowsHeight) + "px";
-		
+
 		// avoid infinitive loops
 		if (checkHeight != false) {
 			this._checkMaxHeight(element);
@@ -739,7 +739,7 @@ var WJWindow = Class.create({
 	 * @return mixed
 	 **/
 	getContenttype: function() {
-		
+
 	},
 
 	/**
@@ -872,11 +872,11 @@ var WJWindow = Class.create({
 		var element = element || this._windowElement;
 		var remainsX = document.viewport.getWidth() - this.getWidth(element);
 		var remainsY = document.viewport.getHeight() - this.getHeight(element);
-		
+
 		this.setX(remainsX / 2, element).setY(remainsY / 2, element);
 		return this;
 	},
-	
+
 	/**
 	 * keepCentered
 	 *
@@ -894,7 +894,7 @@ var WJWindow = Class.create({
 			Event.observe(window, "resize", this._centerObserver);
 		}
 	},
-	
+
 	/**
 	 * stopCentered
 	 *
@@ -908,7 +908,7 @@ var WJWindow = Class.create({
 		Event.stopObserving(window, "resize", this._centerObserver);
 		this._centerObserver = null;
 	},
-	
+
 	/**
 	 * maximize
 	 *
@@ -918,16 +918,58 @@ var WJWindow = Class.create({
 	 * @access public
 	 * @return WJWindow
 	 **/
-	maximize: function(paddingTop, paddingRight, paddingBottom, paddingLeft) {
+	maximize: function(paddingTop, paddingRight, paddingBottom, paddingLeft, noScroll) {
 		var paddingTop = paddingTop || 0;
 		var paddingRight = paddingRight || paddingTop;
 		var paddingBottom = paddingBottom || paddingTop;
 		var paddingLeft = paddingLeft || paddingTop;
-		
-		this.setX(paddingLeft).setY(paddingTop).setWidth(document.viewport.getWidth() - (paddingLeft + paddingRight) ).setHeight(document.viewport.getHeight() - (paddingTop + paddingBottom) );
+		var noScroll = noScroll || false;
+
+		this.setX(paddingLeft).setY(paddingTop);
+
+		if (noScroll) {
+			this.setWidth(0).setHeight(0);
+		}
+
+		this.setWidth(document.viewport.getWidth() - (paddingLeft + paddingRight) ).setHeight(document.viewport.getHeight() - (paddingTop + paddingBottom) );
 		return this;
 	},
-	
+
+	/**
+	 * keepMaximized
+	 *
+	 * Makes sure the window stays maximized
+	 *
+	 * @since Tue Sep 9 2008
+	 * @access public
+	 * @return void
+	 **/
+	keepMaximized: function() {
+		if (!this._maximizedObserver) {
+			var paddingTop = this.getY();
+			var paddingLeft = this.getX();
+			var paddingRight = document.viewport.getWidth() - this.getWidth() - paddingLeft;
+			var paddingBottom = document.viewport.getHeight() - this.getHeight() - paddingTop;
+
+			this._maximizedObserver = this.maximize.bind(this, paddingTop, paddingRight, paddingBottom, paddingLeft, true);
+			Event.observe(window, "resize", this._maximizedObserver);
+		}
+	},
+
+	/**
+	 * stopMaximized
+	 *
+	 * Stops maximizing the window
+	 *
+	 * @since Tue Sep 9 2008
+	 * @access public
+	 * @return void
+	 **/
+	stopMaximized: function() {
+		Event.stopObserving(window, "resize", this._maximizedObserver);
+		this._maximizedObserver = null;
+	},
+
 	/**
 	 * setLoading
 	 *
@@ -976,17 +1018,17 @@ WJWindow._messagedialog = function(type, message, callback, show) {
 	return mwin;
 }
 WJWindow.alert = function(message, callback) {
-	WJWindow._messagedialog("WJWindowAlert", message, callback, true);
+	return WJWindow._messagedialog("WJWindowAlert", message, callback, true);
 }
 WJWindow.notice = function(message, callback) {
-	WJWindow._messagedialog("WJWindowNotice", message, callback, true);
+	return WJWindow._messagedialog("WJWindowNotice", message, callback, true);
 }
 WJWindow.confirm = function(message, callback) {
-	WJWindow._messagedialog("WJWindowConfirm", message, callback, true);
+	return WJWindow._messagedialog("WJWindowConfirm", message, callback, true);
 }
 WJWindow.booleanConfirm = function(message, callback) {
-	WJWindow._messagedialog("WJWindowBooleanConfirm", message, callback, true);
+	return WJWindow._messagedialog("WJWindowBooleanConfirm", message, callback, true);
 }
 WJWindow.prompt = function(message, callback) {
-	WJWindow._messagedialog("WJWindowPrompt", message, callback, true);
+	return WJWindow._messagedialog("WJWindowPrompt", message, callback, true);
 }
