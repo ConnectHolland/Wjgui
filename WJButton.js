@@ -96,9 +96,9 @@ var WJButton = Class.create({
 	_getNewButtonWidth: function(text, element) {
 		var fontfamily = element.getStyle("font-family");
 		var fontsize = element.getStyle("font-size");
-		WJButton.messureElement.setStyle({"font-family": fontfamily, "font-size": fontsize}).update(text);
-		var width = document.body.appendChild(WJButton.messureElement).getWidth();
-		WJButton.messureElement.remove();
+		WJButton.measureElement.setStyle({"font-family": fontfamily, "font-size": fontsize}).update(text);
+		var width = document.body.appendChild(WJButton.measureElement).getWidth();
+		WJButton.measureElement.remove();
 		width += this.getWidth() - element.getWidth();
 		return (width > 100) ? width : 100;
 	},
@@ -238,12 +238,12 @@ var WJButton = Class.create({
 });
 
 /**
- * an element to messure string length in context
+ * an element to measure string length in context
  *
  * @since Tue Aug 19 2008
  * @access public
  **/
-WJButton.messureElement = new Element("div", {"style": "position: absolute; float: left; visibility: hidden;"});
+WJButton.measureElement = new Element("div", {"style": "position: absolute; float: left; visibility: hidden;"});
 
 /**
  * create
