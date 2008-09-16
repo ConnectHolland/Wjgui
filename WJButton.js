@@ -234,6 +234,22 @@ var WJButton = Class.create({
 	 **/
 	_addObserver: function() {
 		Event.observe(this.getButton(), "click", this._eventHandler);
+	},
+
+	/**
+	 * setObserver
+	 *
+	 * Sets the current click observer for this button to eventHandler
+	 *
+	 * @since Tue Sep 16 2008
+	 * @access public
+	 * @param function eventHandler
+	 * @return void
+	 **/
+	setObserver: function(eventHandler) {
+		Event.stopObserving(this.getButton(), "click", this._eventHandler);
+		this._eventHandler = eventHandler;
+		this._addObserver();
 	}
 });
 
