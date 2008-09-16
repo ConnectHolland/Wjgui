@@ -22,6 +22,7 @@ var WJButton = Class.create({
 	 * @return WJButton
 	 **/
 	initialize: function(caption, eventHandler, defaultButton, parentElement) {
+		WJDebugger.log(WJDebugger.INFO, "Create new button", caption, eventHandler, defaultButton, parentElement);
 		this._caption = caption;
 		this._eventHandler = eventHandler;
 		this._defaultButton = (defaultButton === true) ? true : false;
@@ -143,7 +144,9 @@ var WJButton = Class.create({
 		if (!Object.isFunction(this._eventHandler) ) {
 			if (this._eventHandler.indexOf(":") == -1) {
 				this._eventHandler = this._getEventPrefix() + ":" + this._eventHandler;
+				WJDebugger.log(WJDebugger.INFO, "Build event handler for this, create event " + this._eventHandler);
 				var func = function(event, eventHandler) {
+					WJDebugger.log(WJDebugger.INFO, "Fire event in WJButton", event, eventHandler);
 					Event.element(event).fire(eventHandler);
 				}.bindAsEventListener(this.getButton(), this._eventHandler);
 				this._eventHandler = func;
@@ -233,6 +236,8 @@ var WJButton = Class.create({
 	 * @return void
 	 **/
 	_addObserver: function() {
+		WJDebugger.log(WJDebugger.INFO, "_addObserver in WJButton", this._eventHandler);
+		WJDebugger.log(WJDebugger.DEBUG, "WJButton observer code", this._eventHandler.toString() );
 		Event.observe(this.getButton(), "click", this._eventHandler);
 	},
 

@@ -158,6 +158,7 @@ var WJWindow = Class.create({
 	 * @return WJWindow
 	 **/
 	addListener: function(eventName, callback, element) {
+		WJDebugger.log(WJDebugger.INFO, "Adding listener in WJWindow", eventName, callback);
 		var callback = callback || this.windowResult.bindAsEventListener(this);
 		var element = element || this._windowElement;
 
@@ -541,6 +542,7 @@ var WJWindow = Class.create({
 	 * @return DOMElement
 	 **/
 	addButton: function(caption, eventHandler, defaultButton) {
+		WJDebugger.log(WJDebugger.INFO, "Adding button to window", caption, eventHandler, this);
 		var button = WJButton.create(caption, eventHandler, defaultButton, this.getContentElement("buttons") );
 		if (defaultButton) {
 			button.focus();
