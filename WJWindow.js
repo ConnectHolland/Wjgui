@@ -848,6 +848,32 @@ var WJWindow = Class.create({
 	},
 
 	/**
+	 * getContentHeight
+	 *
+	 * Tells what's the height of the content element
+	 *
+	 * @since Tue Sep 16 2008
+	 * @access public
+	 * @return integer
+	 **/
+	getContentHeight: function() {
+		return this.getContentElement("main").getHeight();
+	},
+
+	/**
+	 * getContentWidth
+	 *
+	 * Tells what's the width of the content element
+	 *
+	 * @since Tue Sep 16 2008
+	 * @access public
+	 * @return integer
+	 **/
+	getContentWidth: function() {
+		return this.getContentElement("main").getWidth();
+	},
+
+	/**
 	 * getWindowElement
 	 *
 	 * Returns the windowElement
