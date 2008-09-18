@@ -632,7 +632,7 @@ var WJWindow = Class.create({
 	setWidth: function(width, element) {
 		this._width = width;
 		var element = element || this._windowElement;
-		element.style.width = width + "px";
+		element.setStyle({"width": width + "px"});
 		element.fire("aeroplane:resize");
 		return this;
 	},
