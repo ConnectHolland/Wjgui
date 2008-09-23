@@ -70,6 +70,31 @@ var WJWindow = Class.create({
 	},
 
 	/**
+	 * insertWindowRowBefore
+	 *
+	 * Inserts a new row before given rowname with name newrowname
+	 *
+	 * @since Tue Sep 23 2008
+	 * @access public
+	 * @param string rowname
+	 * @param string newrowname
+	 * @return DOMElement
+	 **/
+	insertWindowRowBefore: function(rowname, newrowname) {
+		if (rowname === "title") {
+			return;
+		}
+		var classname = this._getBaseClassname();
+		var row = this._windowElement.getElementsByClassName(classname + "_" + rowname);
+		var newrowhtml = this._createRow(newrowname, classname, " " + classname + "_body");
+		var div = new Element("div");
+		div.update(newrowhtml);
+		var newrow = row.first().parentNode.insertBefore(div.firstChild, row.first() );
+		this._contentElements[newrowname] = newrow.getElementsByClassName(classname + "_content").first();
+		return newrow;
+	},
+
+	/**
 	 * _addCloseButton
 	 *
 	 * Adds a button to close the window
@@ -295,20 +320,53 @@ var WJWindow = Class.create({
 	 * @return array
 	 **/
 	_createWindowRows: function(rows, classprefix, windowElement) {
-		var row = this._getWindowRowTemplate();
 		var windowElement = windowElement || this._windowElement;
-		rows.each(function(windowElement, row, classprefix, rowname, index) {
+		rows.each(function(windowElement, classprefix, rowname, index) {
 			var body = " " + classprefix + "_body";
 			if (index == 0 || index == (rows.length - 1) ) {
 				body = "";
 			}
-			windowElement.innerHTML += row.evaluate({"rowname": rowname, "classprefix": classprefix, "body": body});
-		}.bind(this, windowElement, row, classprefix));
+			windowElement.innerHTML += this._createRow(rowname, classprefix, body);
+		}.bind(this, windowElement, classprefix));
+		this._saveRows(rows, classprefix, windowElement);
+	},
 
+	/**
+	 * _saveRows
+	 *
+	 * Saves all rows in this._contentElements
+	 *
+	 * @since Tue Sep 23 2008
+	 * @access protected
+	 * @param Array rows
+	 * @param string classprefix
+	 * @param Element windowElement
+	 * @return WJWindow
+	 **/
+	_saveRows: function(rows, classprefix, windowElement) {
+		var windowElement = windowElement || this._windowElement;
 		this._contentElements = {};
 		rows.each(function(windowElements, rowname, index) {
 			this._contentElements[rowname] = windowElements[index];
 		}.bind(this, windowElement.getElementsByClassName(classprefix + "_content") ) );
+		return this;
+	},
+
+	/**
+	 * _createRow
+	 *
+	 * Creates the HTML of a row
+	 *
+	 * @since Tue Sep 23 2008
+	 * @access protected
+	 * @param string rowname
+	 * @param string classprefix
+	 * @param string body
+	 * @return string
+	 **/
+	_createRow: function(rowname, classprefix, body) {
+		var row = this._getWindowRowTemplate();
+		return row.evaluate({"rowname": rowname, "classprefix": classprefix, "body": body});
 	},
 
 	/**
