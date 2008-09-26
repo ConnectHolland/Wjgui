@@ -89,8 +89,8 @@ var WJWindow = Class.create({
 		var newrowhtml = this._createRow(newrowname, classname, " " + classname + "_body");
 		var div = new Element("div");
 		div.update(newrowhtml);
-		var newrow = row.first().parentNode.insertBefore(div.firstChild, row.first() );
-		this._contentElements[newrowname] = newrow.getElementsByClassName(classname + "_content").first();
+		var newrow = row[0].parentNode.insertBefore(div.firstChild, row[0] );
+		this._contentElements[newrowname] = newrow.getElementsByClassName(classname + "_content")[0];
 		return newrow;
 	},
 
