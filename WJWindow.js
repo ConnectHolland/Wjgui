@@ -85,12 +85,12 @@ var WJWindow = Class.create({
 			return;
 		}
 		var classname = this._getBaseClassname();
-		var row = this._windowElement.getElementsByClassName(classname + "_" + rowname);
+		var row = this._windowElement.select("." + classname + "_" + rowname).first();
 		var newrowhtml = this._createRow(newrowname, classname, " " + classname + "_body");
 		var div = new Element("div");
 		div.update(newrowhtml);
-		var newrow = row[0].parentNode.insertBefore(div.firstChild, row[0] );
-		this._contentElements[newrowname] = newrow.getElementsByClassName(classname + "_content")[0];
+		var newrow = row.parentNode.insertBefore(div.firstChild, row );
+		this._contentElements[newrowname] = newrow.select("." + classname + "_content").first();
 		return newrow;
 	},
 
@@ -348,7 +348,7 @@ var WJWindow = Class.create({
 		this._contentElements = {};
 		rows.each(function(windowElements, rowname, index) {
 			this._contentElements[rowname] = windowElements[index];
-		}.bind(this, windowElement.getElementsByClassName(classprefix + "_content") ) );
+		}.bind(this, windowElement.select("." + classprefix + "_content") ) );
 		return this;
 	},
 
