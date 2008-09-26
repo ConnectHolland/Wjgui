@@ -85,12 +85,16 @@ var WJWindow = Class.create({
 			return;
 		}
 		var classname = this._getBaseClassname();
-		var row = this._windowElement.select("." + classname + "_" + rowname).first();
+		var row = this._windowElement.select("." + classname + "_" + rowname)
+		row = row.first();
 		var newrowhtml = this._createRow(newrowname, classname, " " + classname + "_body");
 		var div = new Element("div");
 		div.update(newrowhtml);
-		var newrow = row.parentNode.insertBefore(div.firstChild, row );
-		this._contentElements[newrowname] = newrow.select("." + classname + "_content").first();
+		var toprow = row.parentNode;
+		var newrow = toprow.insertBefore(div.firstChild, row );
+		newrow = Element.extend(newrow);
+		newrow = newrow.select("." + classname + "_content");
+		this._contentElements[newrowname] = newrow.first();
 		return newrow;
 	},
 
