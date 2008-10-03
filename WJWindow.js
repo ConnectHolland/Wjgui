@@ -46,7 +46,7 @@ var WJWindow = Class.create({
 		this._addCloseButton();
 
 		this.setCallback(callback);
-		this.setBaseTitle("Windmill CMS");
+		this.setBaseTitle(WJGuiSettings.windowBaseTitle);
 	},
 
 	/**

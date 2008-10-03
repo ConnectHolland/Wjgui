@@ -1,3 +1,4 @@
+WJGuiSettings.js
 WJWindow.js
 WJWindowModal.js
 WJWindowMessageDialog.js
