@@ -455,7 +455,7 @@ var WJWindow = Class.create({
 	show: function(element) {
 		var element = element || this._outerElement || this._windowElement;
 		element.style.display = "block";
-		element.focus();
+		try { element.focus() } catch(e) {} // TODO think of something better to get focus in browsers and a window in IE6
 		return this;
 	},
 
