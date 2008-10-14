@@ -40,7 +40,7 @@ var WJWindowModal = Class.create({
 	 **/
 	_decorate: function(toDecorate) {
 		this._decorated = toDecorate;
-		
+
 		for (property in this._decorated) {
 			// Add all methods not defined in this
 			if (!Object.isFunction(this[property]) ) {
@@ -74,13 +74,13 @@ var WJWindowModal = Class.create({
 	 **/
 	_createModalLayer: function() {
 		var windowElement = this._decorated.getWindowElement();
-		
+
 		this._modalLayer = new Element("div", {"class": this._getBaseClassname() + "_modality"});
 		document.body.appendChild(this._modalLayer);
 		this._modalLayer.appendChild(windowElement);
 		this._absolutizeTopLeft(this._modalLayer);
 		this._fillViewport();
-		
+
 		Event.observe(window, "resize", this._fillViewport.bind(this, this._modalLayer) ); // on purpose, no need for event
 		this._outerElement = this._modalLayer;
 	},
@@ -99,7 +99,7 @@ var WJWindowModal = Class.create({
 		var element = $(element) || this._modalLayer;
 		element.setStyle({width: (document.viewport.getWidth() + 50) + "px", height: document.viewport.getHeight() + "px"});
 	},
-	
+
 	/**
 	 * show
 	 *
@@ -144,33 +144,33 @@ var WJWindowModal = Class.create({
 	 **/
 	_setBodyOverflow: function(value) {
 		var value = value || "";
-		document.body.setStyle({overflow: value});
-		document.getElementsByTagName("html")[0].setStyle({overflow: value});
+		$(document.body).setStyle({overflow: value});
+		$(document.getElementsByTagName("html")[0]).setStyle({overflow: value});
 	},
-	
+
 	/**
-	 * 
 	 *
-	 * 
+	 *
+	 *
 	 *
 	 * @since Thu Jul 10 2008
-	 * @access 
-	 * @param 
-	 * @return 
+	 * @access
+	 * @param
+	 * @return
 	 **/
 	_addBlinkListener: function() {
 		Event.observe(this._modalLayer, "click", this.blink.bindAsEventListener(this) );
 	},
 
 	/**
-	 * 
 	 *
-	 * 
+	 *
+	 *
 	 *
 	 * @since Thu Jul 10 2008
-	 * @access 
-	 * @param 
-	 * @return 
+	 * @access
+	 * @param
+	 * @return
 	 **/
 	blink: function(event, doBlink, count) {
 		var count = count || 0;

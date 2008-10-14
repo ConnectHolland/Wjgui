@@ -109,7 +109,7 @@ var WJWindow = Class.create({
 	 **/
 	_addCloseButton: function() {
 		var title = this.getContentElement("title");
-		title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "this.fire(\"aeroplane:close\")", "title": dgettext("wjgui", "Close window") } ) );
+		title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "Element.fire(this, \"aeroplane:close\")", "title": dgettext("wjgui", "Close window") } ) );
 	},
 
 	/**
