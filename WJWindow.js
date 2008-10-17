@@ -485,6 +485,7 @@ var WJWindow = Class.create({
 	 **/
 	destroy: function(element) {
 		var element = element || this._outerElement || this._windowElement;
+		WJDebugger.log(WJDebugger.INFO, "Destroy main window", this, element);
 		if (element.parentNode) {
 			element.remove();
 		}
