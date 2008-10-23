@@ -164,7 +164,7 @@ var WJButton = Class.create({
 	 * @return string
 	 **/
 	_getEventPrefix: function() {
-		return "aeroplane";
+		return "wjgui";
 	},
 	
 	/**
@@ -197,7 +197,7 @@ var WJButton = Class.create({
 	 * @return string
 	 **/
 	_getBaseClassName: function() {
-		return "aeroplane_button";
+		return "wjgui_button";
 	},
 
 	/**

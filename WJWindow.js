@@ -109,7 +109,36 @@ var WJWindow = Class.create({
 	 **/
 	_addCloseButton: function() {
 		var title = this.getContentElement("title");
-		title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "Element.fire(this, \"aeroplane:close\")", "title": dgettext("wjgui", "Close window") } ) );
+		//title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "Element.fire(this, \"wjgui:close\")", "title": dgettext("wjgui", "Close window") } ) );
+		
+ 		title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "this.parentNode.getWJWindowObject().fireClose(this)", "title": "Close window"} ) );
+	},
+
+	/**
+	 * fireClose
+	 *
+	 * Fires the close event from the given element
+	 *
+	 * @since Thu Oct 16 2008
+	 * @access public
+	 * @param Element element
+	 * @return void
+	 **/
+	fireClose: function(element) {
+		element = $(element);
+
+		/* Observe once function */
+		var func = function() {
+			this.destroy();
+			Event.stopObserving(document, "wjgui:close", arguments.callee.observerFunction);
+		}
+		var bound = func.bindAsEventListener(this);
+		func.observerFunction = bound;
+		/* End observe once function */
+		
+		Event.observe(document, "wjgui:close", bound);
+		element.fire("wjgui:close");
+		Event.stopObserving.defer(document, "wjgui:close", bound);
 	},
 
 	/**
@@ -158,16 +187,16 @@ var WJWindow = Class.create({
 	 **/
 	keyHandle: function(event) {
 		var element = event.element();
-		if (Object.isElement(element.up(".aeroplane_window") ) ) {
+		if (Object.isElement(element.up(".wjgui_window") ) ) {
 			switch (event.keyCode) {
 				case Event.KEY_RETURN:
 					if (this.isVisible() ) {
-						element.fire("aeroplane:true");
+						element.fire("wjgui:true");
 					}
 					break;
 				case Event.KEY_ESC:
 					if (this.isVisible() ) {
-						element.fire("aeroplane:close");
+						element.fire("wjgui:close");
 					}
 					break;
 				default:
@@ -191,7 +220,7 @@ var WJWindow = Class.create({
 		var callback = callback || this.windowResult.bindAsEventListener(this);
 		var element = element || this._windowElement;
 
-		Event.observe(element, "aeroplane:" + eventName, callback);
+		Event.observe(element, "wjgui:" + eventName, callback);
 		this._setListener(eventName, {"element": element, "callback": callback} );
 		return this;
 	},
@@ -223,7 +252,7 @@ var WJWindow = Class.create({
 	 **/
 	removeListener: function(key) {
 		var listener = this.getListener(key);
-		Event.stopObserving(listener.element, "aeroplane:" + key, listener.callback);
+		Event.stopObserving(listener.element, "wjgui:" + key, listener.callback);
 		this._listeners.unset(key);
 		return this;
 	},
@@ -254,7 +283,7 @@ var WJWindow = Class.create({
 	 * @param Event event
 	 * @return void
 	 **/
-	windowResult: function() {
+	windowResult: function(event) {
 		this._callback.apply(this, arguments);
 	},
 
@@ -295,7 +324,7 @@ var WJWindow = Class.create({
 	 * @return string
 	 **/
 	_getBaseClassname: function() {
-		return "aeroplane_window";
+		return "wjgui_window";
 	},
 
 	/**
@@ -333,6 +362,23 @@ var WJWindow = Class.create({
 			windowElement.innerHTML += this._createRow(rowname, classprefix, body);
 		}.bind(this, windowElement, classprefix));
 		this._saveRows(rows, classprefix, windowElement);
+		this._addWindowObjectGetters();
+	},
+	
+	/**
+	 * _addWindowObjectGetters
+	 *
+	 * Adds a getWJWindowObject getter to all content elements and the main window element
+	 *
+	 * @since Thu Oct 16 2008
+	 * @access protected
+	 * @return void
+	 **/
+	_addWindowObjectGetters: function() {
+		var test = [$H(this._contentElements).values(), this._windowElement].flatten();
+		test.each(function(el) {
+			el.getWJWindowObject = function() { return this; }.bind(this);
+		}, this);
 	},
 
 	/**
@@ -695,7 +741,7 @@ var WJWindow = Class.create({
 		this._width = width;
 		var element = element || this._windowElement;
 		element.setStyle({"width": width + "px"});
-		element.fire("aeroplane:resize");
+		element.fire("wjgui:resize");
 		return this;
 	},
 
@@ -736,7 +782,7 @@ var WJWindow = Class.create({
 			this._checkMaxHeight(element);
 		}
 		if (!checkHeight) {
-			element.fire("aeroplane:resize");
+			element.fire("wjgui:resize");
 		}
 		return this;
 	},
@@ -1072,11 +1118,11 @@ var WJWindow = Class.create({
 	 **/
 	setLoading: function(loading) {
 		if (loading && !this.getLoading() ) {
-			this.getWindowElement().addClassName("aeroplane_window_loading");
+			this.getWindowElement().addClassName("wjgui_window_loading");
 			this.getContentElement("main").setStyle({"visibility": "hidden"});
 		}
 		else if (!loading && this.getLoading() ) {
-			this.getWindowElement().removeClassName("aeroplane_window_loading");
+			this.getWindowElement().removeClassName("wjgui_window_loading");
 			this.getContentElement("main").setStyle({"visibility": "visible"});
 		}
 		this._loading = loading;

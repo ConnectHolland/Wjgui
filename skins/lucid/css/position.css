@@ -1,0 +1,259 @@
+@define {
+	windowtitleheight: 34;
+	windowbottomheight: 8;
+	windowborderwidth: 8;
+	buttonheight: 24;
+	contentbuttonheight: 21;
+	buttonmargin: 12;
+	contentbuttonmargin: 11;
+	buttonwidth: 100;
+}
+
+/**
+ * WINDOW >
+ **/
+div.wjgui_window {
+	width: 400px;
+}
+
+div.wjgui_window_main div.wjgui_window_content {
+	min-height: 5em;
+	overflow-y: auto;
+	position: relative; /* fix IE7 scrolling bug */
+}
+
+div.wjgui_window_center {
+	margin-right: $windowborderwidth$px;
+	margin-left: $windowborderwidth$px;
+}
+
+div.wjgui_window_title div.wjgui_window_column {
+	height: $windowtitleheight$px;
+}
+
+div.wjgui_window_bottom div.wjgui_window_column {
+	height: $windowbottomheight$px;
+}
+
+div.wjgui_window_title  div.wjgui_window_left {
+	background-position:  left -~0*$windowtitleheight$+(3*$windowbottomheight$)~px;
+}
+
+div.wjgui_window_title  div.wjgui_window_center {
+	background-position:  left -~1*$windowtitleheight$+(3*$windowbottomheight$)~px;
+}
+
+div.wjgui_window_title  div.wjgui_window_right {
+	background-position:  right -~2*$windowtitleheight$+(3*$windowbottomheight$)~px;
+}
+
+div.wjgui_window_bottom div.wjgui_window_left {
+	background-position:  left -~0*($windowbottomheight$)~px;
+}
+
+div.wjgui_window_bottom div.wjgui_window_center {
+	background-position:  left -~1*($windowbottomheight$)~px;
+}
+
+div.wjgui_window_bottom div.wjgui_window_right {
+	background-position:  right -~2*($windowbottomheight$)~px;
+}
+
+div.wjgui_window_body div.wjgui_window_right {
+	background-position: right 0px;
+}
+
+div.wjgui_window_body div.wjgui_window_left {
+	background-position: left 0px;
+}
+div.wjgui_window_title h1 {
+	margin: 0;
+	@browser[MSIE 6] (
+		position: relative;
+		top: 3px;
+	)
+}
+
+div.wjgui_window_title div.wjgui_window_closebutton {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin-right: 0.5em;
+	margin-top: 0.33em;
+	padding: 0;
+	width: 21px;
+	height: 21px;
+}
+
+div.wjgui_window_main div.wjgui_window_messageicon {
+	float: left;
+	width: 80px;
+	height: 80px;
+}
+
+div.wjgui_window_main div.wjgui_window_message {
+	margin-top: 24px;
+}
+
+div.wjgui_window div.wjgui_window_title div.wjgui_window_content h1 {
+	margin-left: 24px;
+}
+/**
+ * < WINDOW
+ **/
+
+/**
+ * BUTTON >
+ **/
+button.wjgui_button {
+	padding: 0;
+	height: ~$buttonheight$+2~px;
+	margin-right: 3px;
+	width: $buttonwidth$px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button {
+	height: ~$contentbuttonheight$+2~px;
+}
+
+/*
+ * Auto width buttons seem impossible
+ * because of inconsistencies in IE7 and FF
+ * So here's a range of sizes
+ * NOTE width is calculated now, but here for bc reasons
+ */
+button.wjgui_button {
+	width: $buttonnormalwidth$px;
+}
+button.wjgui_button_wider {
+	width: $buttonwiderwidth$px;
+}
+button.wjgui_button_wide {
+	width: $buttonwidewidth$px;
+}
+button.wjgui_button_extrawide {
+	width: $buttonextrawidewidth$px;
+}
+
+button.wjgui_button div.wjgui_button_column {
+	height: $buttonheight$px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_column {
+	height: $contentbuttonheight$px;
+}
+
+button.wjgui_button div.wjgui_button_center {
+	margin-left: $buttonmargin$px;
+	margin-right: $buttonmargin$px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_center {
+	margin-left: $contentbuttonmargin$px;
+	margin-right: $contentbuttonmargin$px;
+}
+
+button.wjgui_button_default div.wjgui_button_left {
+	background-position: left -~$buttonheight$*0~px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_default div.wjgui_button_left {
+	background-position: left -~$contentbuttonheight$*0~px;
+}
+
+button.wjgui_button_default div.wjgui_button_center {
+	background-position: left -~$buttonheight$*1~px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_default div.wjgui_button_center {
+	background-position: left -~$contentbuttonheight$*1~px;
+}
+
+button.wjgui_button_default div.wjgui_button_right {
+	background-position: right -~$buttonheight$*2~px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_default div.wjgui_button_right {
+	background-position: right -~$contentbuttonheight$*2~px;
+}
+
+button.wjgui_button:focus div.wjgui_button_left,
+button.wjgui_button:hover div.wjgui_button_left {
+	background-position: left -~$buttonheight$*3~px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button:focus div.wjgui_button_left,
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button:hover div.wjgui_button_left {
+	background-position: left -~$contentbuttonheight$*3~px;
+}
+
+button.wjgui_button:focus div.wjgui_button_center,
+button.wjgui_button:hover div.wjgui_button_center {
+	background-position: left -~$buttonheight$*4~px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button:focus div.wjgui_button_center,
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button:hover div.wjgui_button_center {
+	background-position: left -~$contentbuttonheight$*4~px;
+}
+
+button.wjgui_button:focus div.wjgui_button_right,
+button.wjgui_button:hover div.wjgui_button_right {
+	background-position: right -~$buttonheight$*5~px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button:focus div.wjgui_button_right,
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button:hover div.wjgui_button_right {
+	background-position: right -~$contentbuttonheight$*5~px;
+}
+
+button.wjgui_button:active div.wjgui_button_left {
+	background-position: left -~$buttonheight$*6~px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button:active div.wjgui_button_left {
+	background-position: left -~$contentbuttonheight$*6~px;
+}
+
+button.wjgui_button:active div.wjgui_button_center {
+	background-position: left -~$buttonheight$*7~px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button:active div.wjgui_button_center {
+	background-position: left -~$contentbuttonheight$*7~px;
+}
+
+button.wjgui_button:active div.wjgui_button_right {
+	background-position: right -~$buttonheight$*8~px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button:active div.wjgui_button_right {
+	background-position: right -~$contentbuttonheight$*8~px;
+}
+
+button.wjgui_button_nodefault div.wjgui_button_left {
+	background-position: left -~$buttonheight$*9~px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_nodefault div.wjgui_button_left {
+	background-position: left -~$contentbuttonheight$*0~px;
+}
+
+button.wjgui_button_nodefault div.wjgui_button_center {
+	background-position: left -~$buttonheight$*10~px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_nodefault div.wjgui_button_center {
+	background-position: left -~$contentbuttonheight$*1~px;
+}
+
+button.wjgui_button_nodefault div.wjgui_button_right {
+	background-position: right -~$buttonheight$*11~px;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_nodefault div.wjgui_button_right {
+	background-position: right -~$contentbuttonheight$*2~px;
+}
+/**
+ * < BUTTON
+ **/
