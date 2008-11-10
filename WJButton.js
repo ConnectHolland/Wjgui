@@ -30,7 +30,7 @@ var WJButton = Class.create({
 		
 		this._buildEventHandler();
 		this._createButton();
-		this._addCaptionMethod();
+		this._addButtonMethods();
 		this._addObserver();
 		
 		if (Object.isElement(this._parentElement) ) {
@@ -40,16 +40,18 @@ var WJButton = Class.create({
 	},
 
 	/**
-	 * _addCaptionMethod
+	 * _addButtonMethods
 	 *
-	 * Adds a method to the element to easy update the caption
+	 * Adds methods to the element to easy update the caption and enable or disable the button
 	 *
 	 * @since Thu Jul 10 2008
 	 * @access protected
 	 * @return void
 	 **/
-	_addCaptionMethod: function() {
+	_addButtonMethods: function() {
 		this.getButton().updateCaption = this.updateCaption.bind(this);
+		this.getButton().enable = this.enable.bind(this);
+		this.getButton().disable = this.disable.bind(this);
 	},
 
 	/**
@@ -68,6 +70,36 @@ var WJButton = Class.create({
 		contentElement.update(this._caption);
 		this.setWidth(this._getNewButtonWidth(this._caption, contentElement) );
 		return this.getButton();
+	},
+
+	/**
+	 * enable
+	 *
+	 * Enables the button
+	 *
+	 * @since Mon Nov 10 2008
+	 * @access public
+	 * @return this
+	 **/
+	enable: function() {
+		this.getButton().enabled = "enabled";
+		this.getButton().removeClassName("aeroplane_button_disabled");
+		return this;
+	},
+
+	/**
+	 * disable
+	 *
+	 * Disables the button
+	 *
+	 * @since Mon Nov 10 2008
+	 * @access public
+	 * @return this
+	 **/
+	disable: function() {
+		this.getButton().disabled = "disabled";
+		this.getButton().addClassName("aeroplane_button_disabled");
+		return this;
 	},
 
 	/**
