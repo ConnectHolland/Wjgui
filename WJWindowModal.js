@@ -25,6 +25,7 @@ var WJWindowModal = Class.create({
 		this._maxblink = 6;
 		this._addBlinkListener();
 		this._rebindListeners();
+		this.setZ(2147483647);
 		this.show(); // Remove this
 	},
 
