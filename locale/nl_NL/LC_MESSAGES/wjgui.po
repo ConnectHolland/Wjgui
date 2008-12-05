@@ -41,3 +41,26 @@ msgstr "Annuleren"
 msgid "Close window"
 msgstr "Venster sluiten"
 
+msgid "No records found"
+msgstr "Geen gegevens gevonden"
+
+msgid "Loading..."
+msgstr "Bezig met laden..."
+
+msgid "Data error"
+msgstr "Gegevensfout"
+
+msgid "Click to sort ascending"
+msgstr "Klik om oplopend te sorteren"
+
+msgid "Click to sort descending"
+msgstr "Klik om aflopend te sorteren"
+
+msgid "Show"
+msgstr "Toon"
+
+msgid "Page"
+msgstr "Pagina"
+
+msgid "results"
+msgstr "resultaten"

@@ -39,6 +39,7 @@ var WJWindow = Class.create({
 	initialize: function(callback, type) {
 		this._loading = false;
 		this._basetitle = this._title = "";
+		this._theme = "default";
 		this._createWindow();
 		this._listeners = new Hash();
 		this._addDefaultListeners();
@@ -67,6 +68,7 @@ var WJWindow = Class.create({
 		this._absolutizeTopLeft();
 		this.hide();
 		this._outerElement = this._windowElement;
+		this.setTheme();
 	},
 
 	/**
@@ -110,7 +112,7 @@ var WJWindow = Class.create({
 	_addCloseButton: function() {
 		var title = this.getContentElement("title");
 		//title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "Element.fire(this, \"wjgui:close\")", "title": dgettext("wjgui", "Close window") } ) );
-		
+
  		title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "this.parentNode.getWJWindowObject().fireClose(this)", "title": "Close window"} ) );
 	},
 
@@ -135,7 +137,7 @@ var WJWindow = Class.create({
 		var bound = func.bindAsEventListener(this);
 		func.observerFunction = bound;
 		/* End observe once function */
-		
+
 		Event.observe(document, "wjgui:close", bound);
 		element.fire("wjgui:close");
 		Event.stopObserving.defer(document, "wjgui:close", bound);
@@ -364,7 +366,7 @@ var WJWindow = Class.create({
 		this._saveRows(rows, classprefix, windowElement);
 		this._addWindowObjectGetters();
 	},
-	
+
 	/**
 	 * _addWindowObjectGetters
 	 *
@@ -1140,6 +1142,79 @@ var WJWindow = Class.create({
 	 **/
 	getLoading: function() {
 		return this._loading;
+	},
+
+	/**
+	 * setTheme
+	 *
+	 * Sets the theme for the window
+	 *
+	 * @since Fri Dec 5 2008
+	 * @access public
+	 * @param string theme
+	 * @return void
+	 **/
+	setTheme: function(theme) {
+		if (theme == this.getTheme() ) {
+			return;
+		}
+		this._removeOldTheme();
+		this._setTheme(theme);
+		this._addNewTheme();
+	},
+
+	/**
+	 * _setTheme
+	 *
+	 * Sets the value of the _theme property
+	 *
+	 * @since Fri Dec 5 2008
+	 * @access protected
+	 * @param string theme
+	 * @return void
+	 **/
+	_setTheme: function(theme) {
+		this._theme = theme || "default";
+	},
+
+	/**
+	 * _removeOldTheme
+	 *
+	 * Removes the previously set theme class from the window
+	 *
+	 * @since Fri Dec 5 2008
+	 * @access
+	 * @param
+	 * @return
+	 **/
+	_removeOldTheme: function() {
+		this.getWindowElement().removeClassName(this._getBaseClassname() + "theme_" + this.getTheme() );
+	},
+
+	/**
+	 * _addNewTheme
+	 *
+	 * Adds the new theme class to the window
+	 *
+	 * @since Fri Dec 5 2008
+	 * @access protected
+	 * @return void
+	 **/
+	_addNewTheme: function() {
+		this.getWindowElement().addClassName(this._getBaseClassname() + "theme_" + this.getTheme() );
+	},
+
+	/**
+	 * getTheme
+	 *
+	 * Returns the value of the _theme property
+	 *
+	 * @since Fri Dec 5 2008
+	 * @access public
+	 * @return string
+	 **/
+	getTheme: function() {
+		return this._theme;
 	}
 });
 
