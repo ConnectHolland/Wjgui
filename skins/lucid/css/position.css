@@ -3,9 +3,9 @@
 	windowbottomheight: 8;
 	windowborderwidth: 8;
 	buttonheight: 24;
-	contentbuttonheight: 21;
+	contentbuttonheight: 32;
 	buttonmargin: 12;
-	contentbuttonmargin: 11;
+	contentbuttonmargin: 17;
 	buttonwidth: 100;
 }
 
@@ -270,6 +270,32 @@ button.wjgui_button_disabled:hover div.wjgui_button_right,
 button.wjgui_button_disabled div.wjgui_button_right {
 	background-position: right -~$buttonheight$*14~px;
 }
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:active div.wjgui_button_left,
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:hover div.wjgui_button_left,
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled div.wjgui_button_left {
+	background-position: left -~$contentbuttonheight$*9~px;
+}
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:active div.wjgui_button_center,
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:hover div.wjgui_button_center,
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled div.wjgui_button_center {
+	background-position: left -~$contentbuttonheight$*10~px;
+}
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:active div.wjgui_button_right,
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:hover div.wjgui_button_right,
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled div.wjgui_button_right {
+	background-position: right -~$contentbuttonheight$*11~px;
+}
+
+div.wjgui_button_content {
+	line-height: $buttonheight$px;
+}
+
+div.wjgui_window_main div.wjgui_window_content div.wjgui_button_content {
+	line-height: $contentbuttonheight$px;
+}
+
+
 
 /**
  * < BUTTON
