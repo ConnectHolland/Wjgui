@@ -255,12 +255,18 @@ div.wjgui_window_main div.wjgui_window_content button.wjgui_button_nodefault div
 	background-position: right -~$contentbuttonheight$*2~px;
 }
 
+button.wjgui_button_disabled:active div.wjgui_button_left,
+button.wjgui_button_disabled:hover div.wjgui_button_left,
 button.wjgui_button_disabled div.wjgui_button_left {
 	background-position: left -~$buttonheight$*12~px;
 }
+button.wjgui_button_disabled:active div.wjgui_button_center,
+button.wjgui_button_disabled:hover div.wjgui_button_center,
 button.wjgui_button_disabled div.wjgui_button_center {
 	background-position: left -~$buttonheight$*13~px;
 }
+button.wjgui_button_disabled:active div.wjgui_button_right,
+button.wjgui_button_disabled:hover div.wjgui_button_right,
 button.wjgui_button_disabled div.wjgui_button_right {
 	background-position: right -~$buttonheight$*14~px;
 }

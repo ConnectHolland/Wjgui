@@ -82,7 +82,7 @@ var WJButton = Class.create({
 	 * @return this
 	 **/
 	enable: function() {
-		this.getButton().disabled = "false";
+		this.getButton().removeAttribute("disabled");
 		this.getButton().removeClassName("wjgui_button_disabled");
 		return this;
 	},
@@ -97,7 +97,7 @@ var WJButton = Class.create({
 	 * @return this
 	 **/
 	disable: function() {
-		this.getButton().disabled = "true";
+		this.getButton().disabled = "disabled";
 		this.getButton().addClassName("wjgui_button_disabled");
 		return this;
 	},
