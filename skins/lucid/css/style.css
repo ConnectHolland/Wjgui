@@ -8,6 +8,7 @@
 	buttonfontsize: 0.75;
 	contentbuttonfontsize: 0.7;
 	buttoncolor: #000000;
+	disabledbuttoncolor: #888888;
 	contentbuttoncolor: #ffffff;
 	skindir: /lib/wjgui/skins/lucid;
 	windowcontentbgcolor: #d6d7d7;
@@ -186,6 +187,13 @@ div.wjgui_button_content {
 div.wjgui_window_main div.wjgui_window_content div.wjgui_button_content {
 	line-height: 19px;
 }
+
+button.wjgui_button_disabled:active div.wjgui_button_center,
+button.wjgui_button_disabled:hover div.wjgui_button_center,
+button.wjgui_button_disabled div.wjgui_button_center {
+	color: $disabledbuttoncolor$;
+}
+
 /**
  * < BUTTON
  **/
