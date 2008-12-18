@@ -82,8 +82,8 @@ var WJButton = Class.create({
 	 * @return this
 	 **/
 	enable: function() {
-		this.getButton().enabled = "enabled";
-		this.getButton().removeClassName("aeroplane_button_disabled");
+		this.getButton().disabled = "false";
+		this.getButton().removeClassName("wjgui_button_disabled");
 		return this;
 	},
 
@@ -97,8 +97,8 @@ var WJButton = Class.create({
 	 * @return this
 	 **/
 	disable: function() {
-		this.getButton().disabled = "disabled";
-		this.getButton().addClassName("aeroplane_button_disabled");
+		this.getButton().disabled = "true";
+		this.getButton().addClassName("wjgui_button_disabled");
 		return this;
 	},
 
