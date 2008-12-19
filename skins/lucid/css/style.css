@@ -194,5 +194,32 @@ div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled div.
 }
 
 /**
+ * Theme's for BUTTON
+ **/
+div.wjgui_windowtheme_magenta button.wjgui_button div.wjgui_button_column {
+
+}
+
+div.wjgui_windowtheme_purple button.wjgui_button div.wjgui_button_column {
+
+}
+
+div.wjgui_windowtheme_green button.wjgui_button div.wjgui_button_column {
+
+}
+
+div.wjgui_windowtheme_magenta div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_column {
+
+}
+
+div.wjgui_windowtheme_purple div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_column {
+
+}
+
+div.wjgui_windowtheme_green div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_column {
+
+}
+
+/**
  * < BUTTON
  **/

@@ -98,6 +98,46 @@ div.wjgui_window_main div.wjgui_window_message {
 div.wjgui_window div.wjgui_window_title div.wjgui_window_content h1 {
 	margin-left: 24px;
 }
+
+/**
+ * Theme's for WINDOW
+ **/
+div.wjgui_windowtheme_magenta div.wjgui_window_title  div.wjgui_window_left {
+	background-position:  left -~3*$windowtitleheight$+(3*$windowbottomheight$)~px;
+}
+
+div.wjgui_windowtheme_magenta div.wjgui_window_title  div.wjgui_window_center {
+	background-position:  left -~4*$windowtitleheight$+(3*$windowbottomheight$)~px;
+}
+
+div.wjgui_windowtheme_magenta div.wjgui_window_title  div.wjgui_window_right {
+	background-position:  right -~5*$windowtitleheight$+(3*$windowbottomheight$)~px;
+}
+
+div.wjgui_windowtheme_purple div.wjgui_window_title  div.wjgui_window_left {
+	background-position:  left -~6*$windowtitleheight$+(3*$windowbottomheight$)~px;
+}
+
+div.wjgui_windowtheme_purple div.wjgui_window_title  div.wjgui_window_center {
+	background-position:  left -~7*$windowtitleheight$+(3*$windowbottomheight$)~px;
+}
+
+div.wjgui_windowtheme_purple div.wjgui_window_title  div.wjgui_window_right {
+	background-position:  right -~8*$windowtitleheight$+(3*$windowbottomheight$)~px;
+}
+
+div.wjgui_windowtheme_green div.wjgui_window_title  div.wjgui_window_left {
+	background-position:  left -~9*$windowtitleheight$+(3*$windowbottomheight$)~px;
+}
+
+div.wjgui_windowtheme_green div.wjgui_window_title  div.wjgui_window_center {
+	background-position:  left -~10*$windowtitleheight$+(3*$windowbottomheight$)~px;
+}
+
+div.wjgui_windowtheme_green div.wjgui_window_title  div.wjgui_window_right {
+	background-position:  right -~11*$windowtitleheight$+(3*$windowbottomheight$)~px;
+}
+
 /**
  * < WINDOW
  **/
