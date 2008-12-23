@@ -72,14 +72,6 @@ div.wjgui_window_title div.wjgui_window_closebutton {
 	background-repeat: no-repeat;
 }
 
-div.wjgui_window_title div.wjgui_window_closebutton:hover {
-	background-position: left -21px;
-}
-
-div.wjgui_window_title div.wjgui_window_closebutton:active {
-	background-position: left -42px;
-}
-
 div.wjgui_window_title h1 {
 	color: $windowtitlecolor$;
 	font-family: $fonttype$;
@@ -107,10 +99,10 @@ div.wjgui_window_modality {
 }
 
 div.wjgui_window div.wjgui_window_title div.wjgui_window_content {
-	background-position: 0px 7px;
 	background-image: url("$skindir$/images/window-icon.png");
 	background-repeat: no-repeat;
 }
+
 div.wjgui_window.wjgui_window_loading div.wjgui_window_title div.wjgui_window_content {
 	background-image: url("$skindir$/images/window-load.gif");
 }
