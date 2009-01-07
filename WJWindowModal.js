@@ -91,7 +91,7 @@ var WJWindowModal = Class.create({
 	 * @return void
 	 **/
 	show: function(element) {
-		var element = element || this._outerElement || this._modalLayer;
+		var element = element || this._outerElement || this._modalLayer.getLayer();
 		element.style.display = "block";
 		this._setBodyOverflow("hidden");
 		this._decorated.show();
@@ -107,7 +107,7 @@ var WJWindowModal = Class.create({
 	 * @return void
 	 **/
 	hide: function(element) {
-		var element = element || this._outerElement || this._modalLayer;
+		var element = element || this._outerElement || this._modalLayer.getLayer();
 		element.style.display = "none";
 		this._setBodyOverflow();
 		this._decorated.hide();
@@ -140,7 +140,7 @@ var WJWindowModal = Class.create({
 	 * @return
 	 **/
 	_addBlinkListener: function() {
-		Event.observe(this._modalLayer, "click", this.blink.bindAsEventListener(this) );
+		Event.observe(this._modalLayer.getLayer(), "click", this.blink.bindAsEventListener(this) );
 	},
 
 	/**
