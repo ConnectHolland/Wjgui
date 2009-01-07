@@ -51,7 +51,7 @@ var WJModalLayer = Class.create({
 	 **/
 	_fillViewport: function() {
 		var element = this._modalLayer;
-		element.setStyle({width: (document.viewport.getWidth() + 50) + "px", height: document.viewport.getHeight() + "px"});
+		element.setStyle({width: document.viewport.getWidth() + "px", height: document.viewport.getHeight() + "px"});
 	},
 
 	/**

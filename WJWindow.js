@@ -657,6 +657,7 @@ var WJWindow = Class.create({
 		if (defaultButton) {
 			button.focus();
 		}
+		this._checkMaxHeight(); // this function is likely to change the height of the bottom row
 		return button;
 	},
 
@@ -760,26 +761,20 @@ var WJWindow = Class.create({
 	setHeight: function(height, element, checkHeight) {
 		this._height = height;
 		var element = element || this.getContentElement("main");
-		var windowHeight = this._windowElement.getHeight();
-		var otherRowsHeight = windowHeight - element.getHeight();
 
-		if ( (height - otherRowsHeight) < 0) {
-			if (element.getHeight() == 0) {
-				var wasVisible = this.isVisible();
-				this._windowElement.setStyle({"visibility": "hidden"});
-				this.show();
-				this.setHeight(height, element);
-				this._windowElement.setStyle({"visibility": "visible"});
-				this[((wasVisible)?"show":"hide")]();
+		var wasVisible = this.isVisible();
+		this.show();
+
+		var otherRowsHeight = 0;
+		for (var key in this._contentElements) {
+			if (key != "main") {
+				otherRowsHeight += this._contentElements[key].getHeight();
 			}
-			else {
-				this.setHeight(otherRowsHeight, element);
-			}
-			return;
 		}
-		element.style.height = (height - otherRowsHeight) + "px";
 
-		// avoid infinitive loops
+		element.setStyle({"height": (height - otherRowsHeight) + "px"});
+		this[((wasVisible)?"show":"hide")]();
+		
 		if (checkHeight != false) {
 			this._checkMaxHeight(element);
 		}
@@ -1070,6 +1065,7 @@ var WJWindow = Class.create({
 		}
 
 		this.setWidth(document.viewport.getWidth() - (paddingLeft + paddingRight) ).setHeight(document.viewport.getHeight() - (paddingTop + paddingBottom) );
+		console.log(document.viewport.getWidth() - (paddingLeft + paddingRight), document.viewport.getHeight() - (paddingTop + paddingBottom) );
 		return this;
 	},
 
@@ -1116,16 +1112,28 @@ var WJWindow = Class.create({
 	 * @since Wed Sep 3 2008
 	 * @access public
 	 * @param boolean loading
+	 * @param function loadCallback;
 	 * @return WJWindow
 	 **/
-	setLoading: function(loading) {
+	setLoading: function(loading, loadCallback) {
+		var loadCallback = loadCallback || false;
 		if (loading && !this.getLoading() ) {
 			this.getWindowElement().addClassName("wjgui_window_loading");
-			this.getContentElement("main").setStyle({"visibility": "hidden"});
+			if (!loadCallback) {
+				this.getContentElement("main").setStyle({"visibility": "hidden"});
+			}
+			else {
+				loadCallback(this, loading);
+			}
 		}
 		else if (!loading && this.getLoading() ) {
 			this.getWindowElement().removeClassName("wjgui_window_loading");
-			this.getContentElement("main").setStyle({"visibility": "visible"});
+			if (!loadCallback) {
+				this.getContentElement("main").setStyle({"visibility": "visible"});
+			}
+			else {
+				loadCallback(this, loading);
+			}
 		}
 		this._loading = loading;
 		return this;
