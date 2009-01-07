@@ -75,30 +75,10 @@ var WJWindowModal = Class.create({
 	 **/
 	_createModalLayer: function() {
 		var windowElement = this._decorated.getWindowElement();
-
-		this._modalLayer = new Element("div", {"class": this._getBaseClassname() + "_modality"});
-		document.body.appendChild(this._modalLayer);
-		this._modalLayer.appendChild(windowElement);
-		this._absolutizeTopLeft(this._modalLayer);
-		this._fillViewport();
-
-		Event.observe(window, "resize", this._fillViewport.bind(this, this._modalLayer) ); // on purpose, no need for event
-		this._outerElement = this._modalLayer;
-	},
-
-	/**
-	 * _fillViewport
-	 *
-	 * Stretches the given element to fill the viewport
-	 *
-	 * @since Mon Jul 7 2008
-	 * @access protected
-	 * @param DOMElement element
-	 * @return void
-	 **/
-	_fillViewport: function(element) {
-		var element = $(element) || this._modalLayer;
-		element.setStyle({width: (document.viewport.getWidth() + 50) + "px", height: document.viewport.getHeight() + "px"});
+		
+		this._modalLayer = new WJModalLayer();
+		this._modalLayer.getLayer().insert(windowElement);
+		this._outerElement = this._modalLayer.getLayer();
 	},
 
 	/**
