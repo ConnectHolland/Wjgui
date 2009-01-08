@@ -1065,7 +1065,6 @@ var WJWindow = Class.create({
 		}
 
 		this.setWidth(document.viewport.getWidth() - (paddingLeft + paddingRight) ).setHeight(document.viewport.getHeight() - (paddingTop + paddingBottom) );
-		console.log(document.viewport.getWidth() - (paddingLeft + paddingRight), document.viewport.getHeight() - (paddingTop + paddingBottom) );
 		return this;
 	},
 
