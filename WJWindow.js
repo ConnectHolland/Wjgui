@@ -62,9 +62,10 @@ var WJWindow = Class.create({
 	_createWindow: function() {
 		var classname = this._getBaseClassname();
 		this._windowElement = new Element("div", {"class": classname});
+		this._windowElement.setStyle({"display": "none"});
 		this._createWindowRows(["title", "main", "buttons", "bottom"], classname);
 		this._windowElementId = this._windowElement.identify();
-		document.body.appendChild(this._windowElement);
+		document.body.insert(this._windowElement);
 		this._absolutizeTopLeft();
 		this.hide();
 		this._outerElement = this._windowElement;
@@ -462,13 +463,11 @@ var WJWindow = Class.create({
 	 * @return void
 	 **/
 	_absolutizeTopLeft: function(element) {
-		var element = element || this._windowElement;
-		this.show(element);
-		element.absolutize();
-		element.setStyle({height: ""});
-		this.hide(element);
-		this.setX(0, element);
-		this.setY(0, element);
+		var element = element || this._windowElement;
+		element.absolutize();
+		element.setStyle({height: ""});
+		this.setX(0, element);
+		this.setY(0, element);
 	},
 
 	/**
