@@ -463,11 +463,11 @@ var WJWindow = Class.create({
 	 * @return void
 	 **/
 	_absolutizeTopLeft: function(element) {
-		var element = element || this._windowElement;
-		element.absolutize();
-		element.setStyle({height: ""});
-		this.setX(0, element);
-		this.setY(0, element);
+		var element = element || this._windowElement;
+		element.absolutize();
+		element.setStyle({height: ""});
+		this.setX(0, element);
+		this.setY(0, element);
 	},
 
 	/**
@@ -760,9 +760,15 @@ var WJWindow = Class.create({
 	setHeight: function(height, element, checkHeight) {
 		this._height = height;
 		var element = element || this.getContentElement("main");
-
+		
 		var wasVisible = this.isVisible();
-		this.show();
+		var origX = this.getX();
+		var origY = this.getY();
+		if (!wasVisible) {
+			this.setX(-10000);
+			this.setY(-10000);
+			this.show();
+		}
 
 		var otherRowsHeight = 0;
 		for (var key in this._contentElements) {
@@ -772,7 +778,12 @@ var WJWindow = Class.create({
 		}
 
 		element.setStyle({"height": (height - otherRowsHeight) + "px"});
-		this[((wasVisible)?"show":"hide")]();
+		
+		if (!wasVisible) {
+			this.hide();
+			this.setX(origX);
+			this.setY(origY);
+		}
 		
 		if (checkHeight != false) {
 			this._checkMaxHeight(element);
