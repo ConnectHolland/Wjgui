@@ -35,7 +35,7 @@ var WJWindowConfirm = Class.create(WJWindowMessageDialog, {
 	 **/
 	_addButtons: function($super) {
 		this._buttons = $super();
-		this._buttons.set("cancel", WJButton.create(gettext("Cancel"), "false", false, this.getContentElement("buttons") ) );
+		this._buttons.set("cancel", WJButton.create(dgettext("wjgui", "Cancel"), "false", false, this.getContentElement("buttons") ) );
 		return this._buttons;
 	}
 });
