@@ -465,7 +465,7 @@ var WJWindow = Class.create({
 	_absolutizeTopLeft: function(element) {
 		var element = element || this._windowElement;
 		element.absolutize();
-		element.setStyle({height: ""});
+		element.setStyle({height: "", width: ""});
 		this.setX(0, element);
 		this.setY(0, element);
 	},
