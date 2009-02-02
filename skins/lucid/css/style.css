@@ -42,6 +42,12 @@ div.wjgui_window_bottom div.wjgui_window_right {
 	background-image: url("$skindir$/images/window.png");
 }
 
+div.wjgui_window_buttons div.wjgui_window_content div.wjgui_statusbar {
+	font-family: $fonttype$;
+	color: $windowfontcolor$;
+	font-size: $windowmessagefontsize$em;
+}
+
 div.wjgui_window_bottom {
 	line-height: 1px; /* for IE6 */
 }

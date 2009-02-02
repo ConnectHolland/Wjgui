@@ -24,6 +24,16 @@ div.wjgui_window_main div.wjgui_window_content {
 	position: relative; /* fix IE7 scrolling bug */
 }
 
+div.wjgui_window_buttons div.wjgui_window_content {
+	position: relative; /* to position the status bar */
+}
+
+div.wjgui_window_buttons div.wjgui_window_content div.wjgui_statusbar {
+	position: absolute;
+	left: 0;
+	top: 0.5em;
+}
+
 div.wjgui_window_center {
 	margin-right: $windowborderwidth$px;
 	margin-left: $windowborderwidth$px;

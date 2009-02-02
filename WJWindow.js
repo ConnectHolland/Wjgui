@@ -661,6 +661,71 @@ var WJWindow = Class.create({
 	},
 
 	/**
+	 * addStatusbar
+	 *
+	 * Adds a statusbar to the window 
+	 *
+	 * @since Mon Feb 02 2009
+	 * @access public
+	 * @return void
+	 **/
+	addStatusbar: function() {
+		WJDebugger.log(WJDebugger.INFO, "Adding statusbar to window", this);
+		this._statusbar = new Element("div", {"class": "wjgui_statusbar"});
+		this.getContentElement("buttons").insert(this._statusbar);
+		this._checkMaxHeight();
+	},
+
+	/**
+	 * setStatusbar
+	 *
+	 * Sets the content of the statusbar 
+	 *
+	 * @since Mon Feb 02 2009
+	 * @access public
+	 * @param string content
+	 * @param integer fade
+	 * @return void
+	 **/
+	setStatusbar: function(content, fade) {
+		var fade = fade || -1;
+		if (this._statusbar) {
+			this._statusbar.update(content);
+			if (fade > 0) {
+				this.hideStatusbar.bind(this).delay(fade);
+			}
+		}
+	},
+
+	/**
+	 * hideStatusbar
+	 *
+	 * Hides the contents of the statusbar, and then clears its contents
+	 *
+	 * @since Mon Feb 02 2009
+	 * @access public
+	 * @return void
+	 **/
+	hideStatusbar: function() {
+		Effect.Fade(this._statusbar, {duration: 3.0});
+		this.clearAndShowStatusbar.bind(this).delay(3.5);
+	},
+
+	/**
+	 * clearAndShowStatusbar
+	 *
+	 * Clears and shows the statusbar
+	 *
+	 * @since Mon Feb 02 2009
+	 * @access public
+	 * @return void
+	 **/
+	clearAndShowStatusbar: function() {
+		this._statusbar.update("");
+		this._statusbar.show();
+	},
+
+	/**
 	 * setCallback
 	 *
 	 * Changes the callback function
