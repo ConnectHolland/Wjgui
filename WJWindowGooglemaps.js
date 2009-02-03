@@ -1,3 +1,4 @@
+
 /**
  * WJWindowGooglemaps
  *
@@ -8,20 +9,69 @@
  * @author Reyo Stallenberg
  * @package Windmill.Javascript.WJGui
  **/
-var WJWindowGooglemaps = Class.create(WJWindow, {
+var WJWindowGooglemaps = Class.create({
 	/**
 	 * initialize
 	 *
-	 * Creates a new WJWindowGooglemaps
+	 * Creates a new instanceof WJWindowModal
+	 *
+	 * @since Fri Jul 4 2008
+	 * @access public
+	 * @param WJWindow wjwindow
+	 * @return WJWindowModal
+	 **/
+	initialize: function(toDecorate, kmlname, sitename) {
+		this._decorate(toDecorate);
+		this._addPushpinWindowConnector();
+		this._addClassNames(kmlname, sitename);
+		if (typeof(kmlname) != "undefined") {
+			this.setTheme(kmlname);
+		}
+	},
+
+	/**
+	 * addPushpinWindowConnector
+	 *
+	 * Adds a wrapper for the connector between the pushpin and the infowindow
+	 *
+	 * @since Mon Feb 2 2009
+	 * @access protected
+	 * @return void
+	 **/
+	_addPushpinWindowConnector: function() {
+		this._pushpinwindowconnector = new Element("div", {"class": "pushpinwindowconnector", "style": "position: absolute;"});
+		this.getWindowElement().insert(new Element("div", {"style": "position: relative; overflow: visible; height: 0px; width: 0px;"} ).insert(this._pushpinwindowconnector ) );
+		this._pushpinwindowconnectorleft = parseInt(this._pushpinwindowconnector.getStyle("left") );
+	},
+
+	_addClassNames: function(kmlname, sitename) {
+		var classname = this._getBaseClassname() + "_googlemaps";
+		var element = this.getWindowElement()
+		element.addClassName(classname);
+		if (typeof(sitename) != "undefined") {
+			element.addClassName(classname + "_" + sitename);
+		}
+	},
+
+	/**
+	 * _decorate
+	 *
+	 * Decorates the given object
 	 *
 	 * @since Fri Jan 30 2009
-	 * @access public
+	 * @access protected
 	 * @param WJWindow toDecorate
-	 * @return WJWindowAlert
+	 * @return void
 	 **/
-	initialize: function($super, toDecorate) {
-		this._theme = "googlemaps";
-		$super(toDecorate);
+	_decorate: function(toDecorate) {
+		this._decorated = toDecorate;
+
+		for (property in this._decorated) {
+			// Add all methods not defined in this
+			if (!Object.isFunction(this[property]) ) {
+				this[property] = this._decorated[property];
+			}
+		}
 	},
 
 	/**
@@ -48,6 +98,36 @@ var WJWindowGooglemaps = Class.create(WJWindow, {
 	 * @return integer
 	 **/
 	getFullHeight: function() {
-		return this.getHeight();
+		return this.getHeight() + (this._pushpinwindowconnector.getHeight() + parseInt(this._pushpinwindowconnector.getStyle("top") ) );
+	},
+
+	/**
+	 * positionRelativeToMarker
+	 *
+	 * Positions the window relative to the given marker
+	 *
+	 * @since Mon Feb 2 2009
+	 * @access public
+	 * @param GMarker marker
+	 * @param GMap2 map
+	 * @return GPoint
+	 **/
+	positionRelativeToMarker: function(marker, map) {
+		var p = map.fromLatLngToDivPixel(marker.getLatLng() );
+		var icon = marker.getIcon();
+		var halfwidth = (this.getWidth() / 2);
+		var offsety = (icon.iconAnchor.y - icon.infoWindowAnchor.y);
+		p.y -= offsety;
+		p.x -= (icon.iconAnchor.x - icon.infoWindowAnchor.x);
+		p.y -= (this.getFullHeight() + icon.iconSize.height);
+		p.x -= halfwidth;
+		this.setX(p.x);
+		this.setY(p.y);
+
+		this._pushpinwindowconnector.setStyle( {"left": ( (halfwidth + this._pushpinwindowconnectorleft) - offsety) + "px" } );
+
+		var newy = p.y + (this.getFullHeight() / 2);
+		var newx = p.x + halfwidth;
+		return new GPoint(newx, newy);
 	}
 });

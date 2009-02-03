@@ -33,13 +33,14 @@ var WJWindow = Class.create({
 	 * @since Fri Jun 27 2008
 	 * @access public
 	 * @param Function callback
-	 * @param string type (default: window)
+	 * @param DOMElement parent (default: document.body)
 	 * @return WJWindow
 	 **/
-	initialize: function(callback, type) {
+	initialize: function(callback, parent) {
 		this._loading = false;
 		this._basetitle = this._title = "";
 		this._theme = "default";
+		this._parent = parent || document.body;
 		this._createWindow();
 		this._listeners = new Hash();
 		this._addDefaultListeners();
@@ -65,7 +66,7 @@ var WJWindow = Class.create({
 		this._windowElement.setStyle({"display": "none"});
 		this._createWindowRows(["title", "main", "buttons", "bottom"], classname);
 		this._windowElementId = this._windowElement.identify();
-		document.body.insert(this._windowElement);
+		this._parent.insert(this._windowElement);
 		this._absolutizeTopLeft();
 		this.hide();
 		this._outerElement = this._windowElement;
@@ -825,7 +826,7 @@ var WJWindow = Class.create({
 	setHeight: function(height, element, checkHeight) {
 		this._height = height;
 		var element = element || this.getContentElement("main");
-		
+
 		var wasVisible = this.isVisible();
 		var origX = this.getX();
 		var origY = this.getY();
@@ -843,13 +844,13 @@ var WJWindow = Class.create({
 		}
 
 		element.setStyle({"height": (height - otherRowsHeight) + "px"});
-		
+
 		if (!wasVisible) {
 			this.hide();
 			this.setX(origX);
 			this.setY(origY);
 		}
-		
+
 		if (checkHeight != false) {
 			this._checkMaxHeight(element);
 		}
