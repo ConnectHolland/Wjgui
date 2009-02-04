@@ -41,7 +41,7 @@ var WJWindow = Class.create({
 		this._loading = false;
 		this._basetitle = this._title = "";
 		this._theme = "default";
-		this._parent = parent || WJWindow.DEFAULT_PARENT;
+		this._parent = parent || WJWindow.DEFAULT_PARENT || document.body;
 		this._createWindow();
 		this._listeners = new Hash();
 		this._addDefaultListeners();
