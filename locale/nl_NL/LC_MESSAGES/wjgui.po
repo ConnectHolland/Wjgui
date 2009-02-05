@@ -38,6 +38,9 @@ msgstr "Voorbeeld"
 msgid "Cancel"
 msgstr "Annuleren"
 
+msgid "Close"
+msgstr "Sluiten"
+
 msgid "Insert"
 msgstr "Invoegen"
 
