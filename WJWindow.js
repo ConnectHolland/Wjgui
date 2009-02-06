@@ -116,7 +116,7 @@ var WJWindow = Class.create({
 		var title = this.getContentElement("title");
 		//title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "Element.fire(this, \"wjgui:close\")", "title": dgettext("wjgui", "Close window") } ) );
 
- 		title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "this.parentNode.getWJWindowObject().fireClose(this)", "title": "Close window"} ) );
+ 		title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "this.parentNode.getWJWindowObject().fireClose(this)", "title": dgettext("wjgui", "Close window")} ) );
 	},
 
 	/**
