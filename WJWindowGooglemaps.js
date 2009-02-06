@@ -41,7 +41,24 @@ var WJWindowGooglemaps = Class.create({
 	_addPushpinWindowConnector: function() {
 		this._pushpinwindowconnector = new Element("div", {"class": "pushpinwindowconnector", "style": "position: absolute;"});
 		this.getWindowElement().insert(new Element("div", {"style": "position: relative; overflow: visible; height: 0px; width: 0px;"} ).insert(this._pushpinwindowconnector ) );
+
+		var wasVisible = this.isVisible();
+		var origX = this.getX();
+		var origY = this.getY();
+		if (!wasVisible) {
+			this.setX(-10000);
+			this.setY(-10000);
+			this.show();
+		}
+
+		this._pushpinwindowconnectortop = parseInt(this._pushpinwindowconnector.getStyle("top") );
 		this._pushpinwindowconnectorleft = parseInt(this._pushpinwindowconnector.getStyle("left") );
+
+		if (!wasVisible) {
+			this.hide();
+			this.setX(origX);
+			this.setY(origY);
+		}
 	},
 
 	_addClassNames: function(kmlname, sitename) {
@@ -98,7 +115,7 @@ var WJWindowGooglemaps = Class.create({
 	 * @return integer
 	 **/
 	getFullHeight: function() {
-		return this.getHeight() + (this._pushpinwindowconnector.getHeight() + parseInt(this._pushpinwindowconnector.getStyle("top") ) );
+		return this.getHeight() + (this._pushpinwindowconnector.getHeight() - this._pushpinwindowconnectortop);
 	},
 
 	/**
@@ -113,13 +130,15 @@ var WJWindowGooglemaps = Class.create({
 	 * @return GPoint
 	 **/
 	positionRelativeToMarker: function(marker, map) {
-		var p = map.fromLatLngToDivPixel(marker.getLatLng() );
-		var icon = marker.getIcon();
+		this.marker = marker;
+		var p = map.fromLatLngToDivPixel(this.marker.getLatLng() );
+		var icon = this.marker.getIcon();
 		var halfwidth = (this.getWidth() / 2);
 		var offsety = (icon.iconAnchor.y - icon.infoWindowAnchor.y);
+
 		p.y -= offsety;
 		p.x -= (icon.iconAnchor.x - icon.infoWindowAnchor.x);
-		p.y -= (this.getFullHeight() + icon.iconSize.height);
+		p.y -= this.getFullHeight();
 		p.x -= halfwidth;
 		this.setX(p.x);
 		this.setY(p.y);

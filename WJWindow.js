@@ -24,7 +24,7 @@ var WJWindow = Class.create({
 	 * integer _w
 	 * integer _h
 	 **/
-	DEFAULT_PARENT: document.body, 
+	DEFAULT_PARENT: document.body,
 
 	/**
 	 * initialize
@@ -665,7 +665,7 @@ var WJWindow = Class.create({
 	/**
 	 * addStatusbar
 	 *
-	 * Adds a statusbar to the window 
+	 * Adds a statusbar to the window
 	 *
 	 * @since Mon Feb 02 2009
 	 * @access public
@@ -681,7 +681,7 @@ var WJWindow = Class.create({
 	/**
 	 * setStatusbar
 	 *
-	 * Sets the content of the statusbar 
+	 * Sets the content of the statusbar
 	 *
 	 * @since Mon Feb 02 2009
 	 * @access public
@@ -844,7 +844,8 @@ var WJWindow = Class.create({
 			}
 		}
 
-		element.setStyle({"height": (height - otherRowsHeight) + "px"});
+		var height = (Object.isNumber(height) == false) ? height : (height - otherRowsHeight) + "px";
+		element.setStyle({"height": height});
 
 		if (!wasVisible) {
 			this.hide();
