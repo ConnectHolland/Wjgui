@@ -115,7 +115,7 @@ var WJWindowGooglemaps = Class.create({
 	 * @return integer
 	 **/
 	getFullHeight: function() {
-		return this.getHeight() + (this._pushpinwindowconnector.getHeight() - this._pushpinwindowconnectortop);
+		return this.getHeight() + (this._pushpinwindowconnector.getHeight() + this._pushpinwindowconnectortop);
 	},
 
 	/**
@@ -125,12 +125,15 @@ var WJWindowGooglemaps = Class.create({
 	 *
 	 * @since Mon Feb 2 2009
 	 * @access public
-	 * @param GMarker marker
 	 * @param GMap2 map
+	 * @param GMarker marker
 	 * @return GPoint
 	 **/
-	positionRelativeToMarker: function(marker, map) {
-		this.marker = marker;
+	positionRelativeToMarker: function(map, marker) {
+		this.marker = marker || this.marker;
+		if (typeof(this.marker) == "undefined") {
+			return;
+		}
 		var p = map.fromLatLngToDivPixel(this.marker.getLatLng() );
 		var icon = this.marker.getIcon();
 		var halfwidth = (this.getWidth() / 2);
@@ -145,7 +148,7 @@ var WJWindowGooglemaps = Class.create({
 
 		this._pushpinwindowconnector.setStyle( {"left": ( (halfwidth + this._pushpinwindowconnectorleft) - offsety) + "px" } );
 
-		var newy = p.y + (this.getFullHeight() / 2);
+		var newy = p.y + ( (this.getFullHeight() + icon.iconSize.height) / 2);
 		var newx = p.x + halfwidth;
 		return new GPoint(newx, newy);
 	}
