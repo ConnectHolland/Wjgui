@@ -129,7 +129,8 @@ var WJButton = Class.create({
 	_getNewButtonWidth: function(text, element) {
 		var fontfamily = element.getStyle("fontFamily");
 		var fontsize = element.getStyle("fontSize");
-		WJButton.measureElement.setStyle({"fontFamily": fontfamily, "fontSize": fontsize}).update(text);
+		var fontweight = element.getStyle("fontWeight");
+		WJButton.measureElement.setStyle({"fontFamily": fontfamily, "fontSize": fontsize, "fontWeight": fontweight}).update(text);
 		var width = document.body.appendChild(WJButton.measureElement).getWidth();
 		WJButton.measureElement.remove();
 		width += this.getWidth() - element.getWidth();
