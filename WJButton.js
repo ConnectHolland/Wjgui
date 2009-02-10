@@ -127,9 +127,9 @@ var WJButton = Class.create({
 	 * @return integer
 	 **/
 	_getNewButtonWidth: function(text, element) {
-		var fontfamily = element.getStyle("font-family");
-		var fontsize = element.getStyle("font-size");
-		WJButton.measureElement.setStyle({"font-family": fontfamily, "font-size": fontsize}).update(text);
+		var fontfamily = element.getStyle("fontFamily");
+		var fontsize = element.getStyle("fontSize");
+		WJButton.measureElement.setStyle({"fontFamily": fontfamily, "fontSize": fontsize}).update(text);
 		var width = document.body.appendChild(WJButton.measureElement).getWidth();
 		WJButton.measureElement.remove();
 		width += this.getWidth() - element.getWidth();
@@ -287,6 +287,32 @@ var WJButton = Class.create({
 		Event.stopObserving(this.getButton(), "click", this._eventHandler);
 		this._eventHandler = eventHandler;
 		this._addObserver();
+	},
+
+	/**
+	 * getCaption
+	 *
+	 * Returns the value of teh caption
+	 *
+	 * @since Tue Feb 10 2009
+	 * @access public
+	 * @return string
+	 **/
+	getCaption: function() {
+		return this._caption;
+	},
+
+	/**
+	 * recalculateWidth
+	 *
+	 * Recalculates the width by updating the caption with the current caption
+	 *
+	 * @since Tue Feb 10 2009
+	 * @access public
+	 * @return void
+	 **/
+	recalculateWidth: function() {
+		this.updateCaption(this.getCaption() );
 	}
 });
 
@@ -296,7 +322,7 @@ var WJButton = Class.create({
  * @since Tue Aug 19 2008
  * @access public
  **/
-WJButton.measureElement = new Element("div", {"style": "position: absolute; float: left; visibility: hidden;"});
+WJButton.measureElement = new Element("div", {"style": "position: absolute; left: -1000px;"});
 
 /**
  * create
