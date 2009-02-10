@@ -11,10 +11,11 @@ var WJModalLayer = Class.create({
 	 * @access public
 	 * @return void
 	 **/
-	initialize: function() {
+	initialize: function(parent) {
+		parent = parent || document.body;
 		this._modalLayer = new Element("div", {"class": "wjgui_window_modality"});
 		this._removed = false;
-		document.body.insert(this._modalLayer);
+		parent.insert(this._modalLayer);
 		
 		this._absolutizeTopLeft();
 		this._fillViewport();
