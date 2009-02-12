@@ -21,11 +21,11 @@ var WJWindowGooglemaps = Class.create({
 	 **/
 	initialize: function(toDecorate, kmlname, sitename) {
 		this._decorate(toDecorate);
-		this._addPushpinWindowConnector();
 		this._addClassNames(kmlname, sitename);
 		if (typeof(kmlname) != "undefined") {
 			this.setTheme(kmlname);
 		}
+		this._addPushpinWindowConnector();
 	},
 
 	/**
@@ -52,6 +52,7 @@ var WJWindowGooglemaps = Class.create({
 
 		this._pushpinwindowconnectortop = parseInt(this._pushpinwindowconnector.getStyle("top") );
 		this._pushpinwindowconnectorleft = parseInt(this._pushpinwindowconnector.getStyle("left") );
+		this._pushpinwindowconnectorheight = this._pushpinwindowconnector.getHeight();
 
 		if (!wasVisible) {
 			this.hide();
@@ -114,41 +115,6 @@ var WJWindowGooglemaps = Class.create({
 	 * @return integer
 	 **/
 	getFullHeight: function() {
-		return this.getHeight() + (this._pushpinwindowconnector.getHeight() + this._pushpinwindowconnectortop);
-	},
-
-	/**
-	 * positionRelativeToMarker
-	 *
-	 * Positions the window relative to the given marker
-	 *
-	 * @since Mon Feb 2 2009
-	 * @access public
-	 * @param GMap2 map
-	 * @param GMarker marker
-	 * @return GPoint
-	 **/
-	positionRelativeToMarker: function(map, marker) {
-		this.marker = marker || this.marker;
-		if (typeof(this.marker) == "undefined") {
-			return;
-		}
-		var p = map.fromLatLngToDivPixel(this.marker.getLatLng() );
-		var icon = this.marker.getIcon();
-		var halfwidth = (this.getWidth() / 2);
-		var offsety = (icon.iconAnchor.y - icon.infoWindowAnchor.y);
-
-		p.y -= offsety;
-		p.x -= (icon.iconAnchor.x - icon.infoWindowAnchor.x);
-		p.y -= this.getFullHeight();
-		p.x -= halfwidth;
-		this.setX(p.x);
-		this.setY(p.y);
-
-		this._pushpinwindowconnector.setStyle( {"left": ( (halfwidth + this._pushpinwindowconnectorleft) - offsety) + "px" } );
-
-		var newy = p.y + ( (this.getFullHeight() + icon.iconSize.height) / 2);
-		var newx = p.x + halfwidth;
-		return new GPoint(newx, newy);
+		return this.getHeight() + (this._pushpinwindowconnectorheight + this._pushpinwindowconnectortop);
 	}
 });
