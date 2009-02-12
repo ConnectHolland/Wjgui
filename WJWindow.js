@@ -104,6 +104,25 @@ var WJWindow = Class.create({
 	},
 
 	/**
+	 * replaceWindowRow
+	 *
+	 * Replaces windowrow old with new, keeps references to old alive (they'll return the new rows)
+	 * Returns the removed row
+	 *
+	 * @since Thu Feb 12 2009
+	 * @access public
+	 * @param string oldrow
+	 * @param string newrow
+	 * @return htmlelement
+	 **/
+	replaceWindowRow: function(oldrow, newrow) {
+		var inserted = this.insertWindowRowBefore(oldrow, newrow);
+		var toremove = this.getContentElement(oldrow);
+		this._contentElements[oldrow] = this._contentElements[newrow];
+		return toremove.remove();
+	},
+
+	/**
 	 * _addCloseButton
 	 *
 	 * Adds a button to close the window
