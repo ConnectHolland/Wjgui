@@ -121,7 +121,7 @@ div.wjgui_window_main div.wjgui_window_messageicon {
 div.wjgui_window_main div.wjgui_window_messageicon_alert {
 	background-image: url("$skindir$/images/window-icon-alert.png");
 }
-div.wjgui_window_main div.wjgui_window_messageicon_booleanConfirm {
+div.wjgui_window_main div.wjgui_window_messageicon_booleanconfirm {
 	background-image: url("$skindir$/images/window-icon-booleanConfirm.png");
 }
 div.wjgui_window_main div.wjgui_window_messageicon_confirm {

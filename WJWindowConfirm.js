@@ -20,7 +20,9 @@ var WJWindowConfirm = Class.create(WJWindowMessageDialog, {
 	 * @return WJWindowAlert
 	 **/
 	initialize: function($super, toDecorate) {
-		this._type = "confirm";
+		if (typeof(this._type) == "undefined") {
+			this._type = "confirm";
+		}
 		$super(toDecorate);
 	},
 	

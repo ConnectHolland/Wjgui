@@ -36,7 +36,7 @@ var WJButton = Class.create({
 		if (Object.isElement(this._parentElement) ) {
 			this._parentElement.appendChild(this.getButton() );
 		}
-		this.updateCaption.bind(this).defer(this._caption);
+		this.updateCaption(this._caption);
 	},
 
 	/**
@@ -50,6 +50,8 @@ var WJButton = Class.create({
 	 **/
 	_addButtonMethods: function() {
 		this.getButton().updateCaption = this.updateCaption.bind(this);
+		this.getButton().setCaption = this.getButton().updateCaption;
+		this.getButton().getCaption = this.getCaption.bind(this);
 		this.getButton().enable = this.enable.bind(this);
 		this.getButton().disable = this.disable.bind(this);
 	},
@@ -66,6 +68,33 @@ var WJButton = Class.create({
 	 **/
 	updateCaption: function(caption) {
 		this._caption = caption.stripTags().stripScripts();
+		return this._setCaption.bind(this).defer();
+	},
+
+	/**
+	 * setCaption
+	 *
+	 * Changes the caption of this button
+	 *
+	 * @since Mon Feb 16 2009
+	 * @access public
+	 * @param string caption
+	 * @return Element
+	 **/
+	setCaption: function(caption) {
+		this.updateCaption(caption);
+	}
+
+	/**
+	 * _setCaption
+	 *
+	 * Performs the real setting of the caption (it used to be called with a defer from initialize, now it's deferred always (@see updateCaption), to avoid it being updated later by old calls)
+	 *
+	 * @since Fri Feb 13 2009
+	 * @access protected
+	 * @return void
+	 **/
+	_setCaption: function() {
 		var contentElement = this.getContentElement();
 		contentElement.update(this._caption);
 		this.setWidth(this._getNewButtonWidth(this._caption, contentElement) );
@@ -112,7 +141,7 @@ var WJButton = Class.create({
 	 * @return Element
 	 **/
 	getContentElement: function() {
-		return this.getButton().getElementsByClassName(this._getBaseClassName() + "_content")[0];
+		return this.getButton().down("." + this._getBaseClassName() + "_content");
 	},
 
 	/**
@@ -342,3 +371,5 @@ WJButton.create = function(caption, eventHandler, defaultButton, parentElement) 
 	var button = new WJButton(caption, eventHandler, defaultButton, parentElement);
 	return button.getButton();
 }
+
+

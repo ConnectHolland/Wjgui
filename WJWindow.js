@@ -396,13 +396,15 @@ var WJWindow = Class.create({
 	 *
 	 * @since Thu Oct 16 2008
 	 * @access protected
-	 * @return void
+	 * @return Array
 	 **/
 	_addWindowObjectGetters: function() {
 		var test = [$H(this._contentElements).values(), this._windowElement].flatten();
 		test.each(function(el) {
 			el.getWJWindowObject = function() { return this; }.bind(this);
 		}, this);
+		
+		return test;
 	},
 
 	/**

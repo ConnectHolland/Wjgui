@@ -25,6 +25,7 @@ var WJWindowModal = Class.create({
 		this._maxblink = 6;
 		this._addBlinkListener();
 		this._rebindListeners();
+		this._rebindWindowObjectGetters();
 		this.setZ(2147483647);
 		this.show(); // Remove this
 	},
@@ -169,5 +170,22 @@ var WJWindowModal = Class.create({
 				this.blink.bind(this, event, doBlink, count).delay(0.05);
 			}
 		}
+	},
+
+	/**
+	 * _rebindWindowObjectGetters
+	 *
+	 * Adds a getWJWindowObject getter to all content elements and the main window element and binds it to this not the decorated window
+	 *
+	 * @since Fri Feb 13 2009
+	 * @access protected
+	 * @return void
+	 **/
+	_rebindWindowObjectGetters: function() {
+		var els = this._decorated._addWindowObjectGetters();
+		els.each(function(el) {
+			el.getWJWindowObject = el.getWJWindowObject.bind(this);
+		}, this);
+		return els;
 	}
 });
