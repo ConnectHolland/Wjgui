@@ -83,7 +83,7 @@ var WJButton = Class.create({
 	 **/
 	setCaption: function(caption) {
 		this.updateCaption(caption);
-	}
+	},
 
 	/**
 	 * _setCaption
