@@ -61,6 +61,17 @@ var WJWindowGooglemaps = Class.create({
 		}
 	},
 
+	/**
+	 * _addClassNames
+	 *
+	 * Adds classnames to the window element
+	 *
+	 * @since Mon Feb 02 2009
+	 * @access protected
+	 * @param string kmlname
+	 * @param string sitename
+	 * @return void
+	 **/
 	_addClassNames: function(kmlname, sitename) {
 		var classname = this._getBaseClassname() + "_googlemaps";
 		var element = this.getWindowElement()
