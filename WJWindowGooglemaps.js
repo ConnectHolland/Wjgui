@@ -26,6 +26,7 @@ var WJWindowGooglemaps = Class.create({
 			this.setTheme(kmlname);
 		}
 		this._addPushpinWindowConnector();
+		this._saveStyleSettings();
 	},
 
 	/**
@@ -40,7 +41,31 @@ var WJWindowGooglemaps = Class.create({
 	_addPushpinWindowConnector: function() {
 		this._pushpinwindowconnector = new Element("div", {"class": "pushpinwindowconnector", "style": "position: absolute;"});
 		this.getWindowElement().insert(new Element("div", {"style": "position: relative; overflow: visible; height: 0px; width: 0px;"} ).insert(this._pushpinwindowconnector ) );
+	},
 
+	/**
+	 * getPushpinWindowConnectorElement
+	 *
+	 * Gets the pushpinwindowconnector element
+	 *
+	 * @since Wed Feb 18 2009
+	 * @access public
+	 * @return DomNode
+	 **/
+	getPushpinWindowConnectorElement: function() {
+		return this._pushpinwindowconnector;
+	},
+
+	/**
+	 * _saveStyleSettings
+	 *
+	 * Saves some settings from the style
+	 *
+	 * @since Wed Feb 18 2009
+	 * @access protected
+	 * @return void
+	 **/
+	_saveStyleSettings: function() {
 		var wasVisible = this.isVisible();
 		var origX = this.getX();
 		var origY = this.getY();
@@ -50,15 +75,30 @@ var WJWindowGooglemaps = Class.create({
 			this.show();
 		}
 
-		this._pushpinwindowconnectortop = parseInt(this._pushpinwindowconnector.getStyle("top") );
-		this._pushpinwindowconnectorleft = parseInt(this._pushpinwindowconnector.getStyle("left") );
-		this._pushpinwindowconnectorheight = this._pushpinwindowconnector.getHeight();
+		this._stylesettings = new Hash();
+		this._stylesettings.set("pushpinwindowconnector-top", parseInt(this._pushpinwindowconnector.getStyle("top") ) );
+		this._stylesettings.set("pushpinwindowconnector-left", parseInt(this._pushpinwindowconnector.getStyle("left") ) );
+		this._stylesettings.set("pushpinwindowconnector-height", this._pushpinwindowconnector.getHeight() );
 
 		if (!wasVisible) {
 			this.hide();
 			this.setX(origX);
 			this.setY(origY);
 		}
+	},
+
+	/**
+	 * getStyleSetting
+	 *
+	 * Returns a saved style setting
+	 *
+	 * @since Wed Feb 18 2009
+	 * @access
+	 * @param
+	 * @return mixed
+	 **/
+	getStyleSetting: function(setting) {
+		return this._stylesettings.get(setting);
 	},
 
 	/**
@@ -119,13 +159,13 @@ var WJWindowGooglemaps = Class.create({
 	/**
 	 * getHeight
 	 *
-	 * Tells the height of this window, including de hook
+	 * Tells the height of this window, including the pushpinwindowconnector
 	 *
 	 * @since Fri Jan 30 2009
 	 * @access public
 	 * @return integer
 	 **/
 	getFullHeight: function() {
-		return this.getHeight() + (this._pushpinwindowconnectorheight + this._pushpinwindowconnectortop);
+		return this.getHeight() + (this._stylesettings.get("pushpinwindowconnector-height") + this._stylesettings.get("pushpinwindowconnector-top"));
 	}
 });
