@@ -52,7 +52,12 @@ var WJModalLayer = Class.create({
 	 **/
 	_fillViewport: function() {
 		var element = this._modalLayer;
-		element.setStyle({width: element.parentNode.getWidth() + "px", height: element.parentNode.getHeight() + "px"});
+		if (element.parentNode) {
+			element.setStyle({width: element.parentNode.getWidth() + "px", height: element.parentNode.getHeight() + "px"});
+		}
+		else {
+			element.setStyle({width: document.viewport.getWidth() + "px", height: document.viewport.getHeight() + "px"});
+		}
 	},
 
 	/**
