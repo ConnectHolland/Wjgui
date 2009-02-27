@@ -676,9 +676,6 @@ var WJWindow = Class.create({
 	addButton: function(caption, eventHandler, defaultButton) {
 		WJDebugger.log(WJDebugger.INFO, "Adding button to window", caption, eventHandler, this);
 		var button = WJButton.create(caption, eventHandler, defaultButton, this.getContentElement("buttons") );
-		if (defaultButton) {
-			button.focus();
-		}
 		this._checkMaxHeight(); // this function is likely to change the height of the bottom row
 		return button;
 	},
