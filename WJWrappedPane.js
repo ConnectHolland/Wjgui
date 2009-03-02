@@ -22,7 +22,7 @@ var WJWrappedPane = Class.create({
 	initialize: function(element) {
 		this.element = $(element);
 		WJDebugger.log(WJDebugger.INFO, "Create new wrapped pane", element);
-		this.element.parentNode.insertBefore(this._createWrapper(), this.element).down(".wjgui_wrappedpane_main").down(".wjgui_wrappedpane_content").update("").appendChild(this.element);
+		$(this.element.parentNode).insertBefore(this._createWrapper(), this.element).down(".wjgui_wrappedpane_main").down(".wjgui_wrappedpane_content").update("").appendChild(this.element);
 	},
 
 	/**
