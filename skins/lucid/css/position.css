@@ -41,6 +41,7 @@ div.wjgui_window div.wjgui_window_center {
 
 div.wjgui_window div.wjgui_window_title div.wjgui_window_column {
 	height: $windowtitleheight$px;
+	overflow: hidden; /* fix IE7 showing windowicon of different theme */
 }
 
 div.wjgui_window div.wjgui_window_bottom div.wjgui_window_column {

@@ -9,21 +9,22 @@ var WJModalLayer = Class.create({
 	 *
 	 * @since Tue Jan 06 2009
 	 * @access public
+	 * @param Element parent
+	 * @param Element modalLayer
 	 * @return void
 	 **/
-	initialize: function(parent) {
-		parent = parent || document.body;
-		this._modalLayer = new Element("div", {"class": "wjgui_window_modality"});
+	initialize: function(parent, modalLayer) {
+		var parent = parent || document.body;
+		this._modalLayer = (modalLayer || new Element("div") );
+		Element.extend(this._modalLayer).addClassName("wjgui_window_modality");
+		parent.appendChild(this._modalLayer);
 		this._removed = false;
-		parent.insert(this._modalLayer);
-		
 		this._absolutizeTopLeft();
 		this._fillViewport();
 
 		Event.observe(window, "resize", this._fillViewport.bind(this, this._modalLayer) ); // on purpose, no need to bind as event listener
-
 	},
-	
+
 	/**
 	 * _absolutizeTopLeft
 	 *
@@ -39,7 +40,7 @@ var WJModalLayer = Class.create({
 		element.absolutize();
 		element.setStyle({left: 0, top: 0, zIndex: 2147483647});
 	},
-	
+
 	/**
 	 * _fillViewport
 	 *
@@ -51,12 +52,12 @@ var WJModalLayer = Class.create({
 	 * @return void
 	 **/
 	_fillViewport: function() {
-		var element = this._modalLayer;
+		var element = $(this._modalLayer);
 		if (element.parentNode) {
-			element.setStyle({width: element.parentNode.getWidth() + "px", height: element.parentNode.getHeight() + "px"});
+			element.setStyle( {width: element.parentNode.getWidth() + "px", height: element.parentNode.getHeight() + "px"} );
 		}
 		else {
-			element.setStyle({width: document.viewport.getWidth() + "px", height: document.viewport.getHeight() + "px"});
+			element.setStyle( {width: document.viewport.getWidth() + "px", height: document.viewport.getHeight() + "px"} );
 		}
 	},
 
