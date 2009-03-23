@@ -243,9 +243,9 @@ var WJButton = Class.create({
 		var template = this._getTemplate();
 		var replaces = {};
 		replaces.classprefix = this._getBaseClassName();
-		
+
 		this._buttonElement.className = replaces.classprefix + " " + replaces.classprefix + "_" + ((this._defaultButton) ? "" : "no") + "default";
-		
+
 		this._buttonElement.innerHTML = template.evaluate(replaces);
 	},
 
@@ -370,6 +370,31 @@ WJButton.measureElement = new Element("div", {"style": "position: absolute; left
 WJButton.create = function(caption, eventHandler, defaultButton, parentElement) {
 	var button = new WJButton(caption, eventHandler, defaultButton, parentElement);
 	return button.getButton();
+}
+
+/**
+ * toWJButtonStyle
+ *
+ * Styles a given button as a WJButton (NOTE: does not create a WJButton instance and does not attach methods and so on)
+ *
+ * @since Fri Mar 20 2009
+ * @access public
+ * @param Element element
+ * @param boolean defaultButton
+ * @return Element
+ **/
+WJButton.toWJButtonStyle = function(element, defaultButton) {
+	if (element.tagName.toLowerCase() == "button") {
+		var element = $(element);
+		var caption = element.getTextContent();
+		var template = WJButton.prototype._getTemplate();
+		var replaces = {classprefix: WJButton.prototype._getBaseClassName()};
+
+		element.className = replaces.classprefix + " " + replaces.classprefix + "_" + ((defaultButton) ? "" : "no") + "default";
+		element.update(template.evaluate(replaces) );
+		element.down("." + replaces.classprefix + "_content").update(caption);
+	}
+	return element;
 }
 
 
