@@ -163,7 +163,7 @@ var WJButton = Class.create({
 		var width = document.body.appendChild(WJButton.measureElement).getWidth();
 		WJButton.measureElement.remove();
 		width += this.getWidth() - element.getWidth();
-		return (width > 100) ? width : 100;
+		return (width > 100 || this.getButton().up("div.autowidth", 0) ) ? width : 100;
 	},
 
 	/**
