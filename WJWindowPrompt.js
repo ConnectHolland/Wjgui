@@ -22,6 +22,7 @@ var WJWindowPrompt = Class.create(WJWindowMessageDialog, {
 	initialize: function($super, toDecorate) {
 		this._type = "prompt";
 		$super(toDecorate);
+		this.getInput().focus();
 	},
 	
 	/**
