@@ -123,6 +123,8 @@ div.wjgui_window div.wjgui_window_main div.wjgui_window_messageicon {
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_message {
 	margin-top: 24px;
+	float: left;
+	width: 300px;
 }
 
 div.wjgui_window div.wjgui_window_title div.wjgui_window_content h1 {
