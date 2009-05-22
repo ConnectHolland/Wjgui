@@ -101,8 +101,12 @@ var WJWindowMessageDialog = Class.create(WJWindowModal, {
 	 * @param string message
 	 * @return void
 	 **/
-	setMessage: function(message) {
-		this.message = message.stripTags().stripScripts().split("\n").join("<br/>");
+	setMessage: function(message, allowHTML) {
+		var allowHTML = !!allowHTML;
+		if (!allowHTML) {
+			message = message.stripTags();
+		}
+		this.message = message.stripScripts().split("\n").join("<br/>");
 		this.getContentElement("message").innerHTML = this.message;
 	},
 

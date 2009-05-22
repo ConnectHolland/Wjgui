@@ -1322,27 +1322,27 @@ var WJWindow = Class.create({
 });
 
 
-WJWindow._messagedialog = function(type, message, callback, show) {
+WJWindow._messagedialog = function(type, message, callback, show, allowHTML) {
 	var win = new WJWindow(callback);
 	var mwin = new window[type](win);
-	mwin.setMessage(message);
+	mwin.setMessage(message, allowHTML);
 	if (show) {
 		mwin.show();
 	}
 	return mwin;
 }
-WJWindow.alert = function(message, callback) {
-	return WJWindow._messagedialog("WJWindowAlert", message, callback, true);
+WJWindow.alert = function(message, callback, allowHTML) {
+	return WJWindow._messagedialog("WJWindowAlert", message, callback, true, allowHTML);
 }
-WJWindow.notice = function(message, callback) {
-	return WJWindow._messagedialog("WJWindowNotice", message, callback, true);
+WJWindow.notice = function(message, callback, allowHTML) {
+	return WJWindow._messagedialog("WJWindowNotice", message, callback, true, allowHTML);
 }
-WJWindow.confirm = function(message, callback) {
-	return WJWindow._messagedialog("WJWindowConfirm", message, callback, true);
+WJWindow.confirm = function(message, callback, allowHTML) {
+	return WJWindow._messagedialog("WJWindowConfirm", message, callback, true, allowHTML);
 }
-WJWindow.booleanConfirm = function(message, callback) {
-	return WJWindow._messagedialog("WJWindowBooleanConfirm", message, callback, true);
+WJWindow.booleanConfirm = function(message, callback, allowHTML) {
+	return WJWindow._messagedialog("WJWindowBooleanConfirm", message, callback, true, allowHTML);
 }
-WJWindow.prompt = function(message, callback) {
-	return WJWindow._messagedialog("WJWindowPrompt", message, callback, true);
+WJWindow.prompt = function(message, callback, allowHTML) {
+	return WJWindow._messagedialog("WJWindowPrompt", message, callback, true, allowHTML);
 }
