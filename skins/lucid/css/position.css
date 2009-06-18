@@ -7,6 +7,10 @@
 	buttonmargin: 12;
 	contentbuttonmargin: 17;
 	buttonwidth: 100;
+	buttonnormalwidth: 100;
+	buttonwiderwidth: 150;
+	buttonwidewidth: 200;
+	buttonextrawidewidth: 250;
 	closebuttonheight: 21;
 	iconheight: 28;
 }

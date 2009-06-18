@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<optimizerconfig>
+	<wjguijs>
+		<type>js</type>
+		<sitedirectory>../../</sitedirectory>
+		<directories>
+			<directory>.</directory>
+		</directories>
+		<output>optimized/wjgui.js</output>
+		<languages>
+			<language>nl_NL</language>
+			<language>en_US</language>
+		</languages>
+		<dontminify>0</dontminify>
+	</wjguijs>
+	<wjguilucidcss>
+		<type>css</type>
+		<files>
+			<file>skins/lucid/css/position.css</file>
+			<file>skins/lucid/css/style.css</file>
+		</files>
+		<path>skins/lucid/css/</path>
+		<browsers>
+			<browser>FireFox</browser>
+			<browser>MSIE 7</browser>
+			<browser>MSIE 6</browser>
+		</browsers>
+		<output>skins/lucid/css/optimized/wjgui.css</output>
+	</wjguilucidcss>
+</optimizerconfig>

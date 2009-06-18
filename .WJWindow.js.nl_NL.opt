@@ -37,13 +37,15 @@ var WJWindow = Class.create({
 	 * @param DOMElement parent (default: document.body)
 	 * @return WJWindow
 	 **/
-	initialize: function(callback, parent) {
+	initialize: function(callback, parent, translate) {
 		this._loading = false;
 		this._basetitle = this._title = "";
 		this._theme = "default";
 		this._parent = parent || WJWindow.DEFAULT_PARENT || document.body;
-		this._createWindow();
 		this._listeners = new Hash();
+		this.translate = translate || this.translate;
+		
+		this._createWindow();
 		this._addDefaultListeners();
 
 		this._addCloseButton();
@@ -133,9 +135,7 @@ var WJWindow = Class.create({
 	 **/
 	_addCloseButton: function() {
 		var title = this.getContentElement("title");
-		//title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "Element.fire(this, \"wjgui:close\")", "title": "Venster sluiten"} ) );
-
- 		title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "this.parentNode.getWJWindowObject().fireClose(this)", "title": "Venster sluiten"} ) );
+ 		title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "this.parentNode.getWJWindowObject().fireClose(this)", "title": this.translate("CLOSE_WINDOW") } ) );
 	},
 
 	/**
@@ -1318,31 +1318,57 @@ var WJWindow = Class.create({
 	 **/
 	getTheme: function() {
 		return this._theme;
-	}
+	},
+	
+	/**
+	 * translate
+	 *
+	 * Translates strings
+	 *
+	 * @since Thu Jun 18 2009
+	 * @access public
+	 * @param string key
+	 * @return string
+	 **/
+	translate: function(key) {
+		if (this._translations[key] ) {
+			return this._translations[key];
+		}
+		return key.charAt(0).toUpperCase() + key.replace("_", " ").substr(1).toLowerCase();
+	},
+	
+	/**
+	 * The translations table
+	 *
+	 * @since Thu Jun 18 2009
+	 * @access protected
+	 * @var Object
+	 **/
+	_translations: {OK: "Ok", CANCEL: "Annuleren", YES: "Ja", NO: "Nee", CLOSE_WINDOW: "Venster sluiten"}
 });
 
 
-WJWindow._messagedialog = function(type, message, callback, show, allowHTML) {
-	var win = new WJWindow(callback);
+WJWindow._messagedialog = function(type, message, callback, show, translate, allowHTML) {
+	var win = new WJWindow(callback, null, translate);
 	var mwin = new window[type](win);
 	mwin.setMessage(message, allowHTML);
 	if (show) {
 		mwin.show();
 	}
 	return mwin;
-}
-WJWindow.alert = function(message, callback, allowHTML) {
-	return WJWindow._messagedialog("WJWindowAlert", message, callback, true, allowHTML);
-}
-WJWindow.notice = function(message, callback, allowHTML) {
-	return WJWindow._messagedialog("WJWindowNotice", message, callback, true, allowHTML);
-}
-WJWindow.confirm = function(message, callback, allowHTML) {
-	return WJWindow._messagedialog("WJWindowConfirm", message, callback, true, allowHTML);
-}
-WJWindow.booleanConfirm = function(message, callback, allowHTML) {
-	return WJWindow._messagedialog("WJWindowBooleanConfirm", message, callback, true, allowHTML);
-}
-WJWindow.prompt = function(message, callback, allowHTML) {
-	return WJWindow._messagedialog("WJWindowPrompt", message, callback, true, allowHTML);
-}
+};
+WJWindow.alert = function(message, callback, translate, allowHTML) {
+	return WJWindow._messagedialog("WJWindowAlert", message, callback, true, translate, allowHTML);
+};
+WJWindow.notice = function(message, callback, translate, allowHTML) {
+	return WJWindow._messagedialog("WJWindowNotice", message, callback, true, translate, allowHTML);
+};
+WJWindow.confirm = function(message, callback, translate, allowHTML) {
+	return WJWindow._messagedialog("WJWindowConfirm", message, callback, true, translate, allowHTML);
+};
+WJWindow.booleanConfirm = function(message, callback, translate, allowHTML) {
+	return WJWindow._messagedialog("WJWindowBooleanConfirm", message, callback, true, translate, allowHTML);
+};
+WJWindow.prompt = function(message, callback, translate, allowHTML) {
+	return WJWindow._messagedialog("WJWindowPrompt", message, callback, true, translate, allowHTML);
+};

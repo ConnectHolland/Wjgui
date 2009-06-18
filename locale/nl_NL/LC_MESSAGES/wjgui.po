@@ -14,12 +14,22 @@ msgstr ""
 # Giso Stallenberg <giso@connectholland.nl>, 2008.
 #
 
+msgid "OK"
+msgstr "Ok"
+
+msgid "Cancel"
+msgstr "Annuleren"
+
 msgid "Yes"
 msgstr "Ja"
 
 msgid "No"
 msgstr "Nee"
 
+msgid "Close window"
+msgstr "Venster sluiten"
+
+### translations below this line should be moved to the proper .po file (they aren't needed in wjgui and should not be here)
 msgid "yes"
 msgstr "ja"
 
@@ -35,17 +45,11 @@ msgstr "Aanmelden"
 msgid "Preview"
 msgstr "Voorbeeld"
 
-msgid "Cancel"
-msgstr "Annuleren"
-
 msgid "Close"
 msgstr "Sluiten"
 
 msgid "Insert"
 msgstr "Invoegen"
-
-msgid "Close window"
-msgstr "Venster sluiten"
 
 msgid "No records found"
 msgstr "Geen gegevens gevonden"

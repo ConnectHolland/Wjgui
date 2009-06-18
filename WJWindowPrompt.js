@@ -51,7 +51,7 @@ var WJWindowPrompt = Class.create(WJWindowMessageDialog, {
 	 **/
 	_addButtons: function($super) {
 		$super();
-		WJButton.create(dgettext("wjgui", "Cancel"), "false", false, this.getContentElement("buttons") );
+		WJButton.create(this._decorated.translate("CANCEL"), "false", false, this.getContentElement("buttons") );
 	},
 
 	/**
