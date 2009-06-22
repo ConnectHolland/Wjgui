@@ -10,6 +10,7 @@
 		<languages>
 			<language>nl_NL</language>
 			<language>en_US</language>
+			<language>fr_FR</language>
 		</languages>
 		<dontminify>0</dontminify>
 	</wjguijs>

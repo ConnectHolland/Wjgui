@@ -30,6 +30,8 @@ msgid "Close window"
 msgstr "Venster sluiten"
 
 ### translations below this line should be moved to the proper .po file (they aren't needed in wjgui and should not be here)
+### NOTE: leave them here for pre WMLanguage::translate aeroplane builds
+###
 msgid "yes"
 msgstr "ja"
 
