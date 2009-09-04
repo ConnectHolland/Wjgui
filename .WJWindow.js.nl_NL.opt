@@ -65,7 +65,8 @@ var WJWindow = Class.create({
 	 **/
 	_createWindow: function() {
 		var classname = this._getBaseClassname();
-		this._windowElement = new Element("div", {"class": classname});
+		this._windowElement = new Element("div");
+		this._windowElement.addClassName(classname);
 		this._windowElement.setStyle({"display": "none"});
 		this._createWindowRows(["title", "main", "buttons", "bottom"], classname);
 		this._windowElementId = this._windowElement.identify();
