@@ -136,7 +136,9 @@ var WJWindow = Class.create({
 	 **/
 	_addCloseButton: function() {
 		var title = this.getContentElement("title");
- 		title.appendChild(new Element("div", {"class": this._getBaseClassname() + "_closebutton", "onclick": "this.parentNode.getWJWindowObject().fireClose(this)", "title": this.translate("CLOSE_WINDOW") } ) );
+		var titlediv = new Element("div", {"onclick": "this.parentNode.getWJWindowObject().fireClose(this)", "title": this.translate("CLOSE_WINDOW") } );
+		titlediv.addClassName(this._getBaseClassname() + "_closebutton");
+ 		title.insert(titlediv);
 	},
 
 	/**
@@ -692,7 +694,8 @@ var WJWindow = Class.create({
 	 **/
 	addStatusbar: function() {
 		WJDebugger.log(WJDebugger.INFO, "Adding statusbar to window", this);
-		this._statusbar = new Element("div", {"class": "wjgui_statusbar"});
+		this._statusbar = new Element("div");
+		this._statusbar.addClassName("wjgui_statusbar");
 		this.getContentElement("buttons").insert(this._statusbar);
 		this._checkMaxHeight();
 	},

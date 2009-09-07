@@ -244,7 +244,7 @@ var WJButton = Class.create({
 		var replaces = {};
 		replaces.classprefix = this._getBaseClassName();
 
-		this._buttonElement.className = replaces.classprefix + " " + replaces.classprefix + "_" + ((this._defaultButton) ? "" : "no") + "default";
+		this._buttonElement.addClassName(replaces.classprefix + " " + replaces.classprefix + "_" + ((this._defaultButton) ? "" : "no") + "default");
 
 		this._buttonElement.innerHTML = template.evaluate(replaces);
 	},

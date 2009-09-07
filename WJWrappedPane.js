@@ -40,6 +40,9 @@ var WJWrappedPane = Class.create({
 			return content + template.evaluate({rowname: rowname});
 		});
 		
-		return new Element("div", {"class": "wjgui_wrappedpane"}).update(content);
+		var wrappedpane =  new Element("div").update(content);
+		wrappedpane.addClassName("wjgui_wrappedpane");
+		return wrappedpane;
+
 	}
 });
