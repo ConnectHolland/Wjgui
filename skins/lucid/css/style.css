@@ -152,6 +152,10 @@ button.wjgui_button {
 	font-weight: normal;
 }
 
+button.wjgui_button div.wjgui_button_content {
+	font-family: $fonttype$;
+}
+
 button.wjgui_button div.wjgui_button_left,
 button.wjgui_button div.wjgui_button_right,
 button.wjgui_button div.wjgui_button_center {
