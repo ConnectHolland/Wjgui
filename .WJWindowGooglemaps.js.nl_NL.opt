@@ -39,7 +39,8 @@ var WJWindowGooglemaps = Class.create({
 	 * @return void
 	 **/
 	_addPushpinWindowConnector: function() {
-		this._pushpinwindowconnector = new Element("div", {"class": "pushpinwindowconnector", "style": "position: absolute;"});
+		this._pushpinwindowconnector = new Element("div", {"style": "position: absolute;"});
+		this._pushpinwindowconnector.addClassName("pushpinwindowconnector");
 		this.getWindowElement().insert(new Element("div", {"style": "position: relative; overflow: visible; height: 0px; width: 0px;"} ).insert(this._pushpinwindowconnector ) );
 	},
 
