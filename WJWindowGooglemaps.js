@@ -77,7 +77,8 @@ var WJWindowGooglemaps = Class.create({
 		}
 
 		this._stylesettings = new Hash();
-		this._stylesettings.set("pushpinwindowconnector-top", parseInt(this._pushpinwindowconnector.getStyle("top") ) );
+		var top = (this._pushpinwindowconnector.getStyle("top") != null) ? parseInt(this._pushpinwindowconnector.getStyle("top") ) : 0;
+		this._stylesettings.set("pushpinwindowconnector-top", top);
 		this._stylesettings.set("pushpinwindowconnector-left", parseInt(this._pushpinwindowconnector.getStyle("left") ) );
 		this._stylesettings.set("pushpinwindowconnector-height", this._pushpinwindowconnector.getHeight() );
 
