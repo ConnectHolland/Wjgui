@@ -27,7 +27,20 @@ var WJWindowModal = Class.create({
 		this._rebindListeners();
 		this._rebindWindowObjectGetters();
 		this.setZ(2147483647);
-		this.show(); // Remove this
+		this.showOnInit();
+	},
+
+	/**
+	 * showOnInit
+	 *
+	 * BC solution to be able to not show a window on initialize
+	 *
+	 * @since Fri Oct 16 2009
+	 * @access public
+	 * @return void
+	 **/
+	showOnInit: function() {
+		this.show();
 	},
 
 	/**
@@ -76,7 +89,7 @@ var WJWindowModal = Class.create({
 	 **/
 	_createModalLayer: function() {
 		var windowElement = this._decorated.getWindowElement();
-		
+
 		this._modalLayer = new WJModalLayer();
 		this._modalLayer.getLayer().insert(windowElement);
 		this._outerElement = this._modalLayer.getLayer();

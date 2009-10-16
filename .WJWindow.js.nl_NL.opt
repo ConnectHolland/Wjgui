@@ -44,7 +44,7 @@ var WJWindow = Class.create({
 		this._parent = parent || WJWindow.DEFAULT_PARENT || document.body;
 		this._listeners = new Hash();
 		this.translate = translate || this.translate;
-		
+
 		this._createWindow();
 		this._addDefaultListeners();
 
@@ -406,7 +406,7 @@ var WJWindow = Class.create({
 		test.each(function(el) {
 			el.getWJWindowObject = function() { return this; }.bind(this);
 		}, this);
-		
+
 		return test;
 	},
 
@@ -1323,7 +1323,7 @@ var WJWindow = Class.create({
 	getTheme: function() {
 		return this._theme;
 	},
-	
+
 	/**
 	 * translate
 	 *
@@ -1340,7 +1340,7 @@ var WJWindow = Class.create({
 		}
 		return key.charAt(0).toUpperCase() + key.replace("_", " ").substr(1).toLowerCase();
 	},
-	
+
 	/**
 	 * The translations table
 	 *
