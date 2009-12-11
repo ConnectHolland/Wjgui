@@ -126,6 +126,23 @@ var WJWindow = Class.create({
 	},
 
 	/**
+	 * removeWindowRow
+	 *
+	 * Removes windowrow
+	 * Returns the removed row
+	 *
+	 * @since Tue Dec 8 2009
+	 * @access public
+	 * @param string oldrow
+	 * @return htmlelement
+	 **/
+	removeWindowRow: function(oldrow) {
+		var toremove = this.getContentElement(oldrow);
+		delete(this._contentElements[oldrow]);
+		return toremove.remove();
+	},
+
+	/**
 	 * _addCloseButton
 	 *
 	 * Adds a button to close the window

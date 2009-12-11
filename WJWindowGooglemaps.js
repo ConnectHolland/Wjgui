@@ -27,6 +27,7 @@ var WJWindowGooglemaps = Class.create({
 		}
 		this._addPushpinWindowConnector();
 		this._saveStyleSettings();
+		this.removeListener("true");
 	},
 
 	/**
