@@ -24,6 +24,15 @@ div.wjgui_window p {
 	color: $windowfontcolor$;
 }
 
+div.wjgui_window h1,
+div.wjgui_window h2,
+div.wjgui_window h3,
+div.wjgui_window h4,
+div.wjgui_window h5,
+div.wjgui_window h6 {
+	font-family: $fonttype$;
+}
+
 div.wjgui_window_right,
 div.wjgui_window_left {
 	background-repeat: no-repeat;
