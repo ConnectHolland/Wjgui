@@ -1,0 +1,5 @@
+RewriteEngine on
+
+RewriteCond %{HTTP_USER_AGENT} .*MSIE\ 6\.0.*
+RewriteCond %{REQUEST_URI} ^(.*)\.png$
+RewriteRule buttons\.png$          %1.gif [R=301,L]
