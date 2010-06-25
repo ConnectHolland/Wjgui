@@ -21,7 +21,7 @@ div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_closebut
 }
 
 div.googlemaps div.wjgui_window {
-	width: 250px;
+	width: 300px;
 }
 
 div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_closebutton {
@@ -94,4 +94,8 @@ div.googlemaps div.pushpinwindowconnector {
 	background-image: url("/lib/wjgui/skins/lucid/images/maps/windowconnector.png");
 	top: -15px;
 	margin-left: 0.25em;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_main div.wjgui_window_content {
+	min-height: 2em;
 }
