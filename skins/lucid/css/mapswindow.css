@@ -16,8 +16,10 @@ div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_closebut
 	background-image: url("/lib/wjgui/skins/lucid/images/maps/closewindow.gif");
 	width: 13px;
 	height: 13px;
-	margin-right: 1em;
-	margin-top: 0.6em;
+	margin-right: 19px;
+	margin-top: 10px;
+	line-height: 1px;
+	font-size: 1px;
 }
 
 div.googlemaps div.wjgui_window {
@@ -81,11 +83,14 @@ div.googlemaps div.wjgui_window_body div.wjgui_window_center {
 
 div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_content h1 {
 	color: #000000;
-	margin-left: 0px;
+	margin: 0px;
 }
 
 div.googlemaps div.wjgui_window div.wjgui_window_main div.wjgui_window_content {
 	font-size: 12px;
+	@browser[MSIE 6] (
+		border-top: 1px solid #FFFFFF; /* fixes margin gap */
+	)
 }
 
 div.googlemaps div.pushpinwindowconnector {
@@ -98,4 +103,8 @@ div.googlemaps div.pushpinwindowconnector {
 
 div.googlemaps div.wjgui_window div.wjgui_window_main div.wjgui_window_content {
 	min-height: 2em;
+}
+
+div.googlemaps div.wjgui_window_title h1 {
+	font-size: 12px;
 }
