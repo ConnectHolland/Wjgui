@@ -88,6 +88,7 @@ div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_content 
 
 div.googlemaps div.wjgui_window div.wjgui_window_main div.wjgui_window_content {
 	font-size: 12px;
+	line-height: 16px;
 	@browser[MSIE 6] (
 		border-top: 1px solid #FFFFFF; /* fixes margin gap */
 	)
