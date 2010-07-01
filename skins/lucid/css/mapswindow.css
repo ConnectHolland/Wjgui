@@ -22,6 +22,10 @@ div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_closebut
 	font-size: 1px;
 }
 
+div.googlemap {
+	height: 300px; /* just give it some height */
+}
+
 div.googlemaps div.wjgui_window {
 	width: 300px;
 }
