@@ -76,13 +76,16 @@ var WJWindowGooglemaps = Class.create({
 			this.setY(-10000);
 			this.show();
 		}
-
+		
 		this._stylesettings = new Hash();
 		var top = (this._pushpinwindowconnector.getStyle("top") != null) ? parseInt(this._pushpinwindowconnector.getStyle("top") ) : 0;
 		this._stylesettings.set("pushpinwindowconnector-top", top);
-		this._stylesettings.set("pushpinwindowconnector-left", parseInt(this._pushpinwindowconnector.getStyle("left") ) );
+		
+		var left = (this._pushpinwindowconnector.getStyle("left") != null) ? parseInt(this._pushpinwindowconnector.getStyle("left") ) : 0;
+		this._stylesettings.set("pushpinwindowconnector-left", left);
+		
 		this._stylesettings.set("pushpinwindowconnector-height", this._pushpinwindowconnector.getHeight() );
-
+		
 		if (!wasVisible) {
 			this.hide();
 			this.setX(origX);

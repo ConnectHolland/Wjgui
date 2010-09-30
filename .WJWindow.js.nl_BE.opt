@@ -1143,6 +1143,7 @@ var WJWindow = Class.create({
 			this._centerObserver = this.center.bind(this, element);
 			Event.observe(window, "resize", this._centerObserver);
 		}
+		return this;
 	},
 
 	/**
@@ -1157,6 +1158,7 @@ var WJWindow = Class.create({
 	stopCentered: function() {
 		Event.stopObserving(window, "resize", this._centerObserver);
 		this._centerObserver = null;
+		return this;
 	},
 
 	/**
@@ -1204,6 +1206,7 @@ var WJWindow = Class.create({
 			this._maximizedObserver = this.maximize.bind(this, paddingTop, paddingRight, paddingBottom, paddingLeft, true);
 			Event.observe(window, "resize", this._maximizedObserver);
 		}
+		return this;
 	},
 
 	/**
@@ -1218,6 +1221,7 @@ var WJWindow = Class.create({
 	stopMaximized: function() {
 		Event.stopObserving(window, "resize", this._maximizedObserver);
 		this._maximizedObserver = null;
+		return this;
 	},
 
 	/**
@@ -1280,11 +1284,12 @@ var WJWindow = Class.create({
 	 **/
 	setTheme: function(theme) {
 		if (theme == this.getTheme() ) {
-			return;
+			return this;
 		}
 		this._removeOldTheme();
 		this._setTheme(theme);
 		this._addNewTheme();
+		return this;
 	},
 
 	/**
