@@ -159,8 +159,9 @@ var WJButton = Class.create({
 		var fontfamily = element.getStyle("fontFamily");
 		var fontsize = element.getStyle("fontSize");
 		var fontweight = element.getStyle("fontWeight");
-		WJButton.measureElement.setStyle({"fontFamily": fontfamily, "fontSize": "1em", "fontWeight": fontweight}).update(text);
-		element.appendChild(WJButton.measureElement).getWidth();
+		WJButton.measureElement.setStyle({"fontFamily": fontfamily, "fontSize": "1em", "fontWeight": fontweight, "whiteSpace": "nowrap" } ).update(text);
+		element.appendChild(WJButton.measureElement);
+		var width = WJButton.measureElement.getWidth();
 		WJButton.measureElement.remove();
 		width += this.getWidth() - element.getWidth();
 		return (width > 100 || this.getButton().up("div.autowidth", 0) ) ? width : 100;
@@ -352,7 +353,7 @@ var WJButton = Class.create({
  * @since Tue Aug 19 2008
  * @access public
  **/
-WJButton.measureElement = new Element("div", {"style": "position: absolute; left: -1000px;"});
+WJButton.measureElement = new Element("div", {"style": "position: absolute; left: -5000px;"});
 
 /**
  * create
