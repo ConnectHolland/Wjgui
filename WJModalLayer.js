@@ -53,7 +53,7 @@ var WJModalLayer = Class.create({
 	 * @param DOMElement element
 	 * @return void
 	 **/
-	_fillViewport: function(fillviewport) {
+	_fillViewport: function() {
 		if (this.hidescroll) {
 			this.inlineStyling = document.body.readAttribute("style");
 			$(document.body).setStyle( {overflow: "hidden"} );
@@ -95,7 +95,7 @@ var WJModalLayer = Class.create({
 			this._modalLayer.remove();
 			this._removed = true;
 			if (this.hidescroll) {
-				this.inlineStyling = document.body.setAttribute("style", this.inlineStyling);
+				document.body.setAttribute("style", this.inlineStyling);
 			}
 		}
 	}
