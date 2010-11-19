@@ -54,16 +54,17 @@ var WJModalLayer = Class.create({
 	 * @return void
 	 **/
 	_fillViewport: function(fillviewport) {
+		if (this.hidescroll) {
+			this.inlineStyling = document.body.readAttribute("style");
+			$(document.body).setStyle( {overflow: "hidden"} );
+		}
+
 		var element = $(this._modalLayer);
 		if (!this.fillviewport && $(element.parentNode) && $(element.parentNode).getHeight) {
 			element.setStyle( {width: $(element.parentNode).getWidth() + "px", height: $(element.parentNode).getHeight() + "px"} );
 		}
 		else {
-			element.setStyle( {width: document.viewport.getWidth() + "px", height: document.viewport.getHeight() + "px"} );
-			if (this.hidescroll) {
-				this.inlineStyling = document.body.readAttribute("style");
-				document.body.style.overflow = "hidden";
-			}
+			element.setStyle( {width: document.viewport.getWidth() + "px", height: document.viewport.getHeight() + "px", top: $(document.body).cumulativeScrollOffset().top + "px"} );
 		}
 	},
 
