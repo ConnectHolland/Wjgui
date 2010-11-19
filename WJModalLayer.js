@@ -13,8 +13,10 @@ var WJModalLayer = Class.create({
 	 * @param Element modalLayer
 	 * @return void
 	 **/
-	initialize: function(parent, modalLayer) {
+	initialize: function(parent, modalLayer, fillviewport, hidescroll) {
 		var parent = parent || document.body;
+		this.fillviewport = fillviewport || false;
+		this.hidescroll = hidescroll || false;
 		this._modalLayer = (modalLayer || new Element("div") );
 		Element.extend(this._modalLayer).addClassName("wjgui_window_modality");
 		parent.appendChild(this._modalLayer);
@@ -51,13 +53,17 @@ var WJModalLayer = Class.create({
 	 * @param DOMElement element
 	 * @return void
 	 **/
-	_fillViewport: function() {
+	_fillViewport: function(fillviewport) {
 		var element = $(this._modalLayer);
-		if ($(element.parentNode) && $(element.parentNode).getHeight) {
+		if (!this.fillviewport && $(element.parentNode) && $(element.parentNode).getHeight) {
 			element.setStyle( {width: $(element.parentNode).getWidth() + "px", height: $(element.parentNode).getHeight() + "px"} );
 		}
 		else {
 			element.setStyle( {width: document.viewport.getWidth() + "px", height: document.viewport.getHeight() + "px"} );
+			if (this.hidescroll) {
+				this.inlineStyling = document.body.readAttribute("style");
+				document.body.style.overflow = "hidden";
+			}
 		}
 	},
 
@@ -87,6 +93,9 @@ var WJModalLayer = Class.create({
 		if (!this._removed) {
 			this._modalLayer.remove();
 			this._removed = true;
+			if (this.hidescroll) {
+				this.inlineStyling = document.body.setAttribute("style", this.inlineStyling);
+			}
 		}
 	}
 });
