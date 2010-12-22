@@ -19,7 +19,7 @@ var WJModalLayer = Class.create({
 		this.hidescroll = hidescroll || false;
 		this._modalLayer = (modalLayer || new Element("div") );
 		Element.extend(this._modalLayer).addClassName("wjgui_window_modality");
-		parent.appendChild(this._modalLayer);
+		$(parent).appendChild(this._modalLayer);
 		this._removed = false;
 		this._absolutizeTopLeft();
 		this._fillViewport();
