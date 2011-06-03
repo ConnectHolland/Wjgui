@@ -748,10 +748,10 @@ var WJWindow = Class.create({
 	 * @return void
 	 **/
 	hideStatusbar: function() {
-		if (!Object.isUndefined(S2) ) {
+		if (typeof(S2) !== "undefined") {
 			this._statusbar.fade({duration: 3.0});
 		}
-		else if (!Object.isUndefined(Effect) ) {
+		else if (typeof(Effect) !== "undefined" ) {
 			Effect.Fade(this._statusbar, {duration: 3.0} );
 		}
 		this.clearAndShowStatusbar.bind(this).delay(3.5);
