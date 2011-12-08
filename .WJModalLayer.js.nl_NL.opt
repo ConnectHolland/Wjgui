@@ -66,6 +66,7 @@ var WJModalLayer = Class.create({
 		else {
 			element.setStyle( {width: document.viewport.getWidth() + "px", height: document.viewport.getHeight() + "px", top: $(document.body).cumulativeScrollOffset().top + "px"} );
 		}
+		this._modalLayer.fire("wjmodallayer:viewportfilled");
 	},
 
 	/**

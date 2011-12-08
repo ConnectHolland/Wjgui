@@ -90,8 +90,7 @@ var WJWindowModal = Class.create({
 	_createModalLayer: function() {
 		var windowElement = this._decorated.getWindowElement();
 
-		this._modalLayer = this._getModallayerInstance();
-		this._modalLayer.getLayer().insert(windowElement);
+		this._getModallayerInstance().getLayer().insert(windowElement);
 		this._outerElement = this._modalLayer.getLayer();
 	},
 
@@ -105,10 +104,10 @@ var WJWindowModal = Class.create({
 	 * @return WJModalLayer
 	 **/
 	_getModallayerInstance: function() {
-		if (this._modalLayer) {
-			return this._modalLayer;
+		if (typeof(this._modalLayer) == "undefined") {
+			this._modalLayer = new WJModalLayer();
 		}
-		return new WJModalLayer();
+		return this._modalLayer;
 	},
 
 	/**
