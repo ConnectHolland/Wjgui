@@ -90,9 +90,25 @@ var WJWindowModal = Class.create({
 	_createModalLayer: function() {
 		var windowElement = this._decorated.getWindowElement();
 
-		this._modalLayer = new WJModalLayer();
+		this._modalLayer = this._getModallayerInstance();
 		this._modalLayer.getLayer().insert(windowElement);
 		this._outerElement = this._modalLayer.getLayer();
+	},
+
+	/**
+	 * _getModallayerInstance
+	 *
+	 * Get's the instance of the modal layer or creates a new one
+	 *
+	 * @since Wed Dec 07 2011
+	 * @access protected
+	 * @return WJModalLayer
+	 **/
+	_getModallayerInstance: function() {
+		if (this._modalLayer) {
+			return this._modalLayer;
+		}
+		return new WJModalLayer();
 	},
 
 	/**
