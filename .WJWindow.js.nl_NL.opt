@@ -640,7 +640,7 @@ var WJWindow = Class.create({
 		this._title = title;
 		var headers = this.getContentElement("title").getElementsByTagName("h1");
 		if (headers.length < 1) {
-			this.getContentElement("title").innerHTML = "<h1>&#160;</h1>" + this.getContentElement("title").innerHTML;
+			this.getContentElement("title").innerHTML = "<div class=\"title_wrapper arrow\"><h1>&#160;</h1></div>" + this.getContentElement("title").innerHTML;
 			return this.setTitle(this._title);
 		}
 		headers[0].innerHTML = this._getComposedTitle();
