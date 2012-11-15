@@ -135,6 +135,12 @@ div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_but
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled div.wjgui_button_right {background-position:right -352px;}
 div.wjgui_window,
 div.wjgui_window p {font-family:Arial, Helvetica, Verdana, sans-serif;color:#000000;}
+div.wjgui_window h1,
+div.wjgui_window h2,
+div.wjgui_window h3,
+div.wjgui_window h4,
+div.wjgui_window h5,
+div.wjgui_window h6 {font-family:Arial, Helvetica, Verdana, sans-serif;}
 div.wjgui_window_right,
 div.wjgui_window_left {background-repeat:no-repeat;}
 div.wjgui_window_buttons div.wjgui_window_content {text-align:right;}

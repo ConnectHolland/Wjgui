@@ -124,6 +124,7 @@ var WJWindowModal = Class.create({
 		element.style.display = "block";
 		this._setBodyOverflow("hidden");
 		this._decorated.show();
+		return this;
 	},
 
 	/**
@@ -140,6 +141,7 @@ var WJWindowModal = Class.create({
 		element.style.display = "none";
 		this._setBodyOverflow();
 		this._decorated.hide();
+		return this;
 	},
 
 	/**
@@ -159,28 +161,29 @@ var WJWindowModal = Class.create({
 	},
 
 	/**
+	 * _addBlinkListener
 	 *
-	 *
-	 *
+	 * Makes the window blink
 	 *
 	 * @since Thu Jul 10 2008
-	 * @access
-	 * @param
-	 * @return
+	 * @access protected
+	 * @return void
 	 **/
 	_addBlinkListener: function() {
 		Event.observe(this._modalLayer.getLayer(), "click", this.blink.bindAsEventListener(this) );
 	},
 
 	/**
+	 * blink
 	 *
-	 *
-	 *
+	 * Toggles, the blink classname several times
 	 *
 	 * @since Thu Jul 10 2008
-	 * @access
-	 * @param
-	 * @return
+	 * @access public
+	 * @param Event event
+	 * @param boolean doBlink
+	 * @param integer count
+	 * @return void
 	 **/
 	blink: function(event, doBlink, count) {
 		var count = count || 0;
