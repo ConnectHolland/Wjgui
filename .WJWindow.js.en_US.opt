@@ -24,7 +24,6 @@ var WJWindow = Class.create({
 	 * integer _w
 	 * integer _h
 	 **/
-	DEFAULT_PARENT: document.body,
 
 	/**
 	 * initialize
@@ -1378,6 +1377,12 @@ var WJWindow = Class.create({
 	_translations: {OK: "OK", CANCEL: "Cancel", YES: "Yes", NO: "No", CLOSE_WINDOW: "Close window"}
 });
 
+
+document.observe("dom:loaded", function() {
+	if (!WJWindow.DEFAULT_PARENT) {
+		WJWindow.DEFAULT_PARENT = document.body;
+	}
+} );
 
 WJWindow._messagedialog = function(type, message, callback, show, translate, allowHTML) {
 	var win = new WJWindow(callback, null, translate);
