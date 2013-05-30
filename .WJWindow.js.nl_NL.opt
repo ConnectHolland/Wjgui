@@ -41,6 +41,7 @@ var WJWindow = Class.create({
 		this._basetitle = this._title = "";
 		this._theme = "default";
 		this._parent = parent || WJWindow.DEFAULT_PARENT || document.body;
+		Element.extend(this._parent);
 		this._listeners = new Hash();
 		this.translate = translate || this.translate;
 
