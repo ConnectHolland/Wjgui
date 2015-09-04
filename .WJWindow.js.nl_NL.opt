@@ -1375,7 +1375,7 @@ var WJWindow = Class.create({
 	 * @access protected
 	 * @var Object
 	 **/
-	_translations: {OK: dgettext("wjgui", "OK"), CANCEL: dgettext("wjgui", "Cancel"), YES: dgettext("wjgui", "Yes"), NO: dgettext("wjgui", "No"), CLOSE_WINDOW: dgettext("wjgui", "Close window") }
+	_translations: {OK: "Ok", CANCEL: "Annuleren", YES: "Ja", NO: "Nee", CLOSE_WINDOW: "Venster sluiten"}
 });
 
 
