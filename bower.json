@@ -1,0 +1,20 @@
+{
+    "name": "connectholland-wjgui",
+    "description": "GUI including windows and buttons",
+    "authors": [
+      "Giso Stallenberg <gisostallenberg@gmail.com>"
+    ],
+    "license": "MIT",
+    "homepage": "https://github.com/ConnectHolland/Wjgui",
+    "moduleType": [],
+    "ignore": [
+      "**/.*",
+      "node_modules",
+      "bower_components",
+      "test",
+      "tests"
+    ],
+    "dependencies": {
+      "gulp-tasks": "svn+ssh://svn.repositories.connectholland.nl/srv/svn/main/bower_components/gulp-tasks/#^1.0"
+    }
+}

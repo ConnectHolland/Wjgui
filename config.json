@@ -1,0 +1,48 @@
+{
+    "default_tasks": [
+        "sass", "javascript"
+    ],
+    "install_tasks": [],
+    "production": true,
+    "sass": {
+        "src": [
+            "src/style/wjgui.scss"
+        ],
+        "dest": "dist/",
+        "watch": [
+            "src/**/*.scss"
+        ],
+        "autoprefix": [
+            "last 2 versions",
+            "IE >= 8"
+        ]
+    },
+    "javascript": {
+        "src": [
+            "node_modules/connectholland-translate/index.js",
+            "src/javascript/wjgui.en_US.js",
+            "src/javascript/wjgui.nl_NL.js",
+            "src/javascript/WJGuiSettings.js",
+            "src/javascript/WJWindow.js",
+            "src/javascript/WJWindowModal.js",
+            "src/javascript/WJWindowMessageDialog.js",
+            "src/javascript/WJWindowAlert.js",
+            "src/javascript/WJWindowConfirm.js",
+            "src/javascript/WJButton.js",
+            "src/javascript/WJModalLayer.js",
+            "src/javascript/WJWindowBooleanConfirm.js",
+            "src/javascript/WJWindowGooglemaps.js",
+            "src/javascript/WJWindowNotice.js",
+            "src/javascript/WJWindowPrompt.js",
+            "src/javascript/WJWrappedPane.js"
+        ],
+        "dest": "dist/",
+        "outputname": "wjgui.js",
+        "watch": [
+            "src/**/*.js"
+        ],
+        "options": {
+            "mangle": false
+        }
+    }
+}
