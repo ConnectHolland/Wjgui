@@ -18,203 +18,203 @@ $iconheight: 28;
  * WINDOW >
  **/
 div.wjgui_window {
-	width: 400px;
+    width: 400px;
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content {
-	min-height: 5em;
-	overflow-y: auto;
-	position: relative; /* fix IE7 scrolling bug */
+    min-height: 5em;
+    overflow-y: auto;
+    position: relative; /* fix IE7 scrolling bug */
 }
 
 div.wjgui_window div.wjgui_window_buttons div.wjgui_window_content {
-	position: relative; /* to position the status bar */
+    position: relative; /* to position the status bar */
 }
 
 div.wjgui_window div.wjgui_window_buttons div.wjgui_window_content div.wjgui_statusbar {
-	position: absolute;
-	left: 0;
-	top: 0.5em;
+    position: absolute;
+    left: 0;
+    top: 0.5em;
 }
 
 div.wjgui_window div.wjgui_window_center {
-	margin-right: #{$windowborderwidth}px;
-	margin-left: #{$windowborderwidth}px;
+    margin-right: #{$windowborderwidth}px;
+    margin-left: #{$windowborderwidth}px;
 }
 
 div.wjgui_window div.wjgui_window_title div.wjgui_window_column {
-	height: #{$windowtitleheight}px;
-	overflow: hidden; /* fix IE7 showing windowicon of different theme */
+    height: #{$windowtitleheight}px;
+    overflow: hidden; /* fix IE7 showing windowicon of different theme */
 }
 
 div.wjgui_window div.wjgui_window_bottom div.wjgui_window_column {
-	height: #{$windowbottomheight}px;
+    height: #{$windowbottomheight}px;
 }
 
 div.wjgui_window div.wjgui_window_title div.wjgui_window_left {
-	background-position: left (0px - ((0*$windowtitleheight) + (3 * $windowbottomheight)));
+    background-position: left (0px - ((0*$windowtitleheight) + (3 * $windowbottomheight)));
 }
 
 div.wjgui_window div.wjgui_window_title div.wjgui_window_center {
-	background-position: right (0px - ((1*$windowtitleheight) + (3 * $windowbottomheight)));
+    background-position: right (0px - ((1*$windowtitleheight) + (3 * $windowbottomheight)));
 }
 
 div.wjgui_window div.wjgui_window_title div.wjgui_window_right {
-	background-position: right (0px - ((2*$windowtitleheight) + (3 * $windowbottomheight)));
+    background-position: right (0px - ((2*$windowtitleheight) + (3 * $windowbottomheight)));
 }
 
 div.wjgui_window div.wjgui_window_title div.wjgui_window_content {
-	background-position: 0px ((0 * -$iconheight) + 7 * 1px);
+    background-position: 0px ((0 * -$iconheight) + 7 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_bottom div.wjgui_window_left {
-	background-position: left (-0 * ($windowbottomheight) * 1px);
+    background-position: left (-0 * ($windowbottomheight) * 1px);
 }
 
 div.wjgui_window div.wjgui_window_bottom div.wjgui_window_center {
-	background-position: left (-1 * ($windowbottomheight) * 1px);
+    background-position: left (-1 * ($windowbottomheight) * 1px);
 }
 
 div.wjgui_window div.wjgui_window_bottom div.wjgui_window_right {
-	background-position: right (-2 * ($windowbottomheight) * 1px);
+    background-position: right (-2 * ($windowbottomheight) * 1px);
 }
 
 div.wjgui_window div.wjgui_window_body div.wjgui_window_right {
-	background-position: right 0px;
+    background-position: right 0px;
 }
 
 div.wjgui_window div.wjgui_window_body div.wjgui_window_left {
-	background-position: left 0px;
+    background-position: left 0px;
 }
 div.wjgui_window div.wjgui_window_title h1 {
-	margin: 0;
+    margin: 0;
 }
 
 div.wjgui_window div.wjgui_window_title div.wjgui_window_closebutton {
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin-right: 0.5em;
-	margin-top: 0.33em;
-	padding: 0;
-	width: 21px;
-	height: 21px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-right: 0.5em;
+    margin-top: 0.33em;
+    padding: 0;
+    width: 21px;
+    height: 21px;
 }
 
 div.wjgui_window div.wjgui_window_title div.wjgui_window_closebutton {
-	background-position: left (0 * -$closebuttonheight * 1px);
+    background-position: left (0 * -$closebuttonheight * 1px);
 }
 
 div.wjgui_window div.wjgui_window_title div.wjgui_window_closebutton:hover {
-	background-position: left (1 * -$closebuttonheight * 1px);
+    background-position: left (1 * -$closebuttonheight * 1px);
 }
 
 div.wjgui_window div.wjgui_window_title div.wjgui_window_closebutton:active {
-	background-position: left (2 * -$closebuttonheight * 1px);
+    background-position: left (2 * -$closebuttonheight * 1px);
 }
 
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_messageicon {
-	float: left;
-	width: 80px;
-	height: 80px;
+    float: left;
+    width: 80px;
+    height: 80px;
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_message {
-	margin-top: 24px;
-	float: left;
-	width: 300px;
+    margin-top: 24px;
+    float: left;
+    width: 300px;
 }
 
 div.wjgui_window div.wjgui_window_title div.wjgui_window_content h1 {
-	margin-left: 24px;
+    margin-left: 24px;
 }
 
 /**
  * Theme's for WINDOW
  **/
 div.wjgui_windowtheme_magenta div.wjgui_window_title div.wjgui_window_left {
-	background-position: left (0px - ((3*$windowtitleheight) + (3 * $windowbottomheight)));
+    background-position: left (0px - ((3*$windowtitleheight) + (3 * $windowbottomheight)));
 }
 
 div.wjgui_windowtheme_magenta div.wjgui_window_title div.wjgui_window_center {
-	background-position: right (0px - ((4*$windowtitleheight) + (3 * $windowbottomheight)));
+    background-position: right (0px - ((4*$windowtitleheight) + (3 * $windowbottomheight)));
 }
 
 div.wjgui_windowtheme_magenta div.wjgui_window_title div.wjgui_window_right {
-	background-position: right (0px - ((5*$windowtitleheight) + (3 * $windowbottomheight)));
+    background-position: right (0px - ((5*$windowtitleheight) + (3 * $windowbottomheight)));
 }
 
 div.wjgui_windowtheme_purple div.wjgui_window_title div.wjgui_window_left {
-	background-position: left (0px - ((6*$windowtitleheight) + (3 * $windowbottomheight)));
+    background-position: left (0px - ((6*$windowtitleheight) + (3 * $windowbottomheight)));
 }
 
 div.wjgui_windowtheme_purple div.wjgui_window_title div.wjgui_window_center {
-	background-position: right (0px - ((7*$windowtitleheight) + (3 * $windowbottomheight)));
+    background-position: right (0px - ((7*$windowtitleheight) + (3 * $windowbottomheight)));
 }
 
 div.wjgui_windowtheme_purple div.wjgui_window_title div.wjgui_window_right {
-	background-position: right (0px - ((8*$windowtitleheight) + (3 * $windowbottomheight)));
+    background-position: right (0px - ((8*$windowtitleheight) + (3 * $windowbottomheight)));
 }
 
 div.wjgui_windowtheme_green div.wjgui_window_title div.wjgui_window_left {
-	background-position: left (0px - ((9*$windowtitleheight) + (3 * $windowbottomheight)));
+    background-position: left (0px - ((9*$windowtitleheight) + (3 * $windowbottomheight)));
 }
 
 div.wjgui_windowtheme_green div.wjgui_window_title div.wjgui_window_center {
-	background-position: right (0px - ((10*$windowtitleheight) + (3 * $windowbottomheight)));
+    background-position: right (0px - ((10*$windowtitleheight) + (3 * $windowbottomheight)));
 }
 
 div.wjgui_windowtheme_green div.wjgui_window_title div.wjgui_window_right {
-	background-position: right (0px - ((11*$windowtitleheight) + (3 * $windowbottomheight)));
+    background-position: right (0px - ((11*$windowtitleheight) + (3 * $windowbottomheight)));
 }
 
 div.wjgui_windowtheme_magenta div.wjgui_window_title div.wjgui_window_closebutton {
-	background-position: left (3 * -$closebuttonheight * 1px);
+    background-position: left (3 * -$closebuttonheight * 1px);
 }
 
 div.wjgui_windowtheme_magenta div.wjgui_window_title div.wjgui_window_closebutton:hover {
-	background-position: left (4 * -$closebuttonheight * 1px);
+    background-position: left (4 * -$closebuttonheight * 1px);
 }
 
 div.wjgui_windowtheme_magenta div.wjgui_window_title div.wjgui_window_closebutton:active {
-	background-position: left (5 * -$closebuttonheight * 1px);
+    background-position: left (5 * -$closebuttonheight * 1px);
 }
 
 div.wjgui_windowtheme_purple div.wjgui_window_title div.wjgui_window_closebutton {
-	background-position: left (6 * -$closebuttonheight * 1px);
+    background-position: left (6 * -$closebuttonheight * 1px);
 }
 
 div.wjgui_windowtheme_purple div.wjgui_window_title div.wjgui_window_closebutton:hover {
-	background-position: left (7 * -$closebuttonheight * 1px);
+    background-position: left (7 * -$closebuttonheight * 1px);
 }
 
 div.wjgui_windowtheme_purple div.wjgui_window_title div.wjgui_window_closebutton:active {
-	background-position: left (8 * -$closebuttonheight * 1px);
+    background-position: left (8 * -$closebuttonheight * 1px);
 }
 
 div.wjgui_windowtheme_green div.wjgui_window_title div.wjgui_window_closebutton {
-	background-position: left (9 * -$closebuttonheight * 1px);
+    background-position: left (9 * -$closebuttonheight * 1px);
 }
 
 div.wjgui_windowtheme_green div.wjgui_window_title div.wjgui_window_closebutton:hover {
-	background-position: left (10 * -$closebuttonheight * 1px);
+    background-position: left (10 * -$closebuttonheight * 1px);
 }
 
 div.wjgui_windowtheme_green div.wjgui_window_title div.wjgui_window_closebutton:active {
-	background-position: left (11 * -$closebuttonheight * 1px);
+    background-position: left (11 * -$closebuttonheight * 1px);
 }
 
 div.wjgui_windowtheme_magenta div.wjgui_window_title div.wjgui_window_content {
-	background-position: 0px (1 * -$iconheight) + 7 * 1px;
+    background-position: 0px (1 * -$iconheight) + 7 * 1px;
 }
 
 div.wjgui_windowtheme_purple div.wjgui_window_title div.wjgui_window_content {
-	background-position: 0px (2 * -$iconheight) + 7 * 1px;
+    background-position: 0px (2 * -$iconheight) + 7 * 1px;
 }
 
 div.wjgui_windowtheme_green div.wjgui_window_title div.wjgui_window_content {
-	background-position: 0px (3 * -$iconheight) + 7 * 1px;
+    background-position: 0px (3 * -$iconheight) + 7 * 1px;
 }
 /**
  * < WINDOW
@@ -224,10 +224,10 @@ div.wjgui_windowtheme_green div.wjgui_window_title div.wjgui_window_content {
  * BUTTON >
  **/
 button.wjgui_button {
-	padding: 0;
-	height: $buttonheight + 2 * 1px;
-	margin-right: 3px;
-	width: #{$buttonwidth}px;
+    padding: 0;
+    height: $buttonheight + 2 * 1px;
+    margin-right: 3px;
+    width: #{$buttonwidth}px;
 }
 
 /*
@@ -237,76 +237,76 @@ button.wjgui_button {
  * NOTE width is calculated now, but here for bc reasons
  */
 button.wjgui_button {
-	width: #{$buttonnormalwidth}px;
+    width: #{$buttonnormalwidth}px;
 }
 button.wjgui_button_wider {
-	width: #{$buttonwiderwidth}px;
+    width: #{$buttonwiderwidth}px;
 }
 button.wjgui_button_wide {
-	width: #{$buttonwidewidth}px;
+    width: #{$buttonwidewidth}px;
 }
 button.wjgui_button_extrawide {
-	width: #{$buttonextrawidewidth}px;
+    width: #{$buttonextrawidewidth}px;
 }
 
 button.wjgui_button div.wjgui_button_column {
-	height: #{$buttonheight}px;
+    height: #{$buttonheight}px;
 }
 
 button.wjgui_button div.wjgui_button_center {
-	margin-left: #{$buttonmargin}px;
-	margin-right: #{$buttonmargin}px;
+    margin-left: #{$buttonmargin}px;
+    margin-right: #{$buttonmargin}px;
 }
 
 button.wjgui_button:active div.wjgui_button_left {
-	background-position: left (-$buttonheight * 3 * 1px);
+    background-position: left (-$buttonheight * 3 * 1px);
 }
 
 button.wjgui_button:active div.wjgui_button_center {
-	background-position: left (-$buttonheight * 4 * 1px);
+    background-position: left (-$buttonheight * 4 * 1px);
 }
 
 button.wjgui_button:active div.wjgui_button_right {
-	background-position: right (-$buttonheight * 5 * 1px);
+    background-position: right (-$buttonheight * 5 * 1px);
 }
 
 button.wjgui_button_nodefault div.wjgui_button_left {
-	background-position: left (-$buttonheight * 6 * 1px);
+    background-position: left (-$buttonheight * 6 * 1px);
 }
 
 button.wjgui_button_nodefault div.wjgui_button_center {
-	background-position: left (-$buttonheight * 7 * 1px);
+    background-position: left (-$buttonheight * 7 * 1px);
 }
 
 button.wjgui_button_nodefault div.wjgui_button_right {
-	background-position: right (-$buttonheight * 8 * 1px);
+    background-position: right (-$buttonheight * 8 * 1px);
 }
 
 button.wjgui_button_default div.wjgui_button_left {
-	background-position: left (-$buttonheight * 9 * 1px);
+    background-position: left (-$buttonheight * 9 * 1px);
 }
 
 button.wjgui_button_default div.wjgui_button_center {
-	background-position: left (-$buttonheight * 10 * 1px);
+    background-position: left (-$buttonheight * 10 * 1px);
 }
 
 button.wjgui_button_default div.wjgui_button_right {
-	background-position: right (-$buttonheight * 11 * 1px);
+    background-position: right (-$buttonheight * 11 * 1px);
 }
 
 button.wjgui_button:focus div.wjgui_button_left,
 button.wjgui_button:hover div.wjgui_button_left {
-	background-position: left (-$buttonheight * 12 * 1px);
+    background-position: left (-$buttonheight * 12 * 1px);
 }
 
 button.wjgui_button:focus div.wjgui_button_center,
 button.wjgui_button:hover div.wjgui_button_center {
-	background-position: left (-$buttonheight * 13 * 1px);
+    background-position: left (-$buttonheight * 13 * 1px);
 }
 
 button.wjgui_button:focus div.wjgui_button_right,
 button.wjgui_button:hover div.wjgui_button_right {
-	background-position: right (-$buttonheight * 14 * 1px);
+    background-position: right (-$buttonheight * 14 * 1px);
 }
 
 
@@ -314,171 +314,171 @@ button.wjgui_button:hover div.wjgui_button_right {
  * Theme's for normal BUTTON
  **/
 div.wjgui_windowtheme_magenta button.wjgui_button_default div.wjgui_button_left {
-	background-position: left (-$buttonheight * 15 * 1px);
+    background-position: left (-$buttonheight * 15 * 1px);
 }
 
 div.wjgui_windowtheme_magenta button.wjgui_button_default div.wjgui_button_center {
-	background-position: left (-$buttonheight * 16 * 1px);
+    background-position: left (-$buttonheight * 16 * 1px);
 }
 
 div.wjgui_windowtheme_magenta button.wjgui_button_default div.wjgui_button_right {
-	background-position: right (-$buttonheight * 17 * 1px);
+    background-position: right (-$buttonheight * 17 * 1px);
 }
 
 div.wjgui_windowtheme_magenta button.wjgui_button:focus div.wjgui_button_left,
 div.wjgui_windowtheme_magenta button.wjgui_button:hover div.wjgui_button_left {
-	background-position: left (-$buttonheight * 18 * 1px);
+    background-position: left (-$buttonheight * 18 * 1px);
 }
 
 div.wjgui_windowtheme_magenta button.wjgui_button:focus div.wjgui_button_center,
 div.wjgui_windowtheme_magenta button.wjgui_button:hover div.wjgui_button_center {
-	background-position: left (-$buttonheight * 19 * 1px);
+    background-position: left (-$buttonheight * 19 * 1px);
 }
 
 div.wjgui_windowtheme_magenta button.wjgui_button:focus div.wjgui_button_right,
 div.wjgui_windowtheme_magenta button.wjgui_button:hover div.wjgui_button_right {
-	background-position: right (-$buttonheight * 20 * 1px);
+    background-position: right (-$buttonheight * 20 * 1px);
 }
 
 div.wjgui_windowtheme_purple button.wjgui_button_default div.wjgui_button_left {
-	background-position: left (-$buttonheight * 21 * 1px);
+    background-position: left (-$buttonheight * 21 * 1px);
 }
 
 div.wjgui_windowtheme_purple button.wjgui_button_default div.wjgui_button_center {
-	background-position: left (-$buttonheight * 22 * 1px);
+    background-position: left (-$buttonheight * 22 * 1px);
 }
 
 div.wjgui_windowtheme_purple button.wjgui_button_default div.wjgui_button_right {
-	background-position: right (-$buttonheight * 23 * 1px);
+    background-position: right (-$buttonheight * 23 * 1px);
 }
 
 div.wjgui_windowtheme_purple button.wjgui_button:focus div.wjgui_button_left,
 div.wjgui_windowtheme_purple button.wjgui_button:hover div.wjgui_button_left {
-	background-position: left (-$buttonheight * 24 * 1px);
+    background-position: left (-$buttonheight * 24 * 1px);
 }
 
 div.wjgui_windowtheme_purple button.wjgui_button:focus div.wjgui_button_center,
 div.wjgui_windowtheme_purple button.wjgui_button:hover div.wjgui_button_center {
-	background-position: left (-$buttonheight * 25 * 1px);
+    background-position: left (-$buttonheight * 25 * 1px);
 }
 
 div.wjgui_windowtheme_purple button.wjgui_button:focus div.wjgui_button_right,
 div.wjgui_windowtheme_purple button.wjgui_button:hover div.wjgui_button_right {
-	background-position: right (-$buttonheight * 26 * 1px);
+    background-position: right (-$buttonheight * 26 * 1px);
 }
 
 div.wjgui_windowtheme_green button.wjgui_button_default div.wjgui_button_left {
-	background-position: left (-$buttonheight * 27 * 1px);
+    background-position: left (-$buttonheight * 27 * 1px);
 }
 
 div.wjgui_windowtheme_green button.wjgui_button_default div.wjgui_button_center {
-	background-position: left (-$buttonheight * 28 * 1px);
+    background-position: left (-$buttonheight * 28 * 1px);
 }
 
 div.wjgui_windowtheme_green button.wjgui_button_default div.wjgui_button_right {
-	background-position: right (-$buttonheight * 29 * 1px);
+    background-position: right (-$buttonheight * 29 * 1px);
 }
 
 div.wjgui_windowtheme_green button.wjgui_button:focus div.wjgui_button_left,
 div.wjgui_windowtheme_green button.wjgui_button:hover div.wjgui_button_left {
-	background-position: left (-$buttonheight * 30 * 1px);
+    background-position: left (-$buttonheight * 30 * 1px);
 }
 
 div.wjgui_windowtheme_green button.wjgui_button:focus div.wjgui_button_center,
 div.wjgui_windowtheme_green button.wjgui_button:hover div.wjgui_button_center {
-	background-position: left (-$buttonheight * 31 * 1px);
+    background-position: left (-$buttonheight * 31 * 1px);
 }
 
 div.wjgui_windowtheme_green button.wjgui_button:focus div.wjgui_button_right,
 div.wjgui_windowtheme_green button.wjgui_button:hover div.wjgui_button_right {
-	background-position: right (-$buttonheight * 32 * 1px);
+    background-position: right (-$buttonheight * 32 * 1px);
 }
 
 div.wjgui_window button.wjgui_button:active div.wjgui_button_left {
-	background-position: left (-$buttonheight * 3 * 1px);
+    background-position: left (-$buttonheight * 3 * 1px);
 }
 
 div.wjgui_window button.wjgui_button:active div.wjgui_button_center {
-	background-position: left (-$buttonheight * 4 * 1px);
+    background-position: left (-$buttonheight * 4 * 1px);
 }
 
 div.wjgui_window button.wjgui_button:active div.wjgui_button_right {
-	background-position: right (-$buttonheight * 5 * 1px);
+    background-position: right (-$buttonheight * 5 * 1px);
 }
 
 button.wjgui_button div.wjgui_button_content {
-	line-height: #{$buttonheight}px;
+    line-height: #{$buttonheight}px;
 }
 
 /**
  * Overwrites for Content BUTTON
  **/
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button {
-	height: $contentbuttonheight + 2 * 1px;
+    height: $contentbuttonheight + 2 * 1px;
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_column {
-	height: #{$contentbuttonheight}px;
+    height: #{$contentbuttonheight}px;
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_center {
-	margin-left: #{$contentbuttonmargin}px;
-	margin-right: #{$contentbuttonmargin}px;
+    margin-left: #{$contentbuttonmargin}px;
+    margin-right: #{$contentbuttonmargin}px;
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_default div.wjgui_button_left {
-	background-position: left (-$contentbuttonheight * 0 * 1px);
+    background-position: left (-$contentbuttonheight * 0 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_default div.wjgui_button_center {
-	background-position: left (-$contentbuttonheight * 1 * 1px);
+    background-position: left (-$contentbuttonheight * 1 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_default div.wjgui_button_right {
-	background-position: right (-$contentbuttonheight * 2 * 1px);
+    background-position: right (-$contentbuttonheight * 2 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button:focus div.wjgui_button_left,
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button:hover div.wjgui_button_left {
-	background-position: left (-$contentbuttonheight * 3 * 1px);
+    background-position: left (-$contentbuttonheight * 3 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button:focus div.wjgui_button_center,
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button:hover div.wjgui_button_center {
-	background-position: left (-$contentbuttonheight * 4 * 1px);
+    background-position: left (-$contentbuttonheight * 4 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button:focus div.wjgui_button_right,
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button:hover div.wjgui_button_right {
-	background-position: right (-$contentbuttonheight * 5 * 1px);
+    background-position: right (-$contentbuttonheight * 5 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button:active div.wjgui_button_left {
-	background-position: left (-$contentbuttonheight * 6 * 1px);
+    background-position: left (-$contentbuttonheight * 6 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button:active div.wjgui_button_center {
-	background-position: left (-$contentbuttonheight * 7 * 1px);
+    background-position: left (-$contentbuttonheight * 7 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button:active div.wjgui_button_right {
-	background-position: right (-$contentbuttonheight * 8 * 1px);
+    background-position: right (-$contentbuttonheight * 8 * 1px);
 }
 
 div.wjgui_window_main div.wjgui_window_content button.wjgui_button_nodefault div.wjgui_button_left {
-	background-position: left (-$contentbuttonheight * 0 * 1px);
+    background-position: left (-$contentbuttonheight * 0 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_nodefault div.wjgui_button_center {
-	background-position: left (-$contentbuttonheight * 1 * 1px);
+    background-position: left (-$contentbuttonheight * 1 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_nodefault div.wjgui_button_right {
-	background-position: right (-$contentbuttonheight * 2 * 1px);
+    background-position: right (-$contentbuttonheight * 2 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content div.wjgui_button_content {
-	line-height: #{$contentbuttonheight}px;
+    line-height: #{$contentbuttonheight}px;
 }
 
 /**
@@ -487,37 +487,37 @@ div.wjgui_window div.wjgui_window_main div.wjgui_window_content div.wjgui_button
 button.wjgui_button_disabled:active div.wjgui_button_left,
 button.wjgui_button_disabled:hover div.wjgui_button_left,
 button.wjgui_button_disabled div.wjgui_button_left {
-	background-position: left (-$buttonheight * 0 * 1px);
+    background-position: left (-$buttonheight * 0 * 1px);
 }
 
 button.wjgui_button_disabled:active div.wjgui_button_center,
 button.wjgui_button_disabled:hover div.wjgui_button_center,
 button.wjgui_button_disabled div.wjgui_button_center {
-	background-position: left (-$buttonheight * 1 * 1px);
+    background-position: left (-$buttonheight * 1 * 1px);
 }
 
 button.wjgui_button_disabled:active div.wjgui_button_right,
 button.wjgui_button_disabled:hover div.wjgui_button_right,
 button.wjgui_button_disabled div.wjgui_button_right {
-	background-position: right (-$buttonheight * 2 * 1px);
+    background-position: right (-$buttonheight * 2 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:active div.wjgui_button_left,
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:hover div.wjgui_button_left,
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled div.wjgui_button_left {
-	background-position: left (-$contentbuttonheight * 9 * 1px);
+    background-position: left (-$contentbuttonheight * 9 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:active div.wjgui_button_center,
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:hover div.wjgui_button_center,
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled div.wjgui_button_center {
-	background-position: left (-$contentbuttonheight * 10 * 1px);
+    background-position: left (-$contentbuttonheight * 10 * 1px);
 }
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:active div.wjgui_button_right,
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:hover div.wjgui_button_right,
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled div.wjgui_button_right {
-	background-position: right (-$contentbuttonheight * 11 * 1px);
+    background-position: right (-$contentbuttonheight * 11 * 1px);
 }
 /**
  * < BUTTON

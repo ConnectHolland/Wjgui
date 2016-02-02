@@ -9,5 +9,5 @@
  * @package Windmill.WJGui.Javascript
  **/
 var WJGuiSettings = Object.extend({
-	windowBaseTitle: "Windmill CMS"
+    windowBaseTitle: "Windmill CMS"
 }, WJGuiSettings || {});

@@ -17,8 +17,8 @@ $windowcontentbgcolor: #d6d7d7;
  **/
 div.wjgui_window,
 div.wjgui_window p {
-	font-family: $fonttype;
-	color: $windowfontcolor;
+    font-family: $fonttype;
+    color: $windowfontcolor;
 }
 
 div.wjgui_window h1,
@@ -27,16 +27,16 @@ div.wjgui_window h3,
 div.wjgui_window h4,
 div.wjgui_window h5,
 div.wjgui_window h6 {
-	font-family: $fonttype;
+    font-family: $fonttype;
 }
 
 div.wjgui_window_right,
 div.wjgui_window_left {
-	background-repeat: no-repeat;
+    background-repeat: no-repeat;
 }
 
 div.wjgui_window_buttons div.wjgui_window_content {
-	text-align: right;
+    text-align: right;
 }
 
 div.wjgui_window_title  div.wjgui_window_left,
@@ -49,95 +49,95 @@ div.wjgui_window_bottom div.wjgui_window_right {
 }
 
 div.wjgui_window_buttons div.wjgui_window_content div.wjgui_statusbar {
-	font-family: $fonttype;
-	color: $windowfontcolor;
-	font-size: #{$windowmessagefontsize}em;
+    font-family: $fonttype;
+    color: $windowfontcolor;
+    font-size: #{$windowmessagefontsize}em;
 }
 
 div.wjgui_window_bottom {
-	line-height: 1px; /* for IE6 */
+    line-height: 1px; /* for IE6 */
 }
 
 div.wjgui_window_title div.wjgui_window_content h1 {
-	html.ie7 & {
-		line-height: 8px;
-	}
+    html.ie7 & {
+        line-height: 8px;
+    }
 }
 
 div.wjgui_window_bottom div.wjgui_window_content {
-	font-size: 1px;
+    font-size: 1px;
 }
 
 div.wjgui_window_body div.wjgui_window_right,
 div.wjgui_window_body div.wjgui_window_left {
-	@include background-image-window-verticalshadows-png;
-	background-repeat: repeat-y;
+    @include background-image-window-verticalshadows-png;
+    background-repeat: repeat-y;
 }
 
 div.wjgui_window_body div.wjgui_window_center {
-	background-color: $windowcontentbgcolor;
+    background-color: $windowcontentbgcolor;
 }
 
 div.wjgui_window_title div.wjgui_window_closebutton {
-	@include background-image-close-png;
-	background-color: transparent;
-	background-repeat: no-repeat;
+    @include background-image-close-png;
+    background-color: transparent;
+    background-repeat: no-repeat;
 }
 
 div.wjgui_window_title h1 {
-	color: $windowtitlecolor;
-	font-family: $fonttype;
-	font-weight: bold;
-	font-size: #{$windowtitlefontsize}em;
-	padding-top: 0.7em;
+    color: $windowtitlecolor;
+    font-family: $fonttype;
+    font-weight: bold;
+    font-size: #{$windowtitlefontsize}em;
+    padding-top: 0.7em;
 }
 
 div.wjgui_window_blink div.wjgui_window_title  h1 {
-	color: $windowblinkcolor;
+    color: $windowblinkcolor;
 }
 
 div.wjgui_window_main div.wjgui_window_content button.wjgui_button {
-	font-size: #{$contentbuttonfontsize}em;
+    font-size: #{$contentbuttonfontsize}em;
 }
 
 div.wjgui_window_main div.wjgui_window_message {
-	font-family: $fonttype;
-	font-size: #{$windowmessagefontsize}em;
-	font-weight: normal;
+    font-family: $fonttype;
+    font-size: #{$windowmessagefontsize}em;
+    font-weight: normal;
 }
 
 
 div.wjgui_window div.wjgui_window_title div.wjgui_window_content {
-	@include background-image-window-icon-png;
-	background-repeat: no-repeat;
+    @include background-image-window-icon-png;
+    background-repeat: no-repeat;
 }
 
 div.wjgui_window.wjgui_window_loading div.wjgui_window_title div.wjgui_window_content {
-	@include background-image-window-load-gif;
+    @include background-image-window-load-gif;
 }
 
 div.wjgui_window_main div.wjgui_window_messageicon {
-	background-repeat: no-repeat;
-	background-position: center center;
+    background-repeat: no-repeat;
+    background-position: center center;
 }
 
 div.wjgui_window_main div.wjgui_window_messageicon_alert {
-	@include background-image-window-icon-alert-png;
+    @include background-image-window-icon-alert-png;
 }
 div.wjgui_window_main div.wjgui_window_messageicon_booleanconfirm {
-	@include background-image-window-icon-booleanConfirm-png;
+    @include background-image-window-icon-booleanConfirm-png;
 }
 div.wjgui_window_main div.wjgui_window_messageicon_confirm {
-	@include background-image-window-icon-confirm-png;
+    @include background-image-window-icon-confirm-png;
 }
 div.wjgui_window_main div.wjgui_window_messageicon_notice {
-	@include background-image-window-icon-notice-png;
+    @include background-image-window-icon-notice-png;
 }
 div.wjgui_window_main div.wjgui_window_messageicon_ok {
-	@include background-image-window-icon-ok-png;
+    @include background-image-window-icon-ok-png;
 }
 div.wjgui_window_main div.wjgui_window_messageicon_prompt {
-	@include background-image-window-icon-prompt-png;
+    @include background-image-window-icon-prompt-png;
 }
 /**
  * < WINDOW
@@ -147,55 +147,55 @@ div.wjgui_window_main div.wjgui_window_messageicon_prompt {
  * BUTTON >
  **/
 button.wjgui_button {
-	background-color: transparent;
-	border: none;
-	cursor: default;
-	font-family: $fonttype;
-	font-size: #{$buttonfontsize}em;
-	font-weight: normal;
+    background-color: transparent;
+    border: none;
+    cursor: default;
+    font-family: $fonttype;
+    font-size: #{$buttonfontsize}em;
+    font-weight: normal;
 }
 
 button.wjgui_button div.wjgui_button_content {
-	font-family: $fonttype;
+    font-family: $fonttype;
 }
 
 button.wjgui_button div.wjgui_button_left,
 button.wjgui_button div.wjgui_button_right,
 button.wjgui_button div.wjgui_button_center {
-	@include background-image-buttons-png;
+    @include background-image-buttons-png;
 }
 
 div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_left,
 div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_right,
 div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_center {
-	@include background-image-contentbuttons-png;
+    @include background-image-contentbuttons-png;
 }
 
 button.wjgui_button div.wjgui_button_center {
-	color: $buttoncolor;
+    color: $buttoncolor;
 }
 div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_center {
-	color: $contentbuttoncolor;
+    color: $contentbuttoncolor;
 }
 
 button.wjgui_button div.wjgui_button_left,
 button.wjgui_button div.wjgui_button_right {
-	background-repeat: no-repeat;
+    background-repeat: no-repeat;
 }
 button.wjgui_button div.wjgui_button_center {
-	background-repeat: repeat-x;
+    background-repeat: repeat-x;
 }
 
 button.wjgui_button_disabled:active div.wjgui_button_center,
 button.wjgui_button_disabled:hover div.wjgui_button_center,
 button.wjgui_button_disabled div.wjgui_button_center {
-	color: $disabledbuttoncolor;
+    color: $disabledbuttoncolor;
 }
 
 div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:active div.wjgui_button_center,
 div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:hover div.wjgui_button_center,
 div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled div.wjgui_button_center {
-	color: $disabledcontentbuttoncolor;
+    color: $disabledcontentbuttoncolor;
 }
 
 /**

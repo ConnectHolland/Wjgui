@@ -9,20 +9,20 @@
  * @package Windmill.Javascript.Aeroplane
  **/
 var WJWindowNotice = Class.create(WJWindowAlert, {
-	/**
-	 * initialize
-	 *
-	 * Creates a new WJWindowNotice
-	 *
-	 * @since Mon Jul 07 2008
-	 * @access public
-	 * @param Class $super
-	 * @param Function callback
-	 * @param string type
-	 * @return WJWindowNotice
-	 **/
-	initialize: function($super, toDecorate) {
-		this._type = "notice";
-		$super(toDecorate);
-	}
+    /**
+     * initialize
+     *
+     * Creates a new WJWindowNotice
+     *
+     * @since Mon Jul 07 2008
+     * @access public
+     * @param Class $super
+     * @param Function callback
+     * @param string type
+     * @return WJWindowNotice
+     **/
+    initialize: function($super, toDecorate) {
+        this._type = "notice";
+        $super(toDecorate);
+    }
 });
