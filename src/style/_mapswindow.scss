@@ -1,0 +1,112 @@
+div.googlemaps div.wjgui_window_title div.wjgui_window_left,
+div.googlemaps div.wjgui_window_title div.wjgui_window_center,
+div.googlemaps div.wjgui_window_title div.wjgui_window_right,
+div.googlemaps div.wjgui_window_bottom div.wjgui_window_left,
+div.googlemaps div.wjgui_window_bottom div.wjgui_window_center,
+div.googlemaps div.wjgui_window_bottom div.wjgui_window_right {
+	@include background-image-maps-window-png;
+}
+
+div.googlemaps div.wjgui_window_body div.wjgui_window_right,
+div.googlemaps div.wjgui_window_body div.wjgui_window_left {
+	@include background-image-maps-window-vertical-shadows-png;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_closebutton {
+	@include background-image-maps-closewindow-gif;
+	width: 13px;
+	height: 13px;
+	margin-right: 19px;
+	margin-top: 10px;
+	line-height: 1px;
+	font-size: 1px;
+}
+
+div.googlemap {
+	height: 300px; /* just give it some height */
+}
+
+div.googlemaps div.wjgui_window {
+	width: 300px;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_closebutton {
+	background-position: left 0;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_closebutton:hover {
+	background-position: left -13px;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_closebutton:active {
+	background-position: left -26px;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_content {
+	background-image: none;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_bottom div.wjgui_window_left {
+	background-position: left 0;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_bottom div.wjgui_window_center {
+	background-position: left -23px;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_bottom div.wjgui_window_right {
+	background-position: right -46px;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_left {
+	background-position: left -69px;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_center {
+	background-position: left -92px;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_right {
+	background-position: right -115px;
+}
+
+
+div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_column,
+div.googlemaps div.wjgui_window div.wjgui_window_bottom div.wjgui_window_column {
+	height: 23px;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_center {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+div.googlemaps div.wjgui_window_body div.wjgui_window_center {
+	background-color: #FFFFFF;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_title div.wjgui_window_content h1 {
+	color: #000000;
+	margin: 0px;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_main div.wjgui_window_content {
+	font-size: 12px;
+	line-height: 16px;
+}
+
+div.googlemaps div.pushpinwindowconnector {
+	width: 38px;
+	height: 21px;
+	@include background-image-maps-windowconnector-png;
+	top: -15px;
+	margin-left: 0.25em;
+}
+
+div.googlemaps div.wjgui_window div.wjgui_window_main div.wjgui_window_content {
+	min-height: 2em;
+}
+
+div.googlemaps div.wjgui_window_title h1 {
+	font-size: 12px;
+}

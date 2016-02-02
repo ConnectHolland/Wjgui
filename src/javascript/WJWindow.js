@@ -1,0 +1,1411 @@
+/**
+ * class WJWindow
+ *
+ * The base window class
+ *
+ * @since Fri Jun 27 2008
+ * @revision $Revision$
+ * @author Giso Stallenberg
+ * @package Windmill.Javascript.Aeroplane
+ **/
+var WJWindow = Class.create({
+	/**
+	 * Properties of Window
+	 *
+	 * string _title
+	 * string _type
+	 * DOMElement _content
+	 * mixed _contenttype
+	 * Function _callbackFunction
+	 * boolean _visible
+	 * integer _x
+	 * integer _y
+	 * integer _z
+	 * integer _w
+	 * integer _h
+	 **/
+
+	/**
+	 * initialize
+	 *
+	 * Creates a new WJWindow
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @param Function callback
+	 * @param DOMElement parent (default: document.body)
+	 * @return WJWindow
+	 **/
+	initialize: function(callback, parent, translate) {
+		this._loading = false;
+		this._basetitle = this._title = "";
+		this._theme = "default";
+		this._parent = parent || WJWindow.DEFAULT_PARENT || document.body;
+		Element.extend(this._parent);
+		this._listeners = new Hash();
+		this.translate = translate || this.translate;
+
+		this._createWindow();
+		this._addDefaultListeners();
+
+		this._addCloseButton();
+
+		this.setCallback(callback);
+		this.setBaseTitle(WJGuiSettings.windowBaseTitle);
+	},
+
+	/**
+	 * _createWindow
+	 *
+	 * Creates a new window DOMElement
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access protected
+	 * @return void
+	 **/
+	_createWindow: function() {
+		var classname = this._getBaseClassname();
+		this._windowElement = new Element("div");
+		this._windowElement.addClassName(classname);
+		this._windowElement.setStyle({"display": "none"});
+		this._createWindowRows(["title", "main", "buttons", "bottom"], classname);
+		this._windowElementId = this._windowElement.identify();
+		this._parent.insert(this._windowElement);
+		this._absolutizeTopLeft();
+		this.hide();
+		this._outerElement = this._windowElement;
+		this.setTheme();
+	},
+
+	/**
+	 * insertWindowRowBefore
+	 *
+	 * Inserts a new row before given rowname with name newrowname
+	 *
+	 * @since Tue Sep 23 2008
+	 * @access public
+	 * @param string rowname
+	 * @param string newrowname
+	 * @return DOMElement
+	 **/
+	insertWindowRowBefore: function(rowname, newrowname) {
+		if (rowname === "title") {
+			return;
+		}
+		var classname = this._getBaseClassname();
+		var row = this._windowElement.select("." + classname + "_" + rowname)
+		row = row.first();
+		var newrowhtml = this._createRow(newrowname, classname, " " + classname + "_body");
+		var div = new Element("div");
+		div.update(newrowhtml);
+		var toprow = row.parentNode;
+		var newrow = toprow.insertBefore(div.firstChild, row );
+		newrow = Element.extend(newrow);
+		newrow = newrow.select("." + classname + "_content");
+		this._contentElements[newrowname] = newrow.first();
+		return newrow;
+	},
+
+	/**
+	 * replaceWindowRow
+	 *
+	 * Replaces windowrow old with new, keeps references to old alive (they'll return the new rows)
+	 * Returns the removed row
+	 *
+	 * @since Thu Feb 12 2009
+	 * @access public
+	 * @param string oldrow
+	 * @param string newrow
+	 * @return htmlelement
+	 **/
+	replaceWindowRow: function(oldrow, newrow) {
+		var inserted = this.insertWindowRowBefore(oldrow, newrow);
+		var toremove = this.getContentElement(oldrow);
+		this._contentElements[oldrow] = this._contentElements[newrow];
+		return toremove.remove();
+	},
+
+	/**
+	 * removeWindowRow
+	 *
+	 * Removes windowrow
+	 * Returns the removed row
+	 *
+	 * @since Tue Dec 8 2009
+	 * @access public
+	 * @param string oldrow
+	 * @return htmlelement
+	 **/
+	removeWindowRow: function(oldrow) {
+		var toremove = this.getContentElement(oldrow);
+		delete(this._contentElements[oldrow]);
+		return toremove.remove();
+	},
+
+	/**
+	 * _addCloseButton
+	 *
+	 * Adds a button to close the window
+	 *
+	 * @since Mon Jul 7 2008
+	 * @access protected
+	 * @return void
+	 **/
+	_addCloseButton: function() {
+		var title = this.getContentElement("title");
+		var titlediv = new Element("div", {"onclick": "this.parentNode.getWJWindowObject().fireClose(this)", "title": this.translate("CLOSE_WINDOW") } );
+		titlediv.addClassName(this._getBaseClassname() + "_closebutton");
+ 		title.insert(titlediv);
+	},
+
+	/**
+	 * fireClose
+	 *
+	 * Fires the close event from the given element
+	 *
+	 * @since Thu Oct 16 2008
+	 * @access public
+	 * @param Element element
+	 * @return void
+	 **/
+	fireClose: function(element) {
+		element = $(element);
+
+		/* Observe once function */
+		var func = function() {
+			this.destroy();
+			Event.stopObserving(document, "wjgui:close", arguments.callee.observerFunction);
+		}
+		var bound = func.bindAsEventListener(this);
+		func.observerFunction = bound;
+		/* End observe once function */
+
+		Event.observe(document, "wjgui:close", bound);
+		element.fire("wjgui:close");
+		Event.stopObserving.defer(document, "wjgui:close", bound);
+	},
+
+	/**
+	 * _addDefaultListeners
+	 *
+	 * Adds custom event listeners to the window
+	 *
+	 * @since Mon Jul 7 2008
+	 * @access protected
+	 * @return void
+	 **/
+	_addDefaultListeners: function(element) {
+		this.addListener("true", this.windowResult.bindAsEventListener(this, true) );
+		this.addListener("false", this.windowResult.bindAsEventListener(this, false) );
+		this.addListener("close", this.windowResult.bindAsEventListener(this, false) );
+		this.addListener("save", this.windowResult.bindAsEventListener(this) );
+		this.addListener("delete", this.windowResult.bindAsEventListener(this) );
+		this.addListener("cancel", this.windowResult.bindAsEventListener(this) );
+		this._addDefaultKeyListener();
+	},
+
+	/**
+	 * _addDefaultKeyListener
+	 *
+	 * Adds a listener for key's like return and esc
+	 *
+	 * @since Fri Sep 5 2008
+	 * @access protected
+	 * @return void
+	 **/
+	_addDefaultKeyListener: function() {
+		// here for extending purposes only
+		var element = element || this._windowElement;
+		Event.observe(element, "keydown", this.keyHandle.bindAsEventListener(this) );
+	},
+
+	/**
+	 * keyHandle
+	 *
+	 * Handles pressing enter or esc
+	 *
+	 * @since Fri Sep 5 2008
+	 * @access public
+	 * @param Event event
+	 * @return void
+	 **/
+	keyHandle: function(event) {
+		var element = event.element();
+		if (Object.isElement(element.up(".wjgui_window") ) ) {
+			switch (event.keyCode) {
+				case Event.KEY_RETURN:
+					if (this.isVisible() ) {
+						element.fire("wjgui:true");
+					}
+					break;
+				case Event.KEY_ESC:
+					if (this.isVisible() ) {
+						element.fire("wjgui:close");
+					}
+					break;
+				default:
+					return;
+			}
+		}
+	},
+
+	/**
+	 * addListener
+	 *
+	 * Adds a listener for a custom event that calls the given callback or the default callback of this window
+	 *
+	 * @since Tue Aug 12 2008
+	 * @access
+	 * @param
+	 * @return WJWindow
+	 **/
+	addListener: function(eventName, callback, element) {
+		this._log('INFO', "Adding listener in WJWindow", eventName, callback);
+		var callback = callback || this.windowResult.bindAsEventListener(this);
+		var element = element || this._windowElement;
+
+		Event.observe(element, "wjgui:" + eventName, callback);
+		this._setListener(eventName, {"element": element, "callback": callback} );
+		return this;
+	},
+
+	/**
+	 * Log to WJDebugger when available
+	 */
+	_log: function(level) {
+		if (typeof WJDebugger == "undefined") {
+			return;
+		}
+
+		arguments[0] = WJDebugger[level];
+		return WJDebugger.log.apply(this, arguments);
+	},
+
+	/**
+	 * _setListener
+	 *
+	 * Registers a listener function
+	 *
+	 * @since Wed Jul 9 2008
+	 * @access public
+	 * @param string key
+	 * @param Object elementAndCallback
+	 * @return void
+	 **/
+	_setListener: function(key, elementAndCallback) {
+		this._listeners.set(key, elementAndCallback);
+	},
+
+	/**
+	 * removeListener
+	 *
+	 * Removes the listener set for key
+	 *
+	 * @since Tue Aug 12 2008
+	 * @access
+	 * @param
+	 * @return WJWindow
+	 **/
+	removeListener: function(key) {
+		var listener = this.getListener(key);
+		Event.stopObserving(listener.element, "wjgui:" + key, listener.callback);
+		this._listeners.unset(key);
+		return this;
+	},
+
+	/**
+	 * removeListeners
+	 *
+	 * Removes all listeners
+	 *
+	 * @since Tue Aug 12 2008
+	 * @access public
+	 * @return WJWindow
+	 **/
+	removeListeners: function() {
+		this._listeners.each(function(info) {
+			this.removeListener(info.key);
+		}.bind(this) );
+		return this;
+	},
+
+	/**
+	 * windowResult
+	 *
+	 * Handles the window result event
+	 *
+	 * @since Wed Jul 9 2008
+	 * @access protected
+	 * @param Event event
+	 * @return void
+	 **/
+	windowResult: function(event) {
+		this._callback.apply(this, arguments);
+	},
+
+	/**
+	 * getListeners
+	 *
+	 * Returns the listeners hash
+	 *
+	 * @since Mon Jul 7 2008
+	 * @access public
+	 * @return Hash
+	 **/
+	getListeners: function() {
+		return this._listeners;
+	},
+
+	/**
+	 * getListener
+	 *
+	 * Returns the listener info set for key
+	 *
+	 * @since Tue Aug 12 2008
+	 * @access
+	 * @param
+	 * @return
+	 **/
+	getListener: function(key) {
+		return this._listeners.get(key);
+	},
+
+	/**
+	 * _getBaseClassname
+	 *
+	 * Returns the base classname used for windows
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access protected
+	 * @return string
+	 **/
+	_getBaseClassname: function() {
+		return "wjgui_window";
+	},
+
+	/**
+	 * _getWindowRowTemplate
+	 *
+	 * Returns a template that can be used to create rows in windows
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access protected
+	 * @return Template
+	 **/
+	_getWindowRowTemplate: function() {
+		return new Template("<div class='#{classprefix}_#{rowname} #{classprefix}_row#{body}'><div class='#{classprefix}_left #{classprefix}_column'><div class='#{classprefix}_right #{classprefix}_column'><div class='#{classprefix}_center #{classprefix}_column'><div class='#{classprefix}_content'>&#160;</div></div></div></div></div>");
+	},
+
+	/**
+	 * _createWindowRows
+	 *
+	 * Creates rows with names in the rows argument, appends them to windowElement and prefixes all classes with classprefix
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access protected
+	 * @param Array rows
+	 * @param string classprefix
+	 * @param Element windowElement
+	 * @return array
+	 **/
+	_createWindowRows: function(rows, classprefix, windowElement) {
+		var windowElement = windowElement || this._windowElement;
+		rows.each(function(windowElement, classprefix, rowname, index) {
+			var body = " " + classprefix + "_body";
+			if (index == 0 || index == (rows.length - 1) ) {
+				body = "";
+			}
+			windowElement.innerHTML += this._createRow(rowname, classprefix, body);
+		}.bind(this, windowElement, classprefix));
+		this._saveRows(rows, classprefix, windowElement);
+		this._addWindowObjectGetters();
+	},
+
+	/**
+	 * _addWindowObjectGetters
+	 *
+	 * Adds a getWJWindowObject getter to all content elements and the main window element
+	 *
+	 * @since Thu Oct 16 2008
+	 * @access protected
+	 * @return Array
+	 **/
+	_addWindowObjectGetters: function() {
+		var test = [$H(this._contentElements).values(), this._windowElement].flatten();
+		test.each(function(el) {
+			el.getWJWindowObject = function() { return this; }.bind(this);
+		}, this);
+
+		return test;
+	},
+
+	/**
+	 * _saveRows
+	 *
+	 * Saves all rows in this._contentElements
+	 *
+	 * @since Tue Sep 23 2008
+	 * @access protected
+	 * @param Array rows
+	 * @param string classprefix
+	 * @param Element windowElement
+	 * @return WJWindow
+	 **/
+	_saveRows: function(rows, classprefix, windowElement) {
+		var windowElement = windowElement || this._windowElement;
+		this._contentElements = {};
+		rows.each(function(windowElements, rowname, index) {
+			this._contentElements[rowname] = windowElements[index];
+		}.bind(this, windowElement.select("." + classprefix + "_content") ) );
+		return this;
+	},
+
+	/**
+	 * _createRow
+	 *
+	 * Creates the HTML of a row
+	 *
+	 * @since Tue Sep 23 2008
+	 * @access protected
+	 * @param string rowname
+	 * @param string classprefix
+	 * @param string body
+	 * @return string
+	 **/
+	_createRow: function(rowname, classprefix, body) {
+		var row = this._getWindowRowTemplate();
+		return row.evaluate({"rowname": rowname, "classprefix": classprefix, "body": body});
+	},
+
+	/**
+	 * getContentElement
+	 *
+	 * Returns the content element identified by rowname
+	 *
+	 * @since Mon Jul 7 2008
+	 * @access public
+	 * @param string rowname
+	 * @return DOMElement
+	 **/
+	getContentElement: function(rowname) {
+		return this._contentElements[rowname];
+	},
+
+	/**
+	 * evalContentElement
+	 *
+	 * Evaluates the script parts in the content element identified by rowname
+	 *
+	 * @since Wed Jul 30 2008
+	 * @access public
+	 * @param string rowname
+	 * @return WJWindow
+	 **/
+	evalContentElement: function(rowname) {
+		var element = this.getContentElement(rowname);
+		element.innerHTML.evalScripts();
+		return this;
+	},
+
+	/**
+	 * _absolutizeTopLeft
+	 *
+	 * Puts the window in the top left corner of the viewport
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access protected
+	 * @param Element element
+	 * @return void
+	 **/
+	_absolutizeTopLeft: function(element) {
+		var element = element || this._windowElement;
+		element.absolutize();
+		element.setStyle({height: "", width: ""});
+		this.setX(0, element);
+		this.setY(0, element);
+	},
+
+	/**
+	 * _checkMaxHeight
+	 *
+	 * Checks the window wo be inside the viewport
+	 *
+	 * @since Mon Jul 7 2008
+	 * @access protected
+	 * @param DOMElement element
+	 * @return void
+	 **/
+	_checkMaxHeight: function(element) {
+		var element = element || this.getContentElement("main");
+		if (this.getY() + this.getHeight() > document.viewport.getHeight() ) {
+			this.setHeight(document.viewport.getHeight() - this.getY(), element, false);
+		}
+		else {
+			element.setStyle({"maxHeight": ""});
+		}
+	},
+
+	/**
+	 * show
+	 *
+	 * Shows the window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return WJWindow
+	 **/
+	show: function(element) {
+		var element = element || this._outerElement || this._windowElement;
+		element.style.display = "block";
+		try { element.focus() } catch(e) {} // TODO think of something better to get focus in browsers and a window in IE6
+		return this;
+	},
+
+	/**
+	 * hide
+	 *
+	 * Hides the window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return WJWindow
+	 **/
+	hide: function(element) {
+		var element = element || this._outerElement || this._windowElement;
+		element.style.display = "none";
+		return this;
+	},
+
+	/**
+	 * destroy
+	 *
+	 * Destroys the window
+	 *
+	 * @since Mon Jul 28 2008
+	 * @access public
+	 * @return WJWindow
+	 **/
+	destroy: function(element) {
+		var element = element || this._outerElement || this._windowElement;
+		if (element.parentNode) {
+			element.remove();
+		}
+		return this;
+	},
+
+	/**
+	 * _callback
+	 *
+	 * Does the callback that this window should do
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access protected
+	 * @return mixed
+	 **/
+	_callback: function() {
+		if (Object.isFunction(this._callbackFunction) ) {
+			var args = $A(arguments);
+			args.unshift(this);
+			return this._callbackFunction.apply(this._callbackFunction,  args);
+		}
+	},
+
+	/**
+	 * _close
+	 *
+	 * Closes the window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access protected
+	 * @return mixed
+	 **/
+	_close: function(event) {
+		this.hide();
+	},
+
+	/**
+	 * setBaseTitle
+	 *
+	 * Changes the base title
+	 *
+	 * @since Wed Sep 10 2008
+	 * @access public
+	 * @param string title
+	 * @return WJWindow
+	 **/
+	setBaseTitle: function(title) {
+		this._basetitle = title;
+		this.setTitle(this.getTitle() );
+		return this;
+	},
+
+	/**
+	 * setTitle
+	 *
+	 * Changes the title
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return WJWindow
+	 **/
+	setTitle: function(title) {
+		this._title = title;
+		var headers = this.getContentElement("title").getElementsByTagName("h1");
+		if (headers.length < 1) {
+			this.getContentElement("title").innerHTML = "<h1>&#160;</h1>" + this.getContentElement("title").innerHTML;
+			return this.setTitle(this._title);
+		}
+		headers[0].innerHTML = this._getComposedTitle();
+		return this;
+	},
+
+	/**
+	 * _getComposedTitle
+	 *
+	 * Creates a nice looking title
+	 *
+	 * @since Wed Sep 10 2008
+	 * @access protected
+	 * @return string
+	 **/
+	_getComposedTitle: function() {
+		return this._title + ( (this._basetitle != "" &&  this._basetitle != this._title) ? ( (this._title != "") ? " - " : "") + this._basetitle : "");
+	},
+
+	/**
+	 * setContent
+	 *
+	 * Changes the content
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @param mixed content
+	 * @return WJWindow
+	 **/
+	setContent: function(content) {
+		if (Object.isString(content) ) {
+			this.getContentElement("main").innerHTML = content;
+		}
+		if (Object.isElement(content) ) {
+			this.getContentElement("main").appendChild(content);
+		}
+		this._content = content;
+		return this;
+	},
+
+	/**
+	 * addButton
+	 *
+	 * Adds a button to the window
+	 *
+	 * @since Tue Aug 12 2008
+	 * @access public
+	 * @param string caption
+	 * @param mixed callback
+	 * @param boolean defaultButton
+	 * @return DOMElement
+	 **/
+	addButton: function(caption, eventHandler, defaultButton) {
+		this._log('INFO', "Adding button to window", caption, eventHandler, this);
+		var button = WJButton.create(caption, eventHandler, defaultButton, this.getContentElement("buttons") );
+		this._checkMaxHeight(); // this function is likely to change the height of the bottom row
+		return button;
+	},
+
+	/**
+	 * addStatusbar
+	 *
+	 * Adds a statusbar to the window
+	 *
+	 * @since Mon Feb 02 2009
+	 * @access public
+	 * @return void
+	 **/
+	addStatusbar: function() {
+		this._log('INFO', "Adding statusbar to window", this);
+		this._statusbar = new Element("div");
+		this._statusbar.addClassName("wjgui_statusbar");
+		this.getContentElement("buttons").insert(this._statusbar);
+		this._checkMaxHeight();
+	},
+
+	/**
+	 * setStatusbar
+	 *
+	 * Sets the content of the statusbar
+	 *
+	 * @since Mon Feb 02 2009
+	 * @access public
+	 * @param string content
+	 * @param integer fade
+	 * @return void
+	 **/
+	setStatusbar: function(content, fade) {
+		var fade = fade || -1;
+		if (this._statusbar) {
+			this._statusbar.update(content);
+			if (fade > 0) {
+				this.hideStatusbar.bind(this).delay(fade);
+			}
+		}
+	},
+
+	/**
+	 * hideStatusbar
+	 *
+	 * Hides the contents of the statusbar, and then clears its contents
+	 *
+	 * @since Mon Feb 02 2009
+	 * @access public
+	 * @return void
+	 **/
+	hideStatusbar: function() {
+		if (typeof(S2) !== "undefined") {
+			this._statusbar.fade({duration: 3.0});
+		}
+		else if (typeof(Effect) !== "undefined" ) {
+			Effect.Fade(this._statusbar, {duration: 3.0} );
+		}
+		this.clearAndShowStatusbar.bind(this).delay(3.5);
+	},
+
+	/**
+	 * clearAndShowStatusbar
+	 *
+	 * Clears and shows the statusbar
+	 *
+	 * @since Mon Feb 02 2009
+	 * @access public
+	 * @return void
+	 **/
+	clearAndShowStatusbar: function() {
+		this._statusbar.update("");
+		this._statusbar.show();
+	},
+
+	/**
+	 * setCallback
+	 *
+	 * Changes the callback function
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @param Function callback
+	 * @return WJWindow
+	 **/
+	setCallback: function(callback) {
+		if (Object.isFunction(callback) ) {
+			this._callbackFunction = callback;
+		}
+		return this;
+	},
+
+	/**
+	 * setX
+	 *
+	 * Changes the x position of this window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @param integer x
+	 * @return WJWindow
+	 **/
+	setX: function(x, element) {
+		this._x = x || 0;
+		var element = element || this._windowElement;
+		element.style.left = x + "px";
+		return this;
+	},
+
+	/**
+	 * setY
+	 *
+	 * Changes the y position of this window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @param integer y
+	 * @return WJWindow
+	 **/
+	setY: function(y, element) {
+		this._y = y || 0;
+		var element = element || this._windowElement;
+		element.style.top = y + "px";
+		this._checkMaxHeight(element);
+		return this;
+	},
+
+	/**
+	 * setZ
+	 *
+	 * Changes the z-index of this window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @param integer z
+	 * @return WJWindow
+	 **/
+	setZ: function(z, element) {
+		this._z = z || 10000;
+		var element = element || this._windowElement;
+		element.style.zIndex = z;
+		return this;
+	},
+
+	/**
+	 * setWidth
+	 *
+	 * Changes the width of this window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @param integer width
+	 * @return WJWindow
+	 **/
+	setWidth: function(width, element) {
+		this._width = width;
+		var element = element || this._windowElement;
+		element.setStyle({"width": width + "px"});
+		element.fire("wjgui:resize");
+		return this;
+	},
+
+	/**
+	 * setHeight
+	 *
+	 * Changes the height of this window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @param integer height
+	 * @return WJWindow
+	 **/
+	setHeight: function(height, element, checkHeight) {
+		this._height = height;
+		var element = element || this.getContentElement("main");
+
+		var wasVisible = this.isVisible();
+		var origX = this.getX();
+		var origY = this.getY();
+		if (!wasVisible) {
+			this.setX(-10000);
+			this.setY(-10000);
+			this.show();
+		}
+
+		var otherRowsHeight = 0;
+		for (var key in this._contentElements) {
+			if (key != "main") {
+				otherRowsHeight += this._contentElements[key].getHeight();
+			}
+		}
+
+		var height = (Object.isNumber(height) == false) ? height : (height - otherRowsHeight) + "px";
+		element.setStyle({"height": height});
+
+		if (!wasVisible) {
+			this.hide();
+			this.setX(origX);
+			this.setY(origY);
+		}
+
+		if (checkHeight != false) {
+			this._checkMaxHeight(element);
+		}
+		if (!checkHeight) {
+			element.fire("wjgui:resize");
+		}
+		return this;
+	},
+
+	/**
+	 * getBaseTitle
+	 *
+	 * Returns the title of this window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return string
+	 **/
+	getBaseTitle: function() {
+		return this._basetitle;
+	},
+
+	/**
+	 * getTitle
+	 *
+	 * Returns the title of this window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return string
+	 **/
+	getTitle: function() {
+		return this._title;
+	},
+
+	/**
+	 * getType
+	 *
+	 * Tells what window type this window is
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return string
+	 **/
+	getType: function() {
+		return this._type;
+	},
+
+	/**
+	 * getContent
+	 *
+	 * Returns the content of this window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return mixed
+	 **/
+	getContent: function() {
+		return this._content;
+	},
+
+	/**
+	 * getContenttype
+	 *
+	 * Returns the type of the content
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return mixed
+	 **/
+	getContenttype: function() {
+
+	},
+
+	/**
+	 * getCallback
+	 *
+	 * Returns the callback function
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return Function
+	 **/
+	getCallback: function() {
+		return this._callbackFunction;
+	},
+
+	/**
+	 * isVisible
+	 *
+	 * Tells if this window can be seen
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return boolean
+	 **/
+	isVisible: function() {
+		var xInLow = (this.getX() < 0 && (this.getX() + this.getWidth() ) > 0);
+		var xInHigh = (this.getX() >= 0 && this.getX() < document.viewport.getWidth() );
+		var yInLow = (this.getY() < 0 && (this.getY() + this.getHeight() ) > 0);
+		var yInHigh = (this.getY() >= 0 && this.getY() < document.viewport.getHeight() );
+		if ( (xInLow || xInHigh) && (yInLow || yInHigh) && this._windowElement.visible() ) {
+			return true;
+		}
+		return false;
+	},
+
+	/**
+	 * getX
+	 *
+	 * Tells the x position of this window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return integer
+	 **/
+	getX: function(element) {
+		var element = element || this._windowElement;
+		return parseInt(element.style.left);
+	},
+
+	/**
+	 * getY
+	 *
+	 * Tells the y position of this window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return integer
+	 **/
+	getY: function(element) {
+		var element = element || this._windowElement;
+		return parseInt(element.style.top);
+	},
+
+	/**
+	 * getZ
+	 *
+	 * Tells the zIndex of this window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return integer
+	 **/
+	getZ: function() {
+		var element = element || this._windowElement;
+		return element.style.zIndex;
+	},
+
+	/**
+	 * getWidth
+	 *
+	 * Tells the width of this window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return integer
+	 **/
+	getWidth: function(element) {
+		var element = element || this._windowElement;
+		return element.getWidth();
+	},
+
+	/**
+	 * getHeight
+	 *
+	 * Tells the height of this window
+	 *
+	 * @since Fri Jun 27 2008
+	 * @access public
+	 * @return integer
+	 **/
+	getHeight: function(element) {
+		var element = element || this._windowElement;
+		return element.getHeight();
+	},
+
+	/**
+	 * getContentHeight
+	 *
+	 * Tells what's the height of the content element
+	 *
+	 * @since Tue Sep 16 2008
+	 * @access public
+	 * @return integer
+	 **/
+	getContentHeight: function() {
+		return this.getContentElement("main").getHeight();
+	},
+
+	/**
+	 * getContentWidth
+	 *
+	 * Tells what's the width of the content element
+	 *
+	 * @since Tue Sep 16 2008
+	 * @access public
+	 * @return integer
+	 **/
+	getContentWidth: function() {
+		return this.getContentElement("main").getWidth();
+	},
+
+	/**
+	 * getWindowElement
+	 *
+	 * Returns the windowElement
+	 *
+	 * @since Mon Jul 7 2008
+	 * @access public
+	 * @return DOMElement
+	 **/
+	getWindowElement: function() {
+		return this._windowElement;
+	},
+
+	/**
+	 * center
+	 *
+	 * centers the given element
+	 *
+	 * @since Mon Jul 7 2008
+	 * @access public
+	 * @param DOMElement element
+	 * @return WJWindow
+	 **/
+	center: function(element) {
+		var element = element || this._windowElement;
+		var remainsX = document.viewport.getWidth() - this.getWidth(element);
+		var remainsY = document.viewport.getHeight() - this.getHeight(element);
+
+		this.setX(remainsX / 2, element).setY(remainsY / 2, element);
+		return this;
+	},
+
+	/**
+	 * keepCentered
+	 *
+	 * Makes sure the window stays centered
+	 *
+	 * @since Mon Jul 7 2008
+	 * @access public
+	 * @param DOMElement element
+	 * @return void
+	 **/
+	keepCentered: function(element) {
+		if (!this._centerObserver) {
+			var element = element || this._windowElement;
+			this._centerObserver = this.center.bind(this, element);
+			Event.observe(window, "resize", this._centerObserver);
+		}
+		return this;
+	},
+
+	/**
+	 * stopCentered
+	 *
+	 * Stops centering the window
+	 *
+	 * @since Mon Jul 7 2008
+	 * @access public
+	 * @return void
+	 **/
+	stopCentered: function() {
+		Event.stopObserving(window, "resize", this._centerObserver);
+		this._centerObserver = null;
+		return this;
+	},
+
+	/**
+	 * maximize
+	 *
+	 * Maximizes the window
+	 *
+	 * @since Fri Aug 8 2008
+	 * @access public
+	 * @return WJWindow
+	 **/
+	maximize: function(paddingTop, paddingRight, paddingBottom, paddingLeft, noScroll) {
+		var paddingTop = paddingTop || 0;
+		var paddingRight = paddingRight || paddingTop;
+		var paddingBottom = paddingBottom || paddingTop;
+		var paddingLeft = paddingLeft || paddingTop;
+		var noScroll = noScroll || false;
+
+		this.setX(paddingLeft).setY(paddingTop);
+
+		if (noScroll) {
+			this.setWidth(0).setHeight(0);
+		}
+
+		this.setWidth(document.viewport.getWidth() - (paddingLeft + paddingRight) ).setHeight(document.viewport.getHeight() - (paddingTop + paddingBottom) );
+		return this;
+	},
+
+	/**
+	 * keepMaximized
+	 *
+	 * Makes sure the window stays maximized
+	 *
+	 * @since Tue Sep 9 2008
+	 * @access public
+	 * @return void
+	 **/
+	keepMaximized: function() {
+		if (!this._maximizedObserver) {
+			var paddingTop = this.getY();
+			var paddingLeft = this.getX();
+			var paddingRight = document.viewport.getWidth() - this.getWidth() - paddingLeft;
+			var paddingBottom = document.viewport.getHeight() - this.getHeight() - paddingTop;
+
+			this._maximizedObserver = this.maximize.bind(this, paddingTop, paddingRight, paddingBottom, paddingLeft, true);
+			Event.observe(window, "resize", this._maximizedObserver);
+		}
+		return this;
+	},
+
+	/**
+	 * stopMaximized
+	 *
+	 * Stops maximizing the window
+	 *
+	 * @since Tue Sep 9 2008
+	 * @access public
+	 * @return void
+	 **/
+	stopMaximized: function() {
+		Event.stopObserving(window, "resize", this._maximizedObserver);
+		this._maximizedObserver = null;
+		return this;
+	},
+
+	/**
+	 * setLoading
+	 *
+	 * Mark this window as loading (or not)
+	 *
+	 * @since Wed Sep 3 2008
+	 * @access public
+	 * @param boolean loading
+	 * @param function loadCallback;
+	 * @return WJWindow
+	 **/
+	setLoading: function(loading, loadCallback) {
+		var loadCallback = loadCallback || false;
+		if (loading && !this.getLoading() ) {
+			this.getWindowElement().addClassName("wjgui_window_loading");
+			if (!loadCallback) {
+				this.getContentElement("main").setStyle({"visibility": "hidden"});
+			}
+			else {
+				loadCallback(this, loading);
+			}
+		}
+		else if (!loading && this.getLoading() ) {
+			this.getWindowElement().removeClassName("wjgui_window_loading");
+			if (!loadCallback) {
+				this.getContentElement("main").setStyle({"visibility": "visible"});
+			}
+			else {
+				loadCallback(this, loading);
+			}
+		}
+		this._loading = loading;
+		return this;
+	},
+
+	/**
+	 * getLoading
+	 *
+	 * Tells if this window is marked as loading
+	 *
+	 * @since Wed Sep 3 2008
+	 * @access public
+	 * @return boolean
+	 **/
+	getLoading: function() {
+		return this._loading;
+	},
+
+	/**
+	 * setTheme
+	 *
+	 * Sets the theme for the window
+	 *
+	 * @since Fri Dec 5 2008
+	 * @access public
+	 * @param string theme
+	 * @return void
+	 **/
+	setTheme: function(theme) {
+		if (theme == this.getTheme() ) {
+			return this;
+		}
+		this._removeOldTheme();
+		this._setTheme(theme);
+		this._addNewTheme();
+		return this;
+	},
+
+	/**
+	 * _setTheme
+	 *
+	 * Sets the value of the _theme property
+	 *
+	 * @since Fri Dec 5 2008
+	 * @access protected
+	 * @param string theme
+	 * @return void
+	 **/
+	_setTheme: function(theme) {
+		this._theme = theme || "default";
+	},
+
+	/**
+	 * _removeOldTheme
+	 *
+	 * Removes the previously set theme class from the window
+	 *
+	 * @since Fri Dec 5 2008
+	 * @access
+	 * @param
+	 * @return
+	 **/
+	_removeOldTheme: function() {
+		this.getWindowElement().removeClassName(this._getBaseClassname() + "theme_" + this.getTheme() );
+	},
+
+	/**
+	 * _addNewTheme
+	 *
+	 * Adds the new theme class to the window
+	 *
+	 * @since Fri Dec 5 2008
+	 * @access protected
+	 * @return void
+	 **/
+	_addNewTheme: function() {
+		this.getWindowElement().addClassName(this._getBaseClassname() + "theme_" + this.getTheme() );
+	},
+
+	/**
+	 * getTheme
+	 *
+	 * Returns the value of the _theme property
+	 *
+	 * @since Fri Dec 5 2008
+	 * @access public
+	 * @return string
+	 **/
+	getTheme: function() {
+		return this._theme;
+	},
+
+	/**
+	 * translate
+	 *
+	 * Translates strings
+	 *
+	 * @since Thu Jun 18 2009
+	 * @access public
+	 * @param string key
+	 * @return string
+	 **/
+	translate: function(key) {
+		return Translate.lookup(key, "wjgui");
+	}
+});
+
+
+document.observe("dom:loaded", function() {
+	if (!WJWindow.DEFAULT_PARENT) {
+		WJWindow.DEFAULT_PARENT = document.body;
+	}
+} );
+
+WJWindow._messagedialog = function(type, message, callback, show, translate, allowHTML) {
+	var win = new WJWindow(callback, null, translate);
+	var mwin = new window[type](win);
+	mwin.setMessage(message, allowHTML);
+	if (show) {
+		mwin.show();
+	}
+	return mwin;
+};
+WJWindow.alert = function(message, callback, translate, allowHTML) {
+	return WJWindow._messagedialog("WJWindowAlert", message, callback, true, translate, allowHTML);
+};
+WJWindow.notice = function(message, callback, translate, allowHTML) {
+	return WJWindow._messagedialog("WJWindowNotice", message, callback, true, translate, allowHTML);
+};
+WJWindow.confirm = function(message, callback, translate, allowHTML) {
+	return WJWindow._messagedialog("WJWindowConfirm", message, callback, true, translate, allowHTML);
+};
+WJWindow.booleanConfirm = function(message, callback, translate, allowHTML) {
+	return WJWindow._messagedialog("WJWindowBooleanConfirm", message, callback, true, translate, allowHTML);
+};
+WJWindow.prompt = function(message, callback, translate, allowHTML) {
+	return WJWindow._messagedialog("WJWindowPrompt", message, callback, true, translate, allowHTML);
+};

@@ -1,0 +1,230 @@
+$fonttype: Arial, Helvetica, Verdana, sans-serif;
+$windowfontcolor: #000000;
+$windowtitlecolor: #ffffff;
+$windowblinkcolor: #059fc2;
+$windowtitlefontsize: 0.75;
+$windowmessagefontsize: 0.75;
+$buttonfontsize: 0.75;
+$contentbuttonfontsize: 0.75;
+$buttoncolor: #000000;
+$disabledbuttoncolor: #888888;
+$contentbuttoncolor: #01a1c1;
+$disabledcontentbuttoncolor: #888888;
+$windowcontentbgcolor: #d6d7d7;
+
+/**
+ * WINDOW >
+ **/
+div.wjgui_window,
+div.wjgui_window p {
+	font-family: $fonttype;
+	color: $windowfontcolor;
+}
+
+div.wjgui_window h1,
+div.wjgui_window h2,
+div.wjgui_window h3,
+div.wjgui_window h4,
+div.wjgui_window h5,
+div.wjgui_window h6 {
+	font-family: $fonttype;
+}
+
+div.wjgui_window_right,
+div.wjgui_window_left {
+	background-repeat: no-repeat;
+}
+
+div.wjgui_window_buttons div.wjgui_window_content {
+	text-align: right;
+}
+
+div.wjgui_window_title  div.wjgui_window_left,
+div.wjgui_window_title  div.wjgui_window_center,
+div.wjgui_window_title  div.wjgui_window_right,
+div.wjgui_window_bottom div.wjgui_window_left,
+div.wjgui_window_bottom div.wjgui_window_center,
+div.wjgui_window_bottom div.wjgui_window_right {
+    @include background-image-window-png;
+}
+
+div.wjgui_window_buttons div.wjgui_window_content div.wjgui_statusbar {
+	font-family: $fonttype;
+	color: $windowfontcolor;
+	font-size: #{$windowmessagefontsize}em;
+}
+
+div.wjgui_window_bottom {
+	line-height: 1px; /* for IE6 */
+}
+
+div.wjgui_window_title div.wjgui_window_content h1 {
+	html.ie7 & {
+		line-height: 8px;
+	}
+}
+
+div.wjgui_window_bottom div.wjgui_window_content {
+	font-size: 1px;
+}
+
+div.wjgui_window_body div.wjgui_window_right,
+div.wjgui_window_body div.wjgui_window_left {
+	@include background-image-window-verticalshadows-png;
+	background-repeat: repeat-y;
+}
+
+div.wjgui_window_body div.wjgui_window_center {
+	background-color: $windowcontentbgcolor;
+}
+
+div.wjgui_window_title div.wjgui_window_closebutton {
+	@include background-image-close-png;
+	background-color: transparent;
+	background-repeat: no-repeat;
+}
+
+div.wjgui_window_title h1 {
+	color: $windowtitlecolor;
+	font-family: $fonttype;
+	font-weight: bold;
+	font-size: #{$windowtitlefontsize}em;
+	padding-top: 0.7em;
+}
+
+div.wjgui_window_blink div.wjgui_window_title  h1 {
+	color: $windowblinkcolor;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button {
+	font-size: #{$contentbuttonfontsize}em;
+}
+
+div.wjgui_window_main div.wjgui_window_message {
+	font-family: $fonttype;
+	font-size: #{$windowmessagefontsize}em;
+	font-weight: normal;
+}
+
+
+div.wjgui_window div.wjgui_window_title div.wjgui_window_content {
+	@include background-image-window-icon-png;
+	background-repeat: no-repeat;
+}
+
+div.wjgui_window.wjgui_window_loading div.wjgui_window_title div.wjgui_window_content {
+	@include background-image-window-load-gif;
+}
+
+div.wjgui_window_main div.wjgui_window_messageicon {
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+div.wjgui_window_main div.wjgui_window_messageicon_alert {
+	@include background-image-window-icon-alert-png;
+}
+div.wjgui_window_main div.wjgui_window_messageicon_booleanconfirm {
+	@include background-image-window-icon-booleanConfirm-png;
+}
+div.wjgui_window_main div.wjgui_window_messageicon_confirm {
+	@include background-image-window-icon-confirm-png;
+}
+div.wjgui_window_main div.wjgui_window_messageicon_notice {
+	@include background-image-window-icon-notice-png;
+}
+div.wjgui_window_main div.wjgui_window_messageicon_ok {
+	@include background-image-window-icon-ok-png;
+}
+div.wjgui_window_main div.wjgui_window_messageicon_prompt {
+	@include background-image-window-icon-prompt-png;
+}
+/**
+ * < WINDOW
+ **/
+
+/**
+ * BUTTON >
+ **/
+button.wjgui_button {
+	background-color: transparent;
+	border: none;
+	cursor: default;
+	font-family: $fonttype;
+	font-size: #{$buttonfontsize}em;
+	font-weight: normal;
+}
+
+button.wjgui_button div.wjgui_button_content {
+	font-family: $fonttype;
+}
+
+button.wjgui_button div.wjgui_button_left,
+button.wjgui_button div.wjgui_button_right,
+button.wjgui_button div.wjgui_button_center {
+	@include background-image-buttons-png;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_left,
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_right,
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_center {
+	@include background-image-contentbuttons-png;
+}
+
+button.wjgui_button div.wjgui_button_center {
+	color: $buttoncolor;
+}
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_center {
+	color: $contentbuttoncolor;
+}
+
+button.wjgui_button div.wjgui_button_left,
+button.wjgui_button div.wjgui_button_right {
+	background-repeat: no-repeat;
+}
+button.wjgui_button div.wjgui_button_center {
+	background-repeat: repeat-x;
+}
+
+button.wjgui_button_disabled:active div.wjgui_button_center,
+button.wjgui_button_disabled:hover div.wjgui_button_center,
+button.wjgui_button_disabled div.wjgui_button_center {
+	color: $disabledbuttoncolor;
+}
+
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:active div.wjgui_button_center,
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled:hover div.wjgui_button_center,
+div.wjgui_window_main div.wjgui_window_content button.wjgui_button_disabled div.wjgui_button_center {
+	color: $disabledcontentbuttoncolor;
+}
+
+/**
+ * Theme's for BUTTON
+ **/
+div.wjgui_windowtheme_magenta button.wjgui_button div.wjgui_button_column {
+
+}
+
+div.wjgui_windowtheme_purple button.wjgui_button div.wjgui_button_column {
+
+}
+
+div.wjgui_windowtheme_green button.wjgui_button div.wjgui_button_column {
+
+}
+
+div.wjgui_windowtheme_magenta div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_column {
+
+}
+
+div.wjgui_windowtheme_purple div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_column {
+
+}
+
+div.wjgui_windowtheme_green div.wjgui_window_main div.wjgui_window_content button.wjgui_button div.wjgui_button_column {
+
+}
+
+/**
+ * < BUTTON
+ **/
