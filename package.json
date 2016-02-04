@@ -1,13 +1,13 @@
 {
     "name": "connectholland-wjgui",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "GUI including windows and buttons",
     "license" : "MIT",
     "files": [
         "dist/"
     ],
     "dependencies": {
-        "connectholland-translate": "0.0.5"
+        "connectholland-translate": "0.0.6"
     },
     "devDependencies": {
         "gulp": "^3.8.11",
