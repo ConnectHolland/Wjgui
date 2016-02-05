@@ -24,7 +24,7 @@ var WJWindowPrompt = Class.create(WJWindowMessageDialog, {
         $super(toDecorate);
         this.getInput().focus();
     },
-    
+
     /**
      * _getMainTemplate
      *
@@ -39,7 +39,7 @@ var WJWindowPrompt = Class.create(WJWindowMessageDialog, {
         template.template += "<input/>";
         return template;
     },
-    
+
     /**
      * _addButtons
      *
@@ -51,7 +51,7 @@ var WJWindowPrompt = Class.create(WJWindowMessageDialog, {
      **/
     _addButtons: function($super) {
         $super();
-        WJButton.create(this._decorated.translate("CANCEL"), "false", false, this.getContentElement("buttons") );
+        WJButton.create(Translate.lookup("CANCEL", "wjgui"), "false", false, this.getContentElement("buttons") );
     },
 
     /**

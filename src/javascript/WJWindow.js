@@ -153,7 +153,7 @@ var WJWindow = Class.create({
      **/
     _addCloseButton: function() {
         var title = this.getContentElement("title");
-        var titlediv = new Element("div", {"onclick": "this.parentNode.getWJWindowObject().fireClose(this)", "title": this.translate("CLOSE_WINDOW") } );
+        var titlediv = new Element("div", {"onclick": "this.parentNode.getWJWindowObject().fireClose(this)", "title": Translate.lookup("CLOSE_WINDOW", "wjgui") } );
         titlediv.addClassName(this._getBaseClassname() + "_closebutton");
         title.insert(titlediv);
     },
@@ -1374,7 +1374,9 @@ var WJWindow = Class.create({
      * @return string
      **/
     translate: function(key) {
-        return Translate.lookup(key, "wjgui");
+        var result = Translate.lookup(key, "wjgui");
+        console.log(result);
+        return result;
     }
 });
 

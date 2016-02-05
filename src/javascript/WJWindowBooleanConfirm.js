@@ -35,8 +35,8 @@ var WJWindowBooleanConfirm = Class.create(WJWindowConfirm, {
      **/
     _addButtons: function($super) {
         this._buttons = $super();
-        this._buttons.get("ok").updateCaption(this._decorated.translate("YES") );
-        this._buttons.get("cancel").updateCaption(this._decorated.translate("NO") );
+        this._buttons.get("ok").updateCaption(Translate.lookup("YES", "wjgui") );
+        this._buttons.get("cancel").updateCaption(Translate.lookup("NO", "wjgui") );
         return this._buttons;
     }
 });
