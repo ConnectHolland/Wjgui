@@ -9,7 +9,7 @@ taskLoader({
     taskDirectory: 'bower_components/gulp-tasks/tasks',
     plugins: plugins,
     config: config
-});
+}, gulp);
 
 gulp.task('javascript', function () {
     gulp.src(config.javascript.src)
