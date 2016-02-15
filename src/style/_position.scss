@@ -479,6 +479,7 @@ div.wjgui_window div.wjgui_window_main div.wjgui_window_content button.wjgui_but
 
 div.wjgui_window div.wjgui_window_main div.wjgui_window_content div.wjgui_button_content {
     line-height: #{$contentbuttonheight}px;
+    white-space: nowrap;
 }
 
 /**
